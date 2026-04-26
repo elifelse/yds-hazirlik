@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YDS Okuma Teknikleri – Pasaj Nasıl Çözülür? Strateji ve İpuçları | YDS Hazırlık</title>
+  <meta name="description" content="YDS okuma bölümünü hızlı ve doğru çözmek için kanıtlanmış teknikler. Skimming, scanning, ana fikir bulma, çıkarım soruları ve zaman yönetimi rehberi.">
+  <meta name="keywords" content="YDS okuma teknikleri, YDS pasaj çözme, YDS reading, YDS okuma stratejisi, YDS paragraf soruları, YDS sınav ipuçları">
+  <meta name="author" content="YDS Hazırlık">
+  <link rel="canonical" href="https://yds-hazirlik.com/yds-okuma-teknikleri.html">
+
+  <meta property="og:title" content="YDS Okuma Teknikleri – Pasaj Nasıl Çözülür?">
+  <meta property="og:description" content="YDS okuma bölümünü hızlı ve doğru çözmek için kanıtlanmış teknikler ve strateji rehberi.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yds-hazirlik.com/yds-okuma-teknikleri.html">
+  <meta property="og:site_name" content="YDS Hazırlık">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "YDS Okuma Teknikleri – Pasaj Nasıl Çözülür?",
+    "description": "YDS okuma bölümünü hızlı ve doğru çözmek için skimming, scanning, ana fikir bulma ve zaman yönetimi teknikleri.",
+    "url": "https://yds-hazirlik.com/yds-okuma-teknikleri.html",
+    "publisher": { "@type": "Organization", "name": "YDS Hazırlık", "url": "https://yds-hazirlik.com" },
+    "inLanguage": "tr",
+    "datePublished": "2025-04-27",
+    "dateModified": "2025-04-27"
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0e101e; --card: #161929; --border: #2a2d45;
+      --text: #e8eaf0; --muted: #8b90a8; --accent: #7c6af7;
+      --accent2: #f7c948; --green: #4caf7d; --red: #e05c5c; --radius: 12px;
+    }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.75; font-size: 16px; }
+
+    nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .nav-cta { background: var(--accent); color: #fff; text-decoration: none; padding: 8px 18px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; transition: opacity .2s; }
+    .nav-cta:hover { opacity: .85; }
+
+    .hero { max-width: 860px; margin: 0 auto; padding: 56px 24px 32px; }
+    .hero-badge { display: inline-block; background: rgba(247,201,72,.1); color: var(--accent2); border: 1px solid rgba(247,201,72,.3); border-radius: 20px; padding: 4px 14px; font-size: 0.8rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 16px; }
+    h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; line-height: 1.25; margin-bottom: 16px; }
+    h1 em { font-style: normal; color: var(--accent2); }
+    .hero-lead { font-size: 1.05rem; color: var(--muted); max-width: 680px; margin-bottom: 32px; }
+
+    .hero-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+    .stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 22px; text-align: center; }
+    .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--accent); display: block; }
+    .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+
+    .content { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+    .toc { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 48px; }
+    .toc h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin-bottom: 6px; }
+    .toc a { color: var(--accent); text-decoration: none; font-size: 0.95rem; }
+    .toc a:hover { text-decoration: underline; }
+
+    .section { margin-bottom: 56px; }
+    h2.section-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 10px; }
+    .section-intro { color: var(--muted); margin-bottom: 24px; font-size: 0.97rem; }
+    h3.sub-title { font-size: 1.1rem; font-weight: 700; margin: 28px 0 10px; color: var(--text); }
+
+    /* TECHNIQUE CARDS */
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .tech-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; position: relative; overflow: hidden; }
+    .tech-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .tech-card.blue::before { background: var(--accent); }
+    .tech-card.green::before { background: var(--green); }
+    .tech-card.yellow::before { background: var(--accent2); }
+    .tech-card.red::before { background: var(--red); }
+    .tech-icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+    .tech-name { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .tech-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .tech-when { display: inline-block; margin-top: 10px; font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 4px; background: rgba(124,106,247,.12); color: var(--accent); }
+
+    /* QUESTION TYPE CARDS */
+    .qtype-list { display: flex; flex-direction: column; gap: 16px; margin: 20px 0; }
+    .qtype-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; display: grid; grid-template-columns: auto 1fr; gap: 0 20px; }
+    .qtype-num { font-size: 2rem; font-weight: 900; color: var(--accent); opacity: .4; line-height: 1; padding-top: 2px; }
+    .qtype-title { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .qtype-pattern { font-size: 0.82rem; color: var(--accent2); font-style: italic; margin-bottom: 8px; }
+    .qtype-strategy { font-size: 0.9rem; color: var(--muted); }
+    .qtype-tip { margin-top: 10px; font-size: 0.85rem; background: rgba(76,175,125,.08); border-left: 3px solid var(--green); padding: 8px 12px; border-radius: 0 6px 6px 0; color: var(--text); }
+
+    /* STEP LIST */
+    .step-list { counter-reset: steps; list-style: none; margin: 20px 0; }
+    .step-list li { counter-increment: steps; display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+    .step-num { background: var(--accent); color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+    .step-content { flex: 1; }
+    .step-title { font-weight: 700; margin-bottom: 4px; }
+    .step-detail { font-size: 0.9rem; color: var(--muted); }
+
+    /* TIME TABLE */
+    .time-table { width: 100%; border-collapse: collapse; font-size: 0.93rem; margin: 16px 0; }
+    .time-table th { padding: 10px 14px; text-align: left; font-size: 0.78rem; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); border-bottom: 1px solid var(--border); background: rgba(124,106,247,.07); }
+    .time-table td { padding: 10px 14px; border-bottom: 1px solid rgba(42,45,69,.6); }
+    .time-table tr:hover td { background: rgba(124,106,247,.04); }
+    .time-pct { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(124,106,247,.15); color: var(--accent); }
+
+    /* EXAMPLE PASSAGE */
+    .passage-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin: 20px 0; font-size: 0.92rem; line-height: 1.8; }
+    .passage-box .passage-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 12px; font-weight: 600; }
+    .passage-box p { margin-bottom: 12px; }
+    .passage-box p:last-child { margin-bottom: 0; }
+    mark { background: rgba(247,201,72,.25); color: var(--accent2); border-radius: 3px; padding: 0 2px; }
+    .mark-blue { background: rgba(124,106,247,.2); color: #a89ff9; border-radius: 3px; padding: 0 2px; }
+    .mark-green { background: rgba(76,175,125,.2); color: #6fd4a0; border-radius: 3px; padding: 0 2px; }
+
+    /* BOXES */
+    .tip-box { background: rgba(76,175,125,.07); border: 1px solid rgba(76,175,125,.2); border-left: 4px solid var(--green); border-radius: var(--radius); padding: 16px 20px; margin: 24px 0; font-size: 0.95rem; }
+    .tip-box strong { color: var(--green); }
+    .warn-box { background: rgba(247,201,72,.06); border: 1px solid rgba(247,201,72,.2); border-left: 4px solid var(--accent2); border-radius: var(--radius); padding: 16px 20px; margin: 24px 0; font-size: 0.95rem; }
+    .warn-box strong { color: var(--accent2); }
+    .danger-box { background: rgba(224,92,92,.06); border: 1px solid rgba(224,92,92,.2); border-left: 4px solid var(--red); border-radius: var(--radius); padding: 16px 20px; margin: 24px 0; font-size: 0.95rem; }
+    .danger-box strong { color: var(--red); }
+
+    /* CTA */
+    .cta-banner { background: linear-gradient(135deg, rgba(124,106,247,.15) 0%, rgba(247,201,72,.08) 100%); border: 1px solid var(--border); border-radius: 16px; padding: 36px 32px; text-align: center; margin: 48px 0; }
+    .cta-banner h3 { font-size: 1.3rem; margin-bottom: 10px; }
+    .cta-banner p { color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+    .cta-btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-weight: 700; font-size: 1rem; transition: transform .15s, opacity .15s; }
+    .cta-btn:hover { transform: translateY(-2px); opacity: .9; }
+
+    footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; color: var(--muted); font-size: 0.85rem; }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .tech-grid { grid-template-columns: 1fr; }
+      .qtype-card { grid-template-columns: 1fr; }
+      .qtype-num { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/"><span>🐝</span> YDS Hazırlık</a>
+  <a class="nav-cta" href="/">Uygulamaya Git</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge">Okuma Stratejisi</div>
+  <h1>YDS Okuma Bölümünü<br><em>Hızlı ve Doğru</em> Çözmek</h1>
+  <p class="hero-lead">
+    YDS'de okuma bölümü 20 sorudan oluşur ve sınavın en zorlu kısmıdır — sadece İngilizce bilmek yetmez, doğru teknikler olmadan zaman aşımına uğrarsınız. Bu rehber, deneyimli YDS öğrencilerinin kullandığı stratejileri adım adım açıklar.
+  </p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-number">20</span><span class="stat-label">Okuma Sorusu</span></div>
+    <div class="stat"><span class="stat-number">5-6</span><span class="stat-label">Pasaj Sayısı</span></div>
+    <div class="stat"><span class="stat-number">~8 dk</span><span class="stat-label">Pasaj başına süre</span></div>
+  </div>
+</header>
+
+<main class="content">
+
+  <nav class="toc" aria-label="İçindekiler">
+    <h2>İçindekiler</h2>
+    <ol>
+      <li><a href="#teknikler">Temel Okuma Teknikleri</a></li>
+      <li><a href="#adimlar">Pasaja Nasıl Yaklaşılır? (5 Adım)</a></li>
+      <li><a href="#soru-tipleri">Soru Tiplerine Göre Strateji</a></li>
+      <li><a href="#zaman">Zaman Yönetimi</a></li>
+      <li><a href="#ornek">Örnek Pasaj Analizi</a></li>
+      <li><a href="#hatalar">Yapılan Kritik Hatalar</a></li>
+    </ol>
+  </nav>
+
+  <!-- TEKNİKLER -->
+  <section class="section" id="teknikler">
+    <h2 class="section-title"><span>📖</span> Temel Okuma Teknikleri</h2>
+    <p class="section-intro">
+      Akademik İngilizce okuma, günlük okumadan farklıdır. Metni kelimesi kelimesine okumak hem zaman kaybettirir hem de ana fikri kaçırmanıza yol açar. Bu üç teknik birbirini tamamlar.
+    </p>
+
+    <div class="tech-grid">
+      <div class="tech-card blue">
+        <span class="tech-icon">⚡</span>
+        <div class="tech-name">Skimming — Tarama Okuma</div>
+        <div class="tech-desc">Metni baştan sona hızlıca gözden geçirerek genel konuyu ve yapıyı kavramak. Her paragrafın ilk ve son cümlesine odaklanın, diğerlerini atlayın.</div>
+        <span class="tech-when">Ne zaman: Pasajı ilk gördüğünüzde</span>
+      </div>
+      <div class="tech-card green">
+        <span class="tech-icon">🎯</span>
+        <div class="tech-name">Scanning — Hedefli Arama</div>
+        <div class="tech-desc">Sorudaki anahtar kelimeyi (isim, sayı, tarih) metinde bulmak için gözle hızlıca taramak. Metni okumadan, kelimeyi göze çarptırarak arayın.</div>
+        <span class="tech-when">Ne zaman: Detay sorusunda cevabı ararken</span>
+      </div>
+      <div class="tech-card yellow">
+        <span class="tech-icon">🔍</span>
+        <div class="tech-name">Close Reading — Yakın Okuma</div>
+        <div class="tech-desc">Sadece cevabın bulunduğu paragrafı dikkatli okumak. Tüm metni bu şekilde okumak zaman öldürür; yalnızca gerektiğinde kullanın.</div>
+        <span class="tech-when">Ne zaman: Çıkarım ve ana fikir sorularında</span>
+      </div>
+      <div class="tech-card red">
+        <span class="tech-icon">❌</span>
+        <div class="tech-name">Kelimesi Kelimesine Okuma</div>
+        <div class="tech-desc">YDS'de hiçbir pasajı baştan sona, her kelimeyi okuyarak bitirmeye çalışmayın. Bu teknik sınav için en büyük zaman tuzağıdır.</div>
+        <span class="tech-when">Kaçının — süreyi çöpe atar</span>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>Gerçek Strateji:</strong> Önce skimming ile 60-90 saniyede pasajın konusunu anlayın. Sonra soruları okuyun. Her soru için scanning ile ilgili paragrafı bulun, sadece o kısmı close reading ile okuyun.
+    </div>
+  </section>
+
+  <!-- 5 ADIM -->
+  <section class="section" id="adimlar">
+    <h2 class="section-title"><span>🪜</span> Pasaja Nasıl Yaklaşılır? 5 Adım</h2>
+    <p class="section-intro">
+      Her pasajda aynı sırayı takip edin. Bu rutin otomatikleşince hem hız artar hem de hata oranı düşer.
+    </p>
+
+    <ol class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Başlığa ve ilk cümleye bakın (15 saniye)</div>
+          <div class="step-detail">Pasajın başlığı yoksa ilk paragrafın ilk cümlesi konuyu söyler. "Bu metin ne hakkında?" sorusuna hızlıca cevap verin. Konuyu bilmek soruları anlamlandırmanızı kolaylaştırır.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Soruları önce okuyun (45 saniye)</div>
+          <div class="step-detail">Metni okumadan önce soruları gözden geçirin. Hangi anahtar kelimeleri, tarihleri veya isimleri arayacağınızı kafanızda belirleyin. Bu, metni okurken hedefli bakmanızı sağlar.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Skimming — her paragrafın ilk cümlesi (90 saniye)</div>
+          <div class="step-detail">Her paragrafın ilk cümlesini okuyun, geri kalanını atlayın. Bu kadarı çoğu zaman ana fikir sorusunu cevaplamak için yeterlidir. Paragraf yapısını zihinsel haritanıza ekleyin.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Soru bazlı scanning (soru başına 60-90 saniye)</div>
+          <div class="step-detail">Her soru için sorudaki anahtar kelimeyi metinde bulun. O paragrafı dikkatli okuyun, cevabı belirleyin. Cevabı metinde bulamazsanız son seçeneğe geçin, takılıp kalmayın.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Eğer takıldıysanız — eleme yöntemi</div>
+          <div class="step-detail">Doğrudan cevabı bulamıyorsanız yanlış olan seçenekleri eleyin. "Bu bilgi metinde yoktu" veya "Bu metinde söylenenin tam tersi" diyerek 4 seçeneği 2'ye indirin, ardından en mantıklısını işaretleyin.</div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- SORU TİPLERİ -->
+  <section class="section" id="soru-tipleri">
+    <h2 class="section-title"><span>🗂️</span> Soru Tiplerine Göre Strateji</h2>
+    <p class="section-intro">
+      YDS okuma bölümündeki sorular 5 farklı tipte gelir. Her tipin kendine özgü bir çözüm stratejisi vardır.
+    </p>
+
+    <div class="qtype-list">
+      <div class="qtype-card">
+        <div class="qtype-num">01</div>
+        <div>
+          <div class="qtype-title">Ana Fikir Soruları</div>
+          <div class="qtype-pattern">"The main purpose of this passage is..." / "The passage is mainly about..."</div>
+          <div class="qtype-strategy">İlk ve son paragrafı okuyun. Ana fikir genellikle giriş paragrafının son cümlesinde veya sonuç paragrafının ilk cümlesinde açıkça ifade edilir. Çok spesifik olan seçenekleri eleyin — ana fikir geniş kapsamlı olmalı.</div>
+          <div class="qtype-tip">Tuzak: "Bu paragrafta bahsedilen" değil, "tüm metnin" konusu sorulur. Detay içeren seçenekler yanlış olur.</div>
+        </div>
+      </div>
+
+      <div class="qtype-card">
+        <div class="qtype-num">02</div>
+        <div>
+          <div class="qtype-title">Detay / Bilgi Soruları</div>
+          <div class="qtype-pattern">"According to the passage..." / "The author states that..."</div>
+          <div class="qtype-strategy">Sorudaki anahtar kelimeyi metinde bulun (scanning). O paragrafı dikkatli okuyun. Cevap metinde doğrudan yazılıdır — yorumlama gerekmez. "According to" ifadesi gördüğünüzde cevabın metinde kelimesi kelimesine geçtiğini bilin.</div>
+          <div class="qtype-tip">Metinde görmediğiniz bir bilgi cevap olamaz. "Mantıklı ama metinde yok" seçeneklerini kesinlikle eleyin.</div>
+        </div>
+      </div>
+
+      <div class="qtype-card">
+        <div class="qtype-num">03</div>
+        <div>
+          <div class="qtype-title">Çıkarım / Sonuç Soruları</div>
+          <div class="qtype-pattern">"It can be inferred from the passage..." / "The author implies that..."</div>
+          <div class="qtype-strategy">En zor soru tipi. Metinde doğrudan yazılmayan ama ima edilen bilgiyi bulmak gerekir. Doğru cevap metindeki bilginin mantıksal uzantısı olur. "İnfer" soruları için tüm ilgili paragrafı okuyun.</div>
+          <div class="qtype-tip">Çıkarım sorusunda doğru cevap metinde kelimesi kelimesine geçmez — ama metnin içeriğiyle %100 uyumlu olmalı. Aşırı geniş veya dar yorumları eliyin.</div>
+        </div>
+      </div>
+
+      <div class="qtype-card">
+        <div class="qtype-num">04</div>
+        <div>
+          <div class="qtype-title">Kelime Anlam Soruları</div>
+          <div class="qtype-pattern">"As used in paragraph 3, the word X most nearly means..."</div>
+          <div class="qtype-strategy">O kelimeyi hiç bilmeseniz bile cevabı bulabilirsiniz. Kelimeyi cümleden çıkarın, seçeneklerdeki anlamları sırayla yerine koyun. Cümlenin anlamını bozmayan, metinin konusuyla uyumlu seçenek doğrudur.</div>
+          <div class="qtype-tip">Kelimenin sözlük anlamı değil, bu cümledeki anlamı sorulur. "Generally" anlamı ile "in this context" anlamı farklı olabilir.</div>
+        </div>
+      </div>
+
+      <div class="qtype-card">
+        <div class="qtype-num">05</div>
+        <div>
+          <div class="qtype-title">Yazar Tutumu / Amaç Soruları</div>
+          <div class="qtype-pattern">"The author's attitude toward... can be described as..." / "The tone of the passage is..."</div>
+          <div class="qtype-strategy">Yazarın olumlu mu, olumsuz mu, yoksa tarafsız mı bir tutum sergilediğini belirleyin. Bunun için duygusal yük taşıyan kelimelere (unfortunately, remarkably, surprisingly) dikkat edin. Akademik metinler genellikle tarafsız bir ton taşır.</div>
+          <div class="qtype-tip">Ton sorularında "critical" (eleştirel), "supportive" (destekleyici), "objective" (nesnel) gibi seçeneklerin anlamını iyi bilin.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZAMAN YÖNETİMİ -->
+  <section class="section" id="zaman">
+    <h2 class="section-title"><span>⏰</span> Zaman Yönetimi</h2>
+    <p class="section-intro">
+      YDS'de toplam 180 dakika vardır. Okuma bölümüne ne kadar zaman ayırmalısınız?
+    </p>
+
+    <table class="time-table">
+      <thead>
+        <tr><th>Bölüm</th><th>Soru Sayısı</th><th>Önerilen Süre</th><th>Soru Başına</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Kelime</strong></td><td>20</td><td>25 dakika</td><td><span class="time-pct">~75 sn</span></td></tr>
+        <tr><td><strong>Gramer</strong></td><td>20</td><td>30 dakika</td><td><span class="time-pct">~90 sn</span></td></tr>
+        <tr><td><strong>Okuma</strong></td><td>20</td><td>60 dakika</td><td><span class="time-pct">~3 dk</span></td></tr>
+        <tr><td><strong>Paragraf Tamamlama</strong></td><td>10</td><td>25 dakika</td><td><span class="time-pct">~2.5 dk</span></td></tr>
+        <tr><td><strong>Cümle Tamamlama</strong></td><td>10</td><td>20 dakika</td><td><span class="time-pct">~2 dk</span></td></tr>
+        <tr><td><strong>Gözden Geçirme</strong></td><td>—</td><td>20 dakika</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warn-box">
+      <strong>Pratik kural:</strong> Bir okuma sorusunda 2 dakikayı geçtiyseniz tahminde bulunun ve geçin. Takılı kaldığınız tek soru tüm bölümün dengesini bozabilir.
+    </div>
+
+    <h3 class="sub-title">Pasaj içinde zaman dağılımı (pasaj başına ~10 dk)</h3>
+    <ul style="list-style:none; margin: 8px 0;">
+      <li style="padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between;"><span>Skimming + soru okuma</span><span style="color: var(--accent); font-weight: 700;">~2 dakika</span></li>
+      <li style="padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between;"><span>Soru başına scanning + cevap</span><span style="color: var(--accent); font-weight: 700;">~1.5 dakika × 3-4 soru</span></li>
+      <li style="padding: 8px 0; display: flex; justify-content: space-between;"><span>Zor sorularda ek süre</span><span style="color: var(--accent); font-weight: 700;">~1-2 dakika</span></li>
+    </ul>
+  </section>
+
+  <!-- ÖRNEK PASAJ -->
+  <section class="section" id="ornek">
+    <h2 class="section-title"><span>🔬</span> Örnek Pasaj Analizi</h2>
+    <p class="section-intro">
+      Aşağıdaki kısa pasajda tekniklerin nasıl uygulandığını görün. Renkler ne anlama gelir:
+      <mark>sarı = ana fikir</mark> &nbsp; <span class="mark-blue">mavi = anahtar kelime</span> &nbsp; <span class="mark-green">yeşil = çıkarım ipucu</span>
+    </p>
+
+    <div class="passage-box">
+      <div class="passage-label">Örnek Pasaj (Bilim Konusu)</div>
+      <p>
+        <mark>The human brain's ability to adapt to new conditions, known as neuroplasticity, has fundamentally changed how scientists understand learning and recovery from injury.</mark>
+        For decades, researchers believed that the adult brain was largely fixed in structure; once neurons were lost, they could not be replaced. <span class="mark-green">This view began to shift in the late twentieth century</span>, when studies on stroke patients revealed that neighbouring brain regions could take over functions previously handled by damaged areas.
+      </p>
+      <p>
+        <span class="mark-blue">Neuroplasticity</span> operates on two levels. Synaptic plasticity involves the strengthening or weakening of connections between existing neurons — the mechanism believed to underlie memory and skill acquisition. Structural plasticity, by contrast, refers to the brain's capacity to grow new neurons, a process called <span class="mark-blue">neurogenesis</span>, which was once thought to be impossible in adults.
+      </p>
+      <p>
+        <span class="mark-green">The implications of these findings extend well beyond the laboratory.</span> <mark>Rehabilitation programmes for stroke and traumatic brain injury patients are now designed to exploit the brain's natural plasticity, yielding recovery rates that would have seemed impossible a generation ago.</mark>
+      </p>
+    </div>
+
+    <div class="tip-box">
+      <strong>Analiz:</strong> İlk cümle ana fikri verir (neuroplasticity = beynin uyum yeteneği). İkinci paragrafın ilk kelimesi "Neuroplasticity" — detay sorusunda scan edilecek yer burası. Son paragraftaki "implications extend beyond the laboratory" bir çıkarım sorusu için kullanılabilir.
+    </div>
+  </section>
+
+  <!-- HATALAR -->
+  <section class="section" id="hatalar">
+    <h2 class="section-title"><span>⚠️</span> Yapılan Kritik Hatalar</h2>
+
+    <div class="danger-box">
+      <strong>1. Tüm metni baştan sona okumak:</strong> En yaygın ve en maliyetli hata. 500 kelimelik bir pasajı kelimesi kelimesine okumak 6-8 dakika alır — soruları çözmeye zaman kalmaz.
+    </div>
+    <div class="danger-box">
+      <strong>2. "Mantıklı geliyor" diyerek seçmek:</strong> YDS okuma sorularında cevap metinde olmalı. Genel bilginize göre doğru olan ama metinde geçmeyen seçenek yanlış cevaptır.
+    </div>
+    <div class="danger-box">
+      <strong>3. Zor soruya takılıp kalmak:</strong> 2 dakikayı geçen bir soru için tahmin yapıp geçin. Geri kalan sorulardan doğru yaptıklarınız daha değerlidir.
+    </div>
+    <div class="warn-box">
+      <strong>4. Soruyu okumadan metne dalmak:</strong> Soruyu bilmeden metni okumak, aradığınızı bilmeden bir kütüphanede kitap aramak gibidir. Her zaman önce soruyu okuyun.
+    </div>
+    <div class="tip-box">
+      <strong>Doğrusu:</strong> Soru → Anahtar kelime bul → Metinde scan et → İlgili paragrafı oku → Cevapla. Bu döngüyü her soru için tekrarlayın.
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <h3>Teknikleri Pratikle Pekiştir</h3>
+    <p>YDS Hazırlık uygulamasında okuma pasajları çöz, günlük kelime çalış. Arı maskotun ilerlemeyi takip etsin!</p>
+    <a class="cta-btn" href="/">Uygulamayı Aç &rarr;</a>
+  </div>
+
+</main>
+
+<footer>
+  <p>&copy; 2025 <a href="/">YDS Hazırlık</a> — YDS sınavına hazırlananlar için ücretsiz kaynak.</p>
+  <p style="margin-top:8px;"><a href="/">Ana Sayfa</a> · <a href="/yds-kelime-listesi.html">Kelime Listesi</a> · <a href="/yds-30-gunluk-plan.html">30 Günlük Plan</a> · <a href="/yds-gramer-konulari.html">Gramer Konuları</a></p>
+</footer>
+
+</body>
+</html>
