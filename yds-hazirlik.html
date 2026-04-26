@@ -7,7 +7,39 @@
 
 <!-- PWA meta tags -->
 <meta name="theme-color" content="#0d1117"/>
-<meta name="description" content="YDS & e-YDS sınavına akıllı hazırlık: kelime, gramer, okuma, deneme."/>
+<meta name="description" content="YDS ve e-YDS sınavına ücretsiz, akıllı hazırlık. Kelime kartları, gramer testleri, okuma pratikleri ve deneme sınavlarıyla skorunu artır."/>
+<meta name="keywords" content="YDS hazırlık, e-YDS hazırlık, YDS kelime, YDS gramer, YDS deneme, ingilizce sınav hazırlık, YDS online"/>
+<meta name="author" content="YDS Hazırlık"/>
+<meta name="robots" content="index, follow"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="YDS Hazırlık — Ücretsiz Akıllı Hazırlık"/>
+<meta property="og:description" content="Kelime kartları, gramer testleri, okuma pratikleri ve deneme sınavlarıyla YDS skorunu artır. Tamamen ücretsiz, reklamsız."/>
+<meta property="og:url" content="https://yds-hazirlik.com/"/>
+<meta property="og:locale" content="tr_TR"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="YDS Hazırlık — Ücretsiz Akıllı Hazırlık"/>
+<meta name="twitter:description" content="Kelime kartları, gramer testleri, okuma pratikleri ve deneme sınavlarıyla YDS skorunu artır."/>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "YDS Hazırlık",
+  "url": "https://yds-hazirlik.com/",
+  "description": "YDS ve e-YDS sınavına ücretsiz, akıllı hazırlık uygulaması.",
+  "applicationCategory": "EducationApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TRY" },
+  "inLanguage": "tr",
+  "audience": { "@type": "Audience", "audienceType": "YDS ve e-YDS sınavına hazırlanan öğrenciler" }
+}
+</script>
+
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="YDS Hazırlık"/>
@@ -138,7 +170,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .cobweb.light{width:70px;height:70px;opacity:.45}
 .cobweb.heavy{width:90px;height:90px;opacity:.75}
 @keyframes cobweb-sway{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
-.daily-item:not(.done):not(.locked):hover .cobweb{opacity:0;transform:scale(1.15) rotate(4deg)}
+.daily-item:not(.done):hover .cobweb{opacity:0 !important;transform:scale(1.15) rotate(4deg)}
 
 /* Toz partikül efekti (click) */
 .dust-p{position:fixed;width:5px;height:5px;border-radius:50%;pointer-events:none;
@@ -883,6 +915,302 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .card-elevated{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 8px 32px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.04)}
 @keyframes taskDone{0%{transform:scale(1)}40%{transform:scale(1.025)}100%{transform:scale(1)}}
 .daily-item.done{animation:taskDone .3s ease-out;border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.05)}
+
+/* ═══════════════════ BEE MASCOT ═══════════════════ */
+#bee{
+  position:fixed;bottom:90px;right:20px;
+  width:64px;height:80px;z-index:3000;
+  cursor:default;user-select:none;
+  filter:drop-shadow(0 4px 14px rgba(249,202,36,.3));
+}
+
+/* Keyframes only — state applied via JS inline style */
+@keyframes bee-float{
+  0%,100%{ transform:translateY(0); }
+  50%    { transform:translateY(-12px); }
+}
+@keyframes bee-jump{
+  0%  { transform:translateY(0)     rotate(0deg); }
+  35% { transform:translateY(-24px) rotate(-14deg); }
+  65% { transform:translateY(-14px) rotate(10deg); }
+  100%{ transform:translateY(0)     rotate(0deg); }
+}
+@keyframes bee-shake{
+  0%,100%{ transform:translateX(0); }
+  20%    { transform:translateX(-10px); }
+  40%    { transform:translateX(10px); }
+  60%    { transform:translateX(-6px); }
+  80%    { transform:translateX(6px); }
+}
+@keyframes bee-breathe{
+  0%,100%{ transform:translateY(0)  scale(1); }
+  50%    { transform:translateY(4px) scale(1.06); }
+}
+@keyframes bee-wing-blink{
+  0%,100%{ opacity:.85; }
+  50%    { opacity:.1; }
+}
+@keyframes bee-dance{
+  0%,100%{ transform:translateY(0) rotate(0deg) scale(1); }
+  20%{ transform:translateY(-12px) rotate(-16deg) scale(1.12); }
+  40%{ transform:translateY(-16px) rotate(14deg) scale(1.16); }
+  60%{ transform:translateY(-8px) rotate(-10deg) scale(1.1); }
+  80%{ transform:translateY(-4px) rotate(8deg) scale(1.05); }
+}
+@keyframes bee-panic{
+  0%,100%{ transform:translateX(0); filter:drop-shadow(0 4px 14px rgba(249,202,36,.3)); }
+  20%{ transform:translateX(-8px); filter:drop-shadow(0 0 10px #f87171); }
+  40%{ transform:translateX(8px);  filter:drop-shadow(0 0 10px #f87171); }
+  60%{ transform:translateX(-5px); filter:drop-shadow(0 0 7px #f87171); }
+  80%{ transform:translateX(5px);  filter:drop-shadow(0 0 7px #f87171); }
+}
+#bee{ transition:left .45s ease, top .45s ease, right .45s ease, bottom .45s ease; cursor:grab; }
+#bee:active{ cursor:grabbing; }
+#bee:hover{ filter:drop-shadow(0 6px 20px rgba(249,202,36,.55)); }
+#bee.fly-left{ right:auto; left:20px; }
+
+/* Bee info bubble */
+#bee-bubble{
+  position:fixed;bottom:175px;right:90px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:12px 16px;
+  font-size:13px;line-height:1.8;
+  box-shadow:0 8px 30px rgba(0,0,0,.4);
+  z-index:3001;pointer-events:none;
+  opacity:0;transform:translateY(8px) scale(.95);
+  transition:opacity .2s, transform .2s;
+  white-space:nowrap;
+}
+#bee-bubble.show{opacity:1;transform:translateY(0) scale(1);}
+#bee-bubble.fly-left{right:auto;left:90px;}
+#bee-bubble b{color:var(--yellow);}
+/* little tail */
+#bee-bubble::after{
+  content:'';position:absolute;bottom:-7px;right:24px;
+  border:7px solid transparent;border-top:7px solid var(--border);
+  border-bottom:none;
+}
+#bee-bubble.fly-left::after{right:auto;left:24px;}
+
+/* Zzz bubbles */
+#bee-zzz{
+  position:absolute;top:-10px;right:-10px;
+  display:none;flex-direction:column;align-items:center;gap:0;
+  pointer-events:none;
+}
+#bee-zzz span{
+  font-size:13px;font-weight:800;color:var(--blue);opacity:0;
+  animation:bee-zzz 2s calc(var(--i)*.65s) ease-in-out infinite;
+  text-shadow:0 0 8px rgba(129,140,248,.6);
+  line-height:1.2;
+}
+@keyframes bee-zzz{
+  0%  { opacity:0; transform:translateY(0)    scale(.7); }
+  25% { opacity:1; }
+  100%{ opacity:0; transform:translateY(-28px) scale(1.3); }
+}
+
+/* Sparkles on correct */
+.bee-spark{
+  position:fixed;border-radius:50%;pointer-events:none;z-index:3001;
+  animation:bee-spark-fly .65s ease-out forwards;
+}
+@keyframes bee-spark-fly{
+  0%  { opacity:1; transform:translate(0,0)               scale(1.2); }
+  100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(0);  }
+}
+/* Word chips that fly out of bee */
+.bee-word-chip{
+  position:fixed;z-index:3002;
+  padding:5px 13px;border-radius:20px;
+  font-size:13px;font-weight:700;color:#0d1117;
+  animation:bee-word-fly 2s cubic-bezier(.2,.8,.3,1) forwards;
+  white-space:nowrap;cursor:default;
+  box-shadow:0 2px 10px rgba(0,0,0,.3);
+}
+.bee-word-chip.catchable{
+  cursor:pointer;
+  animation:bee-word-fly 2s cubic-bezier(.2,.8,.3,1) forwards;
+}
+.bee-word-chip.catchable:hover{
+  filter:brightness(1.2);transform:scale(1.1);
+}
+.bee-word-chip.caught{
+  animation:bee-word-catch .4s ease-out forwards !important;
+}
+@keyframes bee-word-fly{
+  0%  { opacity:0; transform:translate(0,0)               scale(.5); }
+  15% { opacity:1; transform:translate(calc(var(--dx)*.2),calc(var(--dy)*.2)) scale(1.1); }
+  70% { opacity:1; transform:translate(calc(var(--dx)*.85),calc(var(--dy)*.85)) scale(1); }
+  100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(.7); }
+}
+@keyframes bee-word-catch{
+  0%  { opacity:1; transform:scale(1.3); }
+  100%{ opacity:0; transform:scale(2.2); filter:brightness(2); }
+}
+/* ── HONEYCOMB PANEL ── */
+#honeycomb-panel{
+  position:fixed;top:68px;right:10px;
+  z-index:2999;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;padding:8px 8px 6px;
+  transition:opacity .3s, transform .3s;
+  transform-origin:top right;
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+#honeycomb-panel.hidden{ opacity:0; transform:scale(.88); pointer-events:none; }
+.hc-title{
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);text-align:center;margin-bottom:6px;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  cursor:pointer;user-select:none;
+}
+.hc-title b{ color:var(--yellow); }
+.hc-chevron{ font-size:8px;transition:transform .2s;display:inline-block;color:var(--muted); }
+#honeycomb-panel.collapsed .hc-chevron{ transform:rotate(-90deg); }
+#honeycomb-panel.collapsed .hc-grid{ display:none; }
+.hc-grid{ display:flex;flex-direction:column;gap:2px;align-items:center; }
+.hc-row{ display:flex;gap:2px; }
+.hc-row.offset{ margin-left:18px; }
+
+/* Hex: width × height must satisfy h = w × 0.866 for regular shape */
+.hex{
+  width:32px;height:28px;
+  clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s, transform .2s;
+  overflow:hidden;cursor:default;position:relative;
+}
+/* Empty: faint inner shape using border color */
+.hex-empty-inner{
+  position:absolute;inset:1.5px;
+  clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%);
+  background:var(--border);opacity:.35;
+}
+.hex.filled{ background:linear-gradient(135deg,#f9ca24,#f0932b);cursor:pointer; }
+.hex.filled:hover{ transform:scale(1.18); }
+.hex-word{
+  font-size:5px;font-weight:800;color:#1a1208;
+  text-align:center;line-height:1.1;padding:1px 2px;
+  word-break:break-all;position:relative;z-index:1;
+}
+.hex.new-catch{ animation:hex-pop .4s cubic-bezier(.34,1.56,.64,1); }
+@keyframes hex-pop{
+  0%  { transform:scale(0) rotate(-20deg); }
+  100%{ transform:scale(1) rotate(0deg); }
+}
+
+/* Hex flashcard popup */
+#hex-card{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);
+  z-index:5000;width:280px;
+  background:var(--card);border:1px solid rgba(249,202,36,.4);
+  border-radius:18px;padding:24px 20px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+  opacity:0;transition:opacity .2s, transform .2s;pointer-events:none;
+}
+#hex-card.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:all;}
+#hex-card-close{
+  position:absolute;top:10px;right:14px;background:none;border:none;
+  color:var(--muted);font-size:20px;cursor:pointer;line-height:1;
+}
+#hex-card-word{ font-size:26px;font-weight:900;color:var(--yellow);margin-bottom:4px; }
+#hex-card-pos{ font-size:12px;color:var(--muted);margin-bottom:10px; }
+#hex-card-tr{ font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px; }
+#hex-card-ex{ font-size:13px;color:var(--muted);line-height:1.6;font-style:italic; }
+#hex-card-backdrop{
+  position:fixed;inset:0;z-index:4999;background:rgba(0,0,0,.5);
+  opacity:0;transition:opacity .2s;pointer-events:none;
+}
+#hex-card-backdrop.show{opacity:1;pointer-events:all;}
+
+/* Catch definition popup */
+.bee-catch-pop{
+  position:fixed;z-index:3003;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:10px 14px;max-width:220px;
+  font-size:12px;line-height:1.6;
+  box-shadow:0 8px 30px rgba(0,0,0,.4);pointer-events:none;
+  animation:catch-pop-in .25s ease forwards;
+}
+.bee-catch-pop strong{color:var(--yellow);font-size:14px;}
+.bee-catch-pop em{color:var(--muted);font-style:normal;}
+@keyframes catch-pop-in{
+  from{opacity:0;transform:scale(.8) translateY(8px);}
+  to  {opacity:1;transform:scale(1)  translateY(0);}
+}
+
+/* ═══════════════════ REVIEW POPUP ═══════════════════ */
+#review-backdrop{
+  position:fixed;inset:0;z-index:8500;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(4px);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+#review-backdrop.show{opacity:1;pointer-events:all;}
+
+#review-popup{
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(.88);
+  z-index:8501;width:min(360px,92vw);
+  background:var(--card);border:1px solid var(--border);
+  border-radius:22px;padding:28px 24px 24px;
+  box-shadow:0 24px 80px rgba(0,0,0,.6);
+  opacity:0;transition:opacity .25s, transform .25s;pointer-events:none;
+  text-align:center;
+}
+#review-popup.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:all;}
+
+/* Needy bee SVG */
+#review-bee{
+  width:72px;height:88px;margin:0 auto 12px;
+  animation:rv-sway 1.8s ease-in-out infinite;
+  filter:drop-shadow(0 4px 14px rgba(249,202,36,.35));
+}
+@keyframes rv-sway{
+  0%,100%{transform:rotate(-6deg) translateY(0);}
+  50%    {transform:rotate(6deg)  translateY(-5px);}
+}
+#review-bee #rv-wing-l{animation:bee-wing-blink .13s ease-in-out infinite alternate;}
+#review-bee #rv-wing-r{animation:bee-wing-blink .13s ease-in-out infinite alternate-reverse;}
+
+#review-popup h3{font-size:18px;font-weight:800;margin-bottom:6px;}
+#review-popup p{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5;}
+
+/* Stars */
+.rv-stars{display:flex;justify-content:center;gap:8px;margin-bottom:16px;}
+.rv-star{
+  font-size:32px;cursor:pointer;transition:transform .15s;
+  filter:grayscale(1) opacity(.4);
+}
+.rv-star.active{filter:none;}
+.rv-star:hover{transform:scale(1.2);}
+
+/* Comment */
+#review-comment{
+  width:100%;background:rgba(255,255,255,.05);
+  border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:14px;font-family:inherit;
+  padding:10px 12px;resize:none;height:80px;
+  transition:border-color .2s;margin-bottom:14px;
+}
+#review-comment:focus{outline:none;border-color:var(--yellow);}
+#review-comment::placeholder{color:var(--muted);}
+
+.rv-btns{display:flex;gap:10px;}
+#rv-skip{
+  flex:0 0 auto;padding:11px 18px;border:1px solid var(--border);
+  border-radius:10px;background:none;color:var(--muted);
+  font-size:13px;cursor:pointer;
+}
+#rv-submit{
+  flex:1;padding:12px;border:none;border-radius:10px;
+  background:linear-gradient(135deg,#f9ca24,#f0932b);
+  color:#1a1208;font-size:15px;font-weight:700;
+  cursor:pointer;transition:opacity .15s;
+}
+#rv-submit:hover{opacity:.88;}
+#rv-submit:disabled{opacity:.4;cursor:default;}
 </style>
 </head>
 <body>
@@ -1972,10 +2300,10 @@ function setDone(obj){ localStorage.setItem(DAILY_KEY, JSON.stringify(obj)) }
 function markDone(taskId){
   const d = getDone(); d[taskId] = true; setDone(d);
   checkAllDone();
-  // re-render plan screen so daily items always reflect the latest state
   const level = localStorage.getItem('yds_level') || 'B1';
   const pct = parseInt(localStorage.getItem('yds_pct') || '50');
   showPlan(level, pct);
+  setTimeout(_updateBeeExamMood, 500);
 }
 let _toastTimer=null;
 function showToast(msg, duration=3000){
@@ -2031,7 +2359,7 @@ function daysSinceTask(taskId){
     const data=JSON.parse(localStorage.getItem('yds_daily_'+d.toLocaleDateString('tr-TR'))||'{}');
     if(data[taskId]) return i;
   }
-  return 99; // hiç yapılmamış
+  return 0; // hiç yapılmamış → ağ yok
 }
 
 function taskDustLevel(taskId){
@@ -2507,6 +2835,7 @@ function showPlan(level,pct){
 let vocabIdx=0, vocabPhase='cards'; // cards → quiz
 
 function openWordsModule(){
+  _setBeeModule('vocab');
   vocabIdx=0; vocabPhase='cards';
   exerciseActive='words';
   openModal(`📖 ${_todaySet.label} — 20 Kelime`, '', true);
@@ -2600,6 +2929,7 @@ function vqChoose(i){
   document.querySelectorAll('.mq-opt')[i].classList.add(correct?'correct':'wrong');
   if(!correct) document.querySelectorAll('.mq-opt')[q.ans].classList.add('reveal');
   if(correct) vqScore++;
+  setBeeState(correct?'correct':'wrong', 1200);
   trackWordResult(q.opts[q.ans], correct);
   setTimeout(()=>{ vqIdx++; vqIdx<VOCAB_QUIZ.length?renderVQ():finishVocabQuiz(); },900);
 }
@@ -2623,6 +2953,7 @@ function finishVocabQuiz(){
 let gqIdx=0, gqScore=0;
 
 function openGrammarModule(){
+  _setBeeModule('grammar');
   gqIdx=0; gqScore=0; gqWrongTopics=[];
   exerciseActive='grammar';
   openModal('✏️ Dilbilgisi (10 soru)', '', true);
@@ -2644,6 +2975,7 @@ function gqChoose(i){
   document.querySelectorAll('.mq-opt')[i].classList.add(correct?'correct':'wrong');
   if(!correct) document.querySelectorAll('.mq-opt')[q.ans].classList.add('reveal');
   if(correct) gqScore++;
+  setBeeState(correct?'correct':'wrong', 1200);
   if(q.topic) trackGrammarTopic(q.topic, correct);
   // styled assistant card
   const verdict = correct
@@ -2700,6 +3032,7 @@ function finishGrammar(){
 let rqIdx=0, rqScore=0, rqAnswered=[];
 
 function openReadingModule(){
+  _setBeeModule('reading');
   rqIdx=0; rqScore=0; rqAnswered=[];
   exerciseActive='read';
   const dayIdx = Math.floor((new Date() - new Date(new Date().getFullYear(),0,0))/(1000*60*60*24)) % READINGS.length;
@@ -2786,6 +3119,7 @@ function buildReviewQuiz(){
 }
 
 function openReviewModule(){
+  _setBeeModule('review');
   rvQuiz=buildReviewQuiz();
   rvIdx=0; rvScore=0;
   exerciseActive='review';
@@ -2812,6 +3146,7 @@ function rvChoose(i){
   document.querySelectorAll('.mq-opt')[i].classList.add(correct?'correct':'wrong');
   if(!correct) document.querySelectorAll('.mq-opt')[q.ans].classList.add('reveal');
   if(correct) rvScore++;
+  setBeeState(correct?'correct':'wrong', 1200);
   trackWordResult(q.word, correct);
   setTimeout(()=>{ rvIdx++; rvIdx<rvQuiz.length?renderRQ():finishReview(); },900);
 }
@@ -2904,6 +3239,7 @@ function toggleDict(){
   panel.classList.toggle('open');
   const isOpen = panel.classList.contains('open');
   backdrop.style.display = isOpen ? 'block' : 'none';
+  beeMoveTo(isOpen ? 'left' : 'right');
   if(isOpen) setTimeout(()=>document.getElementById('dict-input').focus(), 300);
 }
 
@@ -3555,6 +3891,7 @@ const DENEME_QS = [
 let dnCurrent=0, dnUserAnswers={}, dnTimerInterval=null, dnTimeLeft=30*60, dnFinished=false;
 
 function openDeneme(){
+  _setBeeModule('deneme');
   dnCurrent=0; dnUserAnswers={}; dnTimeLeft=30*60; dnFinished=false;
   clearInterval(dnTimerInterval);
   document.getElementById('deneme-screen').classList.add('open');
@@ -3899,6 +4236,18 @@ const BADGE_DEFS = [
    check:()=>JSON.parse(localStorage.getItem('yds_deneme_scores')||'[]').some(r=>r.total>0&&(r.correct/r.total)>=0.9)},
   {id:'okuma-pro', emoji:'📰', name:'Okuma Pro', desc:'10 okuma testi çözdün',
    check:()=>JSON.parse(localStorage.getItem('yds_reading_scores')||'[]').length>=10},
+
+  // ── Arı rozetleri ──────────────────────────────────
+  {id:'ari-ilk',    emoji:'🐝', name:'İlk Av',       desc:'Arıdan ilk kelimeni yakaladın',
+   check:()=>parseInt(localStorage.getItem('yds_hc_total')||'0')>=1},
+  {id:'ari-petek',  emoji:'🍯', name:'Bal Dolu',      desc:'Peteki ilk kez tamamladın (20 kelime)',
+   check:()=>parseInt(localStorage.getItem('yds_hc_completions')||'0')>=1},
+  {id:'ari-usta',   emoji:'🐝🍯', name:'Arı Ustası',  desc:'Peteki 5 kez doldurdun (100 kelime)',
+   check:()=>parseInt(localStorage.getItem('yds_hc_completions')||'0')>=5},
+  {id:'ari-avc',    emoji:'🎯', name:'Kelime Avcısı', desc:'Toplamda 50 kelime yakaladın',
+   check:()=>parseInt(localStorage.getItem('yds_hc_total')||'0')>=50},
+  {id:'ari-kovan',  emoji:'🏠', name:'Kovan Sahibi',  desc:'Peteki 20 kez doldurdun',
+   check:()=>parseInt(localStorage.getItem('yds_hc_completions')||'0')>=20},
 ];
 
 function checkBadges(){
@@ -4246,6 +4595,861 @@ function endTour() {
   document.getElementById('tour-overlay').classList.remove('active');
   document.getElementById('tour-ring').style.display = 'none';
 }
+
+// ═══════════════════ BEE MASCOT — TÜM ÖZELLİKLER ═══════════════════
+let _beeTimer       = null;
+let _beeCurrentState = 'idle';
+let _beePriority     = 0; // higher = harder to override
+let _inactiveTimer   = null;
+let _beeQuizOpen     = false;
+let _pendingWeekly   = false;
+const BEE_STATES = { idle:0, sleep:1, correct:2, wrong:2, dance:3, panic:4 };
+
+function _beeSetAnim(anim) {
+  const bee = document.getElementById('bee');
+  if (!bee) return;
+  bee.style.animation = 'none';
+  bee.offsetWidth; // reflow
+  bee.style.animation = anim;
+}
+
+function _beeSetWings(sleeping) {
+  const wl = document.getElementById('wing-l');
+  const wr = document.getElementById('wing-r');
+  if (!wl || !wr) return;
+  if (sleeping) {
+    wl.style.animation = 'none'; wl.style.opacity = '0.25';
+    wr.style.animation = 'none'; wr.style.opacity = '0.25';
+  } else {
+    wl.style.animation = 'bee-wing-blink .13s ease-in-out infinite alternate';
+    wr.style.animation = 'bee-wing-blink .13s ease-in-out infinite alternate-reverse';
+    wl.style.opacity = '';
+    wr.style.opacity = '';
+  }
+}
+
+function setBeeState(state, duration, force) {
+  const bee = document.getElementById('bee');
+  if (!bee) return;
+  const pri = BEE_STATES[state] ?? 0;
+  if (!force && pri < (_beePriority||0) && _beeCurrentState !== 'idle') return;
+
+  const eyeN  = document.getElementById('bee-eye-normal');
+  const eyeX  = document.getElementById('bee-eye-x');
+  const eyeS  = document.getElementById('bee-eye-sleep');
+  const eyeEx = document.getElementById('bee-eye-excited');
+  const eyeSt = document.getElementById('bee-eye-stressed');
+  const smile = document.getElementById('bee-smile');
+  const bsmile= document.getElementById('bee-bigsmile');
+  const sad   = document.getElementById('bee-sad');
+  const wavy  = document.getElementById('bee-wavy');
+  const zzz   = document.getElementById('bee-zzz');
+
+  if (_beeTimer) { clearTimeout(_beeTimer); _beeTimer = null; }
+  _beeCurrentState = state;
+  _beePriority = pri;
+
+  // Reset all face elements
+  [eyeN,eyeEx,eyeSt].forEach(e => e?.removeAttribute('display'));
+  [eyeX,eyeS].forEach(e => e?.setAttribute('display','none'));
+  [smile].forEach(e => e?.removeAttribute('display'));
+  [bsmile,sad,wavy].forEach(e => e?.setAttribute('display','none'));
+  zzz.style.display = 'none';
+
+  const revertToIdle = () => { _beePriority = 0; setBeeState('idle'); };
+
+  switch(state) {
+    case 'idle':
+      _beeSetAnim('bee-float 2s ease-in-out infinite');
+      _beeSetWings(false);
+      _beePriority = 0;
+      break;
+    case 'correct':
+      _beeSetAnim('bee-jump .7s cubic-bezier(.34,1.56,.64,1) forwards');
+      _beeSetWings(false);
+      _beeSparkle();
+      if (duration) _beeTimer = setTimeout(revertToIdle, duration);
+      break;
+    case 'wrong':
+      _beeSetAnim('bee-shake .5s ease-in-out forwards');
+      _beeSetWings(false);
+      eyeN.setAttribute('display','none'); eyeX.removeAttribute('display');
+      smile.setAttribute('display','none'); sad.removeAttribute('display');
+      if (duration) _beeTimer = setTimeout(revertToIdle, duration);
+      break;
+    case 'sleep':
+      _beeSetAnim('bee-breathe 3s ease-in-out infinite');
+      _beeSetWings(true);
+      eyeN.setAttribute('display','none'); eyeS.removeAttribute('display');
+      smile.setAttribute('display','none');
+      zzz.style.display = 'flex';
+      break;
+    case 'dance':
+      _beeSetAnim('bee-dance 1s ease-in-out 3');
+      _beeSetWings(false);
+      eyeN.setAttribute('display','none'); eyeEx.removeAttribute('display');
+      smile.setAttribute('display','none'); bsmile.removeAttribute('display');
+      if (duration) _beeTimer = setTimeout(revertToIdle, duration);
+      break;
+    case 'panic':
+      _beeSetAnim('bee-panic .4s ease-in-out infinite');
+      _beeSetWings(false);
+      eyeN.setAttribute('display','none'); eyeSt.removeAttribute('display');
+      smile.setAttribute('display','none'); wavy.removeAttribute('display');
+      if (duration) _beeTimer = setTimeout(revertToIdle, duration);
+      break;
+    case 'stressed':
+      _beeSetAnim('bee-float 1.2s ease-in-out infinite');
+      _beeSetWings(false);
+      eyeN.setAttribute('display','none'); eyeSt.removeAttribute('display');
+      smile.setAttribute('display','none'); wavy.removeAttribute('display');
+      break;
+  }
+}
+
+function _beeSparkle() {
+  const bee = document.getElementById('bee');
+  if (!bee) return;
+  const r = bee.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const colors = ['#f9ca24','#58a6ff','#3fb950','#bc8cff','#ff7eb3','#fb923c'];
+
+  // Pick 2 random vocab words to float up as word chips
+  const wordSample = typeof VOCAB !== 'undefined'
+    ? VOCAB.sort(() => Math.random() - .5).slice(0, 2)
+    : [];
+
+  // Dot sparkles
+  for (let i = 0; i < 10; i++) {
+    const el = document.createElement('div');
+    el.className = 'bee-spark';
+    const size  = 5 + Math.random() * 7;
+    const angle = (Math.PI * 2 * i) / 10 + Math.random() * .4;
+    const dist  = 28 + Math.random() * 36;
+    el.style.cssText = `width:${size}px;height:${size}px;left:${cx}px;top:${cy}px;background:${colors[i%colors.length]};--dx:${Math.cos(angle)*dist}px;--dy:${Math.sin(angle)*dist}px;`;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove(), {once:true});
+  }
+
+  // Word chips — catchable!
+  wordSample.forEach((w, i) => {
+    const el = document.createElement('div');
+    el.className = 'bee-word-chip catchable';
+    el.textContent = w.word;
+    const ox = (i === 0 ? -70 : 30);
+    const oy = -40 - i * 25;
+    el.style.cssText = `left:${cx + ox}px;top:${cy}px;--dx:${ox}px;--dy:${oy}px;background:${colors[i*2]};`;
+    document.body.appendChild(el);
+
+    // Catch on click/touch
+    function catchWord(e) {
+      e.stopPropagation();
+      el.classList.remove('catchable');
+      el.classList.add('caught');
+      el.removeEventListener('click', catchWord);
+      el.removeEventListener('touchstart', catchWord);
+      setTimeout(() => el.remove(), 400);
+
+      // Reward: reduce weak word count + add to honeycomb
+      trackWordResult(w.word, true);
+      addToHoneycomb(w);
+
+      // Show definition popup
+      _showCatchToast(w, e.clientX || cx, e.clientY || cy);
+    }
+    el.addEventListener('click', catchWord);
+    el.addEventListener('touchstart', catchWord, {passive:true});
+    el.addEventListener('animationend', () => el.remove(), {once:true});
+  });
+}
+
+// ── Bee bubble (click to show stats) ──
+let _beeBubbleTimer = null;
+function _showBeeBubble() {
+  const bubble = document.getElementById('bee-bubble');
+  if (!bubble) return;
+  const done   = getDone();
+  const core   = ['words','grammar','read','review'];
+  const doneCount = core.filter(id => done[id]).length;
+  const streak = parseInt(localStorage.getItem('yds_streak') || '0');
+  const weakMap = JSON.parse(localStorage.getItem('yds_weak_words') || '{}');
+  const weakCount = Object.values(weakMap).filter(v => v > 0).length;
+  const isLeft = document.getElementById('bee').classList.contains('fly-left');
+
+  bubble.innerHTML = `
+    📅 Bugün: <b>${doneCount}/4</b> görev<br>
+    🔥 Seri: <b>${streak}</b> gün<br>
+    ${weakCount > 0 ? `⚠️ Zayıf kelime: <b>${weakCount}</b>` : '✅ Zayıf kelime yok'}
+  `;
+  bubble.className = 'show' + (isLeft ? ' fly-left' : '');
+
+  if (_beeBubbleTimer) clearTimeout(_beeBubbleTimer);
+  _beeBubbleTimer = setTimeout(() => {
+    bubble.classList.remove('show');
+  }, 3500);
+}
+
+// ── HONEYCOMB ──
+const HC_MAX = 20;
+const HC_KEY = 'yds_honeycomb';
+// Row layout: 4+5+4+5+2 = 20 cells, alternating offset
+const HC_ROWS = [4, 5, 4, 5, 2];
+
+function _getHC() { return JSON.parse(localStorage.getItem(HC_KEY) || '[]'); }
+function _saveHC(arr) { localStorage.setItem(HC_KEY, JSON.stringify(arr)); }
+
+function renderHoneycomb() {
+  const grid  = document.getElementById('hc-grid');
+  const panel = document.getElementById('honeycomb-panel');
+  const count = document.getElementById('hc-count');
+  if (!grid) return;
+
+  const cells = _getHC();
+  count.textContent = `${cells.length}/${HC_MAX}`;
+  panel.classList.toggle('hidden', cells.length === 0);
+
+  grid.innerHTML = '';
+  let idx = 0;
+  HC_ROWS.forEach((n, rowIdx) => {
+    const row = document.createElement('div');
+    row.className = 'hc-row' + (rowIdx % 2 === 1 ? ' offset' : '');
+    for (let c = 0; c < n; c++) {
+      const hex = document.createElement('div');
+      if (idx < cells.length) {
+        const w = cells[idx];
+        hex.className = 'hex filled';
+        hex.innerHTML = `<span class="hex-word">${w.word}</span>`;
+        hex.addEventListener('click', () => openHexCard(w));
+      } else {
+        hex.className = 'hex';
+        hex.innerHTML = '<div class="hex-empty-inner"></div>';
+      }
+      row.appendChild(hex);
+      idx++;
+    }
+    grid.appendChild(row);
+  });
+}
+
+function addToHoneycomb(word) {
+  const cells = _getHC();
+  if (cells.length >= HC_MAX) return; // full
+  if (cells.find(c => c.word === word.word)) return; // duplicate
+
+  cells.push({ word: word.word, tr: word.tr || '', pos: word.pos || '' });
+  _saveHC(cells);
+
+  // Track totals for badges
+  const total = parseInt(localStorage.getItem('yds_hc_total') || '0') + 1;
+  localStorage.setItem('yds_hc_total', total);
+
+  renderHoneycomb();
+
+  // Mark last added hex with pop animation
+  const hexes = document.querySelectorAll('#hc-grid .hex.filled');
+  if (hexes.length) hexes[hexes.length - 1].classList.add('new-catch');
+
+  // Check if new bee badge earned
+  _checkBeeBadges();
+
+  if (cells.length >= HC_MAX) {
+    const completions = parseInt(localStorage.getItem('yds_hc_completions') || '0') + 1;
+    localStorage.setItem('yds_hc_completions', completions);
+    setTimeout(() => {
+      launchKonfeti();
+      showToast(`🍯 Petek doldu! ${completions}. tamamlama — muhteşem!`, 4000);
+      _checkBeeBadges();
+      setTimeout(() => { _saveHC([]); renderHoneycomb(); }, 6000);
+    }, 400);
+  }
+}
+
+function _checkBeeBadges() {
+  const beeBadgeIds = ['ari-ilk','ari-petek','ari-usta','ari-avc','ari-kovan'];
+  const already = JSON.parse(localStorage.getItem('yds_badges_earned') || '[]');
+  const defs = (typeof BADGE_DEFS !== 'undefined' ? BADGE_DEFS : []).filter(b => beeBadgeIds.includes(b.id));
+  const newlyEarned = defs.filter(b => {
+    if (already.includes(b.id)) return false;
+    try { return !!b.check(); } catch(e) { return false; }
+  });
+  if (newlyEarned.length) {
+    localStorage.setItem('yds_badges_earned', JSON.stringify([...new Set([...already, ...newlyEarned.map(b=>b.id)])]));
+    newlyEarned.forEach((b, i) => {
+      setTimeout(() => {
+        showToast(`${b.emoji} Yeni rozet: ${b.name}!`, 3500);
+        setBeeState('correct', 1200);
+      }, i * 1000);
+    });
+  }
+}
+
+function toggleHoneycomb() {
+  document.getElementById('honeycomb-panel').classList.toggle('collapsed');
+}
+
+function openHexCard(w) {
+  // Find full word data from VOCAB for the example sentence
+  const full = (typeof VOCAB !== 'undefined' ? VOCAB : []).find(v => v.word === w.word) || w;
+  document.getElementById('hex-card-word').textContent = w.word;
+  document.getElementById('hex-card-pos').textContent  = w.pos ? `(${w.pos})` : '';
+  document.getElementById('hex-card-tr').textContent   = w.tr  || '';
+  document.getElementById('hex-card-ex').textContent   = full.ex || '';
+  document.getElementById('hex-card').classList.add('show');
+  document.getElementById('hex-card-backdrop').classList.add('show');
+}
+function closeHexCard() {
+  document.getElementById('hex-card').classList.remove('show');
+  document.getElementById('hex-card-backdrop').classList.remove('show');
+}
+
+function _showCatchToast(word, x, y) {
+  const el = document.createElement('div');
+  el.className = 'bee-catch-pop';
+  el.innerHTML = `<strong>${word.word}</strong> <em>${word.pos || ''}</em><br>${word.tr || word.def || ''}`;
+  // Position above click point
+  el.style.left = Math.min(x - 110, window.innerWidth - 240) + 'px';
+  el.style.top  = Math.max(y - 90, 10) + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => {
+    el.style.transition = 'opacity .3s';
+    el.style.opacity = '0';
+    setTimeout(() => el.remove(), 350);
+  }, 2800);
+}
+
+// ── 1. CLICK: kelime balonları + stats (haftalık özet öncelikli) ──
+document.addEventListener('click', e => {
+  if (!e.target.closest('#bee') || _beeDragged) return;
+  if (_pendingWeekly) { _pendingWeekly = false; _showWeeklySummary(); return; }
+  setBeeState('correct', 900);
+  _showBeeBubble();
+});
+
+// ── 2. HOVER: locked task → uyku, modül açık → rehber ──
+document.addEventListener('mouseover', e => {
+  const item = e.target.closest('.daily-item.locked');
+  if (item && _beeCurrentState === 'idle') setBeeState('sleep');
+});
+document.addEventListener('mouseout', e => {
+  const item = e.target.closest('.daily-item.locked');
+  if (item && _beeCurrentState === 'sleep') setBeeState('idle', 0, true);
+});
+
+// ── 3. SÜRÜKLE & BIRAK ───────────────────────────────────
+let _beeDragging = false, _beeDragged = false;
+let _beeDragOX = 0, _beeDragOY = 0;
+
+document.getElementById('bee')?.addEventListener('mousedown', e => {
+  if (e.button !== 0) return;
+  _beeDragging = true; _beeDragged = false;
+  const r = document.getElementById('bee').getBoundingClientRect();
+  _beeDragOX = e.clientX - r.left;
+  _beeDragOY = e.clientY - r.top;
+  e.preventDefault();
+});
+document.addEventListener('mousemove', e => {
+  if (!_beeDragging) return;
+  _beeDragged = true;
+  const bee = document.getElementById('bee');
+  const hp  = document.getElementById('honeycomb-panel');
+  const x = Math.max(0, Math.min(window.innerWidth  - 70, e.clientX - _beeDragOX));
+  const y = Math.max(0, Math.min(window.innerHeight - 90, e.clientY - _beeDragOY));
+  bee.style.left = x+'px'; bee.style.top = y+'px';
+  bee.style.right = 'auto'; bee.style.bottom = 'auto';
+  if(hp){ hp.style.left=(x-160)+'px'; hp.style.top=(y-hp.offsetHeight-8)+'px'; hp.style.right='auto'; hp.style.bottom='auto'; }
+});
+document.addEventListener('mouseup', () => {
+  if (!_beeDragging) return;
+  _beeDragging = false;
+  if (_beeDragged) {
+    const bee = document.getElementById('bee');
+    localStorage.setItem('yds_bee_pos', JSON.stringify({ left:bee.style.left, top:bee.style.top }));
+  }
+  setTimeout(() => { _beeDragged = false; }, 50);
+});
+
+// ── 4. İNAKTİVİTE: 10dk hareketsizse uyku ──────────────
+function _resetActivity() {
+  if (_beeCurrentState === 'sleep' && _beePriority < 1) {
+    setBeeState('idle', 0, true);
+    showToast('🐝 Uyanıyorum! Hadi çalışalım!', 2000);
+  }
+  clearTimeout(_inactiveTimer);
+  _inactiveTimer = setTimeout(() => {
+    if (['idle','stressed'].includes(_beeCurrentState)) {
+      setBeeState('sleep');
+      showToast('🐝 Uyukladım... Bir şeye tıkla!', 2500);
+    }
+  }, 10 * 60 * 1000);
+}
+['click','keydown','mousemove','touchstart','scroll'].forEach(ev =>
+  document.addEventListener(ev, _resetActivity, { passive:true })
+);
+
+// ── 5. STREAK KORUYUCU: 21:00+ panik ──────────────────
+function _checkStreakGuardian() {
+  const hour   = new Date().getHours();
+  if (hour < 21) { setTimeout(_checkStreakGuardian, 5 * 60 * 1000); return; }
+  const streak = parseInt(localStorage.getItem('yds_streak') || '0');
+  if (!streak) return;
+  const coreDone = ['words','grammar','read','review'].filter(id => getDone()[id]).length;
+  if (coreDone >= 4) return;
+  setBeeState('panic', 0, true);
+  showToast(`🐝 ${4-coreDone} görev kaldı — seriniz gece yarısı sıfırlanır!`, 5000);
+  setTimeout(_checkStreakGuardian, 30 * 60 * 1000);
+}
+
+// ── 6. SINAV GERİ SAYIMI: yaklaştıkça stress ──────────
+function _updateBeeExamMood() {
+  const coreDone = ['words','grammar','read','review'].filter(id => getDone()[id]).length;
+  if (coreDone === 4) { setBeeState('dance', 4000, true); return; }
+
+  const examTs = localStorage.getItem('yds_exam_date');
+  if (examTs) {
+    const days = Math.ceil((parseInt(examTs) - Date.now()) / 86400000);
+    if (days > 0 && days <= 7 && _beeCurrentState === 'idle') {
+      setBeeState('stressed', 0, false);
+      return;
+    }
+  }
+  if (coreDone > 0 && _beeCurrentState === 'idle') setBeeState('idle');
+}
+
+// ── 7. HAFTALIK ÖZET: Pazartesi ilk tık ──────────────
+function _checkWeeklySummary() {
+  if (new Date().getDay() !== 1) return; // sadece Pazartesi
+  const wk = Math.floor(Date.now() / (7*86400000));
+  if (localStorage.getItem('yds_weekly_shown') === String(wk)) return;
+  localStorage.setItem('yds_weekly_shown', wk);
+  _pendingWeekly = true;
+  showToast('🐝 Haftanın özeti için bana tıkla!', 4000);
+}
+
+function _showWeeklySummary() {
+  const days = 7;
+  let tasksDone = 0, totalWords = 0;
+  for (let i = 1; i <= days; i++) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const data = JSON.parse(localStorage.getItem('yds_daily_' + d.toLocaleDateString('tr-TR')) || '{}');
+    tasksDone += Object.values(data).filter(v => v === true).length;
+  }
+  const weakMap = JSON.parse(localStorage.getItem('yds_weak_words') || '{}');
+  const weakCount = Object.values(weakMap).filter(v => v > 0).length;
+  const streak = localStorage.getItem('yds_streak') || '0';
+  const caught = localStorage.getItem('yds_hc_total') || '0';
+
+  openModal('🐝 Haftalık Özet', `
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="background:rgba(249,202,36,.1);border:1px solid rgba(249,202,36,.3);border-radius:12px;padding:14px;text-align:center">
+        <div style="font-size:32px;font-weight:900;color:var(--yellow)">${streak}</div>
+        <div style="font-size:12px;color:var(--muted)">gün serisi 🔥</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:24px;font-weight:800">${tasksDone}</div>
+          <div style="font-size:11px;color:var(--muted)">bu hafta tamamlanan görev</div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:24px;font-weight:800">${caught}</div>
+          <div style="font-size:11px;color:var(--muted)">toplam kelime yakalandı 🐝</div>
+        </div>
+      </div>
+      ${weakCount > 0
+        ? `<div style="background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:12px;font-size:13px;color:var(--red)">⚠️ <strong>${weakCount}</strong> zayıf kelime var — tekrar modülünü çalıştır!</div>`
+        : `<div style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:10px;padding:12px;font-size:13px;color:var(--green)">✅ Zayıf kelime yok — harika gidiyorsun!</div>`
+      }
+    </div>
+  `, true);
+  setBeeState('dance', 3000, true);
+}
+
+// ── 8. MİNİ QUIZ: günde 5 hak ─────────────────────────
+const _BQ_KEY = 'yds_bq_' + new Date().toLocaleDateString('tr-TR');
+function _beeRunMiniQuiz() {
+  const used = parseInt(localStorage.getItem(_BQ_KEY) || '0');
+  if (used >= 5) { showToast('🐝 Bugünlük 5 sorumu bitirdim! Yarın sor.', 2000); return true; }
+  if (typeof VOCAB === 'undefined' || !VOCAB.length) return false;
+
+  const weakMap = JSON.parse(localStorage.getItem('yds_weak_words') || '{}');
+  const weak = VOCAB.filter(w => (weakMap[w.word] || 0) > 0);
+  const pool = weak.length ? weak : VOCAB;
+  const w = pool[Math.floor(Math.random() * pool.length)];
+  const distractors = VOCAB.filter(v => v.word !== w.word).sort(() => Math.random()-.5).slice(0,3).map(v => v.tr);
+  const opts = [...distractors, w.tr].sort(() => Math.random()-.5);
+  const ans  = opts.indexOf(w.tr);
+
+  localStorage.setItem(_BQ_KEY, used + 1);
+  _beeQuizOpen = true;
+
+  openModal(`🐝 Hızlı Soru (${used+1}/5)`,
+    `<div style="margin-bottom:16px;font-size:17px;font-weight:700">"<em>${w.word}</em>" ne demek?</div>
+     <div style="display:flex;flex-direction:column;gap:8px">
+       ${opts.map((o,i) => `
+         <button class="mq-opt" onclick="beeMiniAns(${i},${ans},'${w.word}')" style="text-align:left;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer;font-size:14px">${o}</button>
+       `).join('')}
+     </div>`, true);
+  return true;
+}
+
+window.beeMiniAns = function(i, ans, word) {
+  const correct = i === ans;
+  document.querySelectorAll('.mq-opt')[i].style.background = correct ? 'rgba(52,211,153,.2)' : 'rgba(248,113,113,.2)';
+  if (!correct) document.querySelectorAll('.mq-opt')[ans].style.background = 'rgba(52,211,153,.2)';
+  document.querySelectorAll('.mq-opt').forEach(b => b.disabled = true);
+  setBeeState(correct ? 'correct' : 'wrong', 1200);
+  trackWordResult(word, correct);
+  setTimeout(() => { closeModal(); _beeQuizOpen = false; }, 1200);
+};
+
+// ── 8b. MODÜL REHBERİ: modül açıkken ipucu ──────────
+const _MOD_TIPS = {
+  vocab:   '💡 Kelimeyi önce bağlamdan tahmin et, sonra karta bak.',
+  grammar: '💡 Özne-yüklem uyumu YDS\'nin en sık tuzağı!',
+  reading: '💡 Önce soruları oku, sonra metne dön — zaman kazandırır.',
+  review:  '💡 Zayıf kelimeleri tekrar gör — skor düştükçe öncelik artar.',
+  deneme:  '💡 İlk 10 dakika: sadece emin olduklarını işaretle.',
+};
+let _currentModule = null;
+function _setBeeModule(mod) {
+  _currentModule = mod;
+  if (mod && _MOD_TIPS[mod]) showToast(`🐝 ${_MOD_TIPS[mod]}`, 4000);
+}
+
+// ── Bee positioning: fly left when right panel opens ──
+function beeMoveTo(side) {
+  const bee    = document.getElementById('bee');
+  const bubble = document.getElementById('bee-bubble');
+  const panel  = document.getElementById('honeycomb-panel');
+  if (!bee) return;
+  if (side === 'left') {
+    bee.classList.add('fly-left');
+    if (bubble) bubble.classList.add('fly-left');
+    if (panel)  panel.classList.add('fly-left');
+  } else {
+    bee.classList.remove('fly-left');
+    if (bubble) bubble.classList.remove('fly-left');
+    if (panel)  panel.classList.remove('fly-left');
+  }
+}
+
+// ═══════════════════ REVIEW POPUP ═══════════════════
+let _rvRating = 0;
+
+function _initReviewStars() {
+  document.querySelectorAll('.rv-star').forEach(star => {
+    star.addEventListener('click', () => {
+      _rvRating = parseInt(star.dataset.v);
+      document.querySelectorAll('.rv-star').forEach((s, i) => {
+        s.classList.toggle('active', i < _rvRating);
+      });
+      document.getElementById('rv-submit').disabled = false;
+    });
+  });
+}
+
+function showReview() {
+  document.getElementById('review-backdrop').classList.add('show');
+  document.getElementById('review-popup').classList.add('show');
+}
+
+function closeReview(submitted) {
+  document.getElementById('review-backdrop').classList.remove('show');
+  document.getElementById('review-popup').classList.remove('show');
+  // Don't show again for 60 days
+  localStorage.setItem('yds_review_shown', Date.now() + (submitted ? 999 : 60) * 86400000);
+}
+
+async function submitReview() {
+  if (!_rvRating) return;
+  const btn = document.getElementById('rv-submit');
+  btn.disabled = true;
+  btn.textContent = 'Gönderiliyor...';
+
+  const comment = document.getElementById('review-comment').value.trim();
+  const userId  = supa ? (await supa.auth.getUser()).data?.user?.id : null;
+
+  if (supa) {
+    const { error } = await supa.from('reviews').insert({
+      rating: _rvRating,
+      comment: comment || null,
+      user_id: userId || null,
+      display_name: null
+    });
+    if (error) console.warn('[YDS] Review save error:', error);
+  }
+
+  closeReview(true);
+  setBeeState('correct', 1500);
+  showToast('🐝 Teşekkürler! Seni seviyorum!', 3000);
+}
+
+function _checkReviewTrigger() {
+  // Already shown recently?
+  const shown = parseInt(localStorage.getItem('yds_review_shown') || '0');
+  if (shown > Date.now()) return;
+
+  // Has user completed at least 1 task ever?
+  const hasHistory = Object.keys(localStorage).some(k => k.startsWith('yds_daily_'));
+  if (!hasHistory) return;
+
+  // First visit recorded?
+  if (!localStorage.getItem('yds_first_visit')) {
+    localStorage.setItem('yds_first_visit', Date.now());
+    return;
+  }
+
+  // At least 1 day since first visit
+  const firstVisit = parseInt(localStorage.getItem('yds_first_visit'));
+  if (Date.now() - firstVisit < 86400000) return;
+
+  // At least 1 task done today or streak > 0
+  const streak = parseInt(localStorage.getItem('yds_streak') || '0');
+  const todayDone = Object.values(getDone()).some(v => v === true);
+  if (!streak && !todayDone) return;
+
+  // Show after 10 minutes on site
+  setTimeout(showReview, 10 * 60 * 1000);
+}
+
+// Start bee on load
+window.addEventListener('load', () => {
+  setBeeState('idle');
+  renderHoneycomb();
+  _initReviewStars();
+  if (!localStorage.getItem('yds_first_visit')) {
+    localStorage.setItem('yds_first_visit', Date.now());
+  }
+  _checkReviewTrigger();
+
+  // Restore bee position
+  try {
+    const pos = JSON.parse(localStorage.getItem('yds_bee_pos') || 'null');
+    if (pos?.left && pos?.top) {
+      const bee = document.getElementById('bee');
+      const hp  = document.getElementById('honeycomb-panel');
+      bee.style.left = pos.left; bee.style.top = pos.top;
+      bee.style.right = 'auto'; bee.style.bottom = 'auto';
+      const x = parseInt(pos.left);
+      if (hp) { hp.style.left = (x-160)+'px'; hp.style.top = pos.top; hp.style.right='auto'; hp.style.bottom='auto'; }
+    }
+  } catch(e) {}
+
+  // Start activity tracking
+  _resetActivity();
+
+  // Streak guardian check
+  setTimeout(_checkStreakGuardian, 5000);
+
+  // Weekly summary check
+  setTimeout(_checkWeeklySummary, 3000);
+
+  // Exam mood
+  setTimeout(_updateBeeExamMood, 1000);
+
+  if (new URLSearchParams(location.search).get('test') === '1') _runTests();
+});
+
+// ═══════════════════ MONKEY TESTER ═══════════════════
+async function _runTests() {
+  // Catch all JS errors
+  const errors = [];
+  const log    = [];
+  const orig   = window.onerror;
+  window.onerror = (msg, src, line, col, err) => {
+    errors.push(`${msg} (${src?.split('/').pop()}:${line})`);
+    if (orig) orig(msg, src, line, col, err);
+    return true;
+  };
+  window.addEventListener('unhandledrejection', e => {
+    errors.push(`Promise rejected: ${e.reason}`);
+  });
+
+  const wait  = ms => new Promise(r => setTimeout(r, ms));
+  const click = sel => { const el = document.querySelector(sel); if (el) el.click(); return !!el; };
+  const pass  = txt => log.push({ ok: true,  txt });
+  const fail  = txt => log.push({ ok: false, txt });
+
+  // ── Helpers ──────────────────────────────────────────
+  function pickOpt() {
+    // Click first available quiz option
+    const opts = [...document.querySelectorAll('.mq-opt:not(.correct):not(.wrong):not([disabled])')];
+    if (opts.length) { opts[0].click(); return true; }
+    return false;
+  }
+  async function drainQuiz(maxQ = 20) {
+    for (let i = 0; i < maxQ; i++) {
+      await wait(350);
+      if (!pickOpt()) break;
+    }
+    await wait(600);
+  }
+
+  // ── 1. PLAN SCREEN ───────────────────────────────────
+  try {
+    // Navigate to plan (bypass intro by setting level)
+    if (!localStorage.getItem('yds_level')) {
+      localStorage.setItem('yds_level', 'B1');
+      localStorage.setItem('yds_pct', '50');
+    }
+    showPlan('B1', 50);
+    await wait(500);
+    pass('Plan ekranı açıldı');
+  } catch(e) { fail('Plan ekranı: ' + e.message); }
+
+  // ── 2. VOCAB MODULE ──────────────────────────────────
+  try {
+    if (typeof openVocab === 'function') openVocab();
+    else click('[onclick*="openVocab"]') || click('[onclick*="Vocab"]');
+    await wait(600);
+    // Click through flashcards
+    for (let i = 0; i < 22; i++) {
+      const next = document.querySelector('.vocab-next, [onclick*="nextCard"], [onclick*="vocabNext"], .btn-primary');
+      if (next) next.click();
+      await wait(180);
+    }
+    await drainQuiz(18);
+    pass('Kelime modülü tamamlandı');
+  } catch(e) { fail('Kelime modülü: ' + e.message); }
+
+  // Close any open modal
+  click('#modal-close, .modal-close, [onclick*="closeModal"]');
+  await wait(400);
+
+  // ── 3. GRAMMAR MODULE ────────────────────────────────
+  try {
+    if (typeof openGrammar === 'function') openGrammar();
+    else click('[onclick*="openGrammar"]') || click('[onclick*="Grammar"]');
+    await wait(600);
+    await drainQuiz(12);
+    pass('Gramer modülü tamamlandı');
+  } catch(e) { fail('Gramer modülü: ' + e.message); }
+
+  click('#modal-close, .modal-close, [onclick*="closeModal"]');
+  await wait(400);
+
+  // ── 4. READING MODULE ────────────────────────────────
+  try {
+    if (typeof openReading === 'function') openReading();
+    else click('[onclick*="openReading"]') || click('[onclick*="Reading"]');
+    await wait(600);
+    await drainQuiz(10);
+    // Try next passage
+    const nextBtn = document.querySelector('[onclick*="nextPassage"], [onclick*="nextReading"]');
+    if (nextBtn) { nextBtn.click(); await wait(400); await drainQuiz(10); }
+    pass('Okuma modülü tamamlandı');
+  } catch(e) { fail('Okuma modülü: ' + e.message); }
+
+  click('#modal-close, .modal-close, [onclick*="closeModal"]');
+  await wait(400);
+
+  // ── 5. REVIEW MODULE ─────────────────────────────────
+  try {
+    if (typeof openReview === 'function') openReview();
+    else click('[onclick*="openReview"]') || click('[onclick*="Review"]');
+    await wait(600);
+    await drainQuiz(10);
+    pass('Tekrar modülü tamamlandı');
+  } catch(e) { fail('Tekrar modülü: ' + e.message); }
+
+  click('#modal-close, .modal-close, [onclick*="closeModal"]');
+  await wait(400);
+
+  // ── 6. DENEME MODULE ─────────────────────────────────
+  try {
+    if (typeof openDeneme === 'function') openDeneme();
+    await wait(600);
+    // Click start if there's a start screen
+    click('[onclick*="startDeneme"], .btn-primary');
+    await wait(400);
+    // Answer 5 questions then quit
+    for (let i = 0; i < 5; i++) {
+      pickOpt(); await wait(350);
+    }
+    // Close
+    click('[onclick*="closeDeneme"], #modal-close, .modal-close');
+    pass('Deneme modülü açıldı ve test edildi');
+  } catch(e) { fail('Deneme modülü: ' + e.message); }
+
+  await wait(400);
+
+  // ── 7. DICTIONARY ────────────────────────────────────
+  try {
+    if (typeof toggleDict === 'function') toggleDict();
+    await wait(500);
+    const inp = document.getElementById('dict-input');
+    if (inp) { inp.value = 'autonomous'; inp.dispatchEvent(new Event('input')); }
+    await wait(1200);
+    if (typeof toggleDict === 'function') toggleDict();
+    pass('Sözlük açıldı/kapandı');
+  } catch(e) { fail('Sözlük: ' + e.message); }
+
+  // ── 8. BEE + HONEYCOMB ───────────────────────────────
+  try {
+    setBeeState('correct', 800); await wait(300);
+    setBeeState('wrong',   800); await wait(300);
+    setBeeState('sleep');        await wait(300);
+    setBeeState('idle');
+    pass('Arı durumları çalışıyor');
+  } catch(e) { fail('Arı: ' + e.message); }
+
+  // ── 9. REVIEW POPUP ──────────────────────────────────
+  try {
+    showReview(); await wait(400);
+    document.querySelectorAll('.rv-star')[3]?.click();
+    await wait(200);
+    closeReview(false);
+    pass('Yorum popup\'ı çalışıyor');
+  } catch(e) { fail('Yorum popup: ' + e.message); }
+
+  // ── 10. localStorage ─────────────────────────────────
+  try {
+    const keys = ['yds_level','yds_weak_words','yds_grammar_topics'];
+    const missing = keys.filter(k => localStorage.getItem(k) === null);
+    if (missing.length) fail('Eksik localStorage: ' + missing.join(', '));
+    else pass('localStorage anahtarları mevcut');
+  } catch(e) { fail('localStorage: ' + e.message); }
+
+  // Restore onerror
+  window.onerror = orig;
+
+  // ── REPORT ───────────────────────────────────────────
+  await wait(500);
+  _showTestReport(log, errors);
+}
+
+function _showTestReport(log, errors) {
+  const passed = log.filter(l => l.ok).length;
+  const failed = log.filter(l => !l.ok).length;
+  const panel = document.createElement('div');
+  panel.style.cssText = `
+    position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+    z-index:99999;width:min(420px,94vw);max-height:80vh;overflow-y:auto;
+    background:#0d1117;border:2px solid ${errors.length || failed ? '#f87171' : '#34d399'};
+    border-radius:16px;padding:20px;font-family:monospace;font-size:13px;color:#e2e8f0;
+    box-shadow:0 24px 80px rgba(0,0,0,.8);
+  `;
+  panel.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <b style="font-size:15px">🧪 Test Raporu</b>
+      <span style="color:${failed||errors.length?'#f87171':'#34d399'};font-weight:700">
+        ${passed} geçti · ${failed} başarısız · ${errors.length} JS hatası
+      </span>
+    </div>
+    ${log.map(l => `
+      <div style="padding:5px 0;border-bottom:1px solid #21262d;display:flex;gap:8px">
+        <span>${l.ok ? '✅' : '❌'}</span>
+        <span style="color:${l.ok?'#e2e8f0':'#f87171'}">${l.txt}</span>
+      </div>`).join('')}
+    ${errors.length ? `
+      <div style="margin-top:14px;color:#f87171;font-weight:700">⚠️ JS Hataları:</div>
+      ${errors.map(e => `<div style="padding:4px 0;color:#f87171;font-size:11px;word-break:break-all">• ${e}</div>`).join('')}
+    ` : ''}
+    <button onclick="this.parentElement.remove()" style="margin-top:14px;width:100%;padding:10px;
+      background:#21262d;border:1px solid #30363d;border-radius:8px;
+      color:#e2e8f0;cursor:pointer;font-family:monospace">Kapat</button>
+  `;
+  document.body.appendChild(panel);
+}
 </script>
 
 <!-- PWA install banner (Android Chrome) -->
@@ -4277,6 +5481,150 @@ function endTour() {
 </div>
 <div class="tour-highlight-ring" id="tour-ring" style="display:none"></div>
 <div id="toast"></div>
+
+<!-- ═══════════════════ HONEYCOMB PANEL ═══════════════════ -->
+<div id="honeycomb-panel" class="hidden">
+  <div class="hc-title" onclick="toggleHoneycomb()">🍯 Petek <b id="hc-count">0/20</b> <span class="hc-chevron">▼</span></div>
+  <div class="hc-grid" id="hc-grid"></div>
+</div>
+<!-- ═══════════════════ REVIEW POPUP ═══════════════════ -->
+<div id="review-backdrop"></div>
+<div id="review-popup">
+  <!-- Needy bee — pleading pose -->
+  <svg id="review-bee" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
+    <ellipse id="rv-wing-l" cx="16" cy="38" rx="15" ry="7" fill="rgba(210,235,255,.78)" stroke="rgba(160,200,255,.5)" stroke-width=".8"/>
+    <ellipse id="rv-wing-r" cx="48" cy="38" rx="15" ry="7" fill="rgba(210,235,255,.78)" stroke="rgba(160,200,255,.5)" stroke-width=".8"/>
+    <g>
+      <ellipse cx="32" cy="60" rx="13" ry="17" fill="#f9ca24"/>
+      <rect x="19.5" y="55" width="25" height="5.5" rx="2.8" fill="#1a1208" opacity=".65"/>
+      <rect x="19.5" y="64" width="25" height="5.5" rx="2.8" fill="#1a1208" opacity=".65"/>
+      <ellipse cx="32" cy="77" rx="3.5" ry="2" fill="#c49010"/>
+      <ellipse cx="32" cy="40" rx="10" ry="8.5" fill="#e8b800"/>
+      <circle cx="32" cy="24" r="12" fill="#f9ca24"/>
+      <!-- Big pleading eyes -->
+      <circle cx="27" cy="22" r="4" fill="#1a1208"/>
+      <circle cx="37" cy="22" r="4" fill="#1a1208"/>
+      <circle cx="28.5" cy="20.5" r="1.5" fill="white"/>
+      <circle cx="38.5" cy="20.5" r="1.5" fill="white"/>
+      <!-- Hopeful smile -->
+      <path d="M27 29 Q32 34 37 29" stroke="#1a1208" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <!-- Prayer hands (two small ovals in front) -->
+      <ellipse cx="24" cy="46" rx="4" ry="2.5" fill="#f9ca24" stroke="#e8b800" stroke-width=".8" transform="rotate(-20,24,46)"/>
+      <ellipse cx="40" cy="46" rx="4" ry="2.5" fill="#f9ca24" stroke="#e8b800" stroke-width=".8" transform="rotate(20,40,46)"/>
+      <!-- Antennae -->
+      <line x1="28" y1="13" x2="21" y2="4"  stroke="#1a1208" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="36" y1="13" x2="43" y2="4"  stroke="#1a1208" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="20" cy="3" r="2.5" fill="#f9ca24" stroke="#1a1208" stroke-width="1"/>
+      <circle cx="44" cy="3" r="2.5" fill="#f9ca24" stroke="#1a1208" stroke-width="1"/>
+      <!-- Sweat drop -->
+      <ellipse cx="47" cy="14" rx="2" ry="3" fill="rgba(100,180,255,.7)" transform="rotate(15,47,14)"/>
+    </g>
+  </svg>
+
+  <h3>Seni seviyorum! 🐝</h3>
+  <p>Bu uygulamayı nasıl buldun?<br>Bir yorum bırakırsan çok mutlu olurum!</p>
+
+  <div class="rv-stars">
+    <span class="rv-star" data-v="1">⭐</span>
+    <span class="rv-star" data-v="2">⭐</span>
+    <span class="rv-star" data-v="3">⭐</span>
+    <span class="rv-star" data-v="4">⭐</span>
+    <span class="rv-star" data-v="5">⭐</span>
+  </div>
+
+  <textarea id="review-comment" placeholder="Ne düşünüyorsun? (isteğe bağlı)"></textarea>
+
+  <div class="rv-btns">
+    <button id="rv-skip" onclick="closeReview(false)">Sonra</button>
+    <button id="rv-submit" onclick="submitReview()" disabled>Gönder 🍯</button>
+  </div>
+</div>
+
+<div id="hex-card-backdrop" onclick="closeHexCard()"></div>
+<div id="hex-card">
+  <button id="hex-card-close" onclick="closeHexCard()">×</button>
+  <div id="hex-card-word"></div>
+  <div id="hex-card-pos"></div>
+  <div id="hex-card-tr"></div>
+  <div id="hex-card-ex"></div>
+</div>
+
+<!-- ═══════════════════ BEE MASCOT ═══════════════════ -->
+<div id="bee-bubble"></div>
+<div id="bee" class="idle">
+  <svg width="64" height="80" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
+    <!-- Wings (behind body) -->
+    <ellipse id="wing-l" cx="16" cy="38" rx="15" ry="7"
+      fill="rgba(210,235,255,.78)" stroke="rgba(160,200,255,.5)" stroke-width=".8"/>
+    <ellipse id="wing-r" cx="48" cy="38" rx="15" ry="7"
+      fill="rgba(210,235,255,.78)" stroke="rgba(160,200,255,.5)" stroke-width=".8"/>
+    <!-- Body group -->
+    <g id="bee-body-g">
+      <!-- Abdomen -->
+      <ellipse cx="32" cy="60" rx="13" ry="17" fill="#f9ca24"/>
+      <!-- Stripes -->
+      <rect x="19.5" y="55" width="25" height="5.5" rx="2.8" fill="#1a1208" opacity=".65"/>
+      <rect x="19.5" y="64" width="25" height="5.5" rx="2.8" fill="#1a1208" opacity=".65"/>
+      <!-- Stinger -->
+      <ellipse cx="32" cy="77" rx="3.5" ry="2" fill="#c49010"/>
+      <!-- Thorax -->
+      <ellipse cx="32" cy="40" rx="10" ry="8.5" fill="#e8b800"/>
+      <!-- Head -->
+      <circle cx="32" cy="24" r="12" fill="#f9ca24"/>
+      <!-- Eyes normal -->
+      <g id="bee-eye-normal">
+        <circle cx="27" cy="22" r="3.2" fill="#1a1208"/>
+        <circle cx="37" cy="22" r="3.2" fill="#1a1208"/>
+        <circle cx="28" cy="21" r="1.1" fill="white"/>
+        <circle cx="38" cy="21" r="1.1" fill="white"/>
+      </g>
+      <!-- Eyes X (wrong) -->
+      <g id="bee-eye-x" display="none">
+        <line x1="24" y1="19" x2="30" y2="25" stroke="#1a1208" stroke-width="2" stroke-linecap="round"/>
+        <line x1="30" y1="19" x2="24" y2="25" stroke="#1a1208" stroke-width="2" stroke-linecap="round"/>
+        <line x1="34" y1="19" x2="40" y2="25" stroke="#1a1208" stroke-width="2" stroke-linecap="round"/>
+        <line x1="40" y1="19" x2="34" y2="25" stroke="#1a1208" stroke-width="2" stroke-linecap="round"/>
+      </g>
+      <!-- Eyes closed (sleep) -->
+      <g id="bee-eye-sleep" display="none">
+        <path d="M24 22 Q27 26 30 22" stroke="#1a1208" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M34 22 Q37 26 40 22" stroke="#1a1208" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+      <!-- Eyes excited (stars) -->
+      <g id="bee-eye-excited" display="none">
+        <text x="24" y="26" font-size="10" text-anchor="middle">★</text>
+        <text x="40" y="26" font-size="10" text-anchor="middle">★</text>
+      </g>
+      <!-- Eyes stressed (sweat) -->
+      <g id="bee-eye-stressed" display="none">
+        <circle cx="27" cy="22" r="3.5" fill="#1a1208"/>
+        <circle cx="37" cy="22" r="3.5" fill="#1a1208"/>
+        <circle cx="28" cy="21" r="1.2" fill="white"/>
+        <circle cx="38" cy="21" r="1.2" fill="white"/>
+        <ellipse cx="44" cy="17" rx="1.8" ry="2.8" fill="rgba(100,180,255,.75)" transform="rotate(15,44,17)"/>
+      </g>
+      <!-- Smile -->
+      <path id="bee-smile" d="M28 29 Q32 33 36 29" stroke="#1a1208" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- Big smile (excited) -->
+      <path id="bee-bigsmile" d="M26 28 Q32 35 38 28" stroke="#1a1208" stroke-width="2" fill="none" stroke-linecap="round" display="none"/>
+      <!-- Sad -->
+      <path id="bee-sad" d="M28 32 Q32 28 36 32" stroke="#1a1208" stroke-width="1.5" fill="none" stroke-linecap="round" display="none"/>
+      <!-- Wavy stressed mouth -->
+      <path id="bee-wavy" d="M27 30 Q29 28 31 30 Q33 32 35 30 Q37 28 38 30" stroke="#1a1208" stroke-width="1.5" fill="none" stroke-linecap="round" display="none"/>
+      <!-- Antennae -->
+      <line x1="28" y1="13" x2="21" y2="4"  stroke="#1a1208" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="36" y1="13" x2="43" y2="4"  stroke="#1a1208" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="20" cy="3"  r="2.5" fill="#f9ca24" stroke="#1a1208" stroke-width="1"/>
+      <circle cx="44" cy="3"  r="2.5" fill="#f9ca24" stroke="#1a1208" stroke-width="1"/>
+    </g>
+  </svg>
+  <!-- Zzz -->
+  <div id="bee-zzz">
+    <span style="--i:0">z</span>
+    <span style="--i:1">z</span>
+    <span style="--i:2">Z</span>
+  </div>
+</div>
 
 </body>
 </html>
