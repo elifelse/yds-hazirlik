@@ -688,6 +688,20 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .tnav-btn:hover{background:rgba(255,255,255,.07);color:var(--text)}
 .tnav-btn.primary{background:var(--blue);color:#0d1117;margin-left:8px}
 .tnav-btn.primary:hover{opacity:.85}
+.tnav-dropdown{position:relative}
+.tnav-dropdown-menu{
+  display:none;position:absolute;top:calc(100% + 6px);left:0;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:6px;z-index:200;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+}
+.tnav-dropdown:hover .tnav-dropdown-menu,
+.tnav-dropdown-menu:hover{display:flex;flex-direction:column}
+.tnav-dropdown-menu a{
+  display:block;padding:9px 12px;border-radius:7px;font-size:13px;font-weight:500;
+  color:var(--muted);text-decoration:none;transition:.12s;white-space:nowrap;
+}
+.tnav-dropdown-menu a:hover{background:rgba(129,140,248,.1);color:var(--text)}
 
 @media(max-width:640px){
   #top-nav{display:none !important}
@@ -1226,6 +1240,19 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
     <button class="tnav-btn" onclick="toggleDict()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Sözlük</button>
     <button class="tnav-btn" onclick="toggleGrammar()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 9.5-9.5z"/></svg>Gramer</button>
     <button class="tnav-btn" onclick="goTo('plan-screen')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Ana Sayfa</button>
+    <div class="tnav-dropdown">
+      <button class="tnav-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Rehber ▾</button>
+      <div class="tnav-dropdown-menu">
+        <a href="/yds-sinav-hakkinda.html">YDS Sınavı Hakkında</a>
+        <a href="/yds-kelime-listesi.html">YDS Kelime Listesi</a>
+        <a href="/yds-gramer-konulari.html">Gramer Konuları</a>
+        <a href="/yds-okuma-teknikleri.html">Okuma Teknikleri</a>
+        <a href="/yds-30-gunluk-plan.html">30 Günlük Plan</a>
+        <a href="/yds-zaman-yonetimi.html">Zaman Yönetimi</a>
+        <a href="/yds-ielts-fark.html">YDS vs IELTS</a>
+        <a href="/yds-relative-clauses.html">Relative Clauses</a>
+      </div>
+    </div>
     <button class="tnav-btn" onclick="openSettingsModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Ayarlar</button>
   </div>
   <!-- Right side: theme dots + user chip -->
