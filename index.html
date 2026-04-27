@@ -1716,6 +1716,9 @@ async function initAuth(){
     }
     if(!session && currentUser){
       currentUser = null;
+      document.getElementById('bee').style.display = 'none';
+      document.getElementById('bee-bubble').style.display = 'none';
+      document.getElementById('honeycomb-panel').style.display = 'none';
     }
   });
 }
@@ -1745,6 +1748,10 @@ function enterApp(){
   document.getElementById('bottom-nav').style.display = 'flex';
   document.getElementById('top-nav').classList.add('active');
   document.getElementById('theme-picker-fixed').classList.add('visible');
+  // Giriş yapılmamışsa arı ve petek gizle
+  document.getElementById('bee').style.display = currentUser ? '' : 'none';
+  document.getElementById('bee-bubble').style.display = currentUser ? '' : 'none';
+  document.getElementById('honeycomb-panel').style.display = currentUser ? '' : 'none';
   renderLvlQ();
 }
 
@@ -1856,6 +1863,9 @@ async function authSignOut(){
   currentUser = null;
   document.getElementById('user-chip').style.display = 'none';
   document.getElementById('theme-picker-fixed').classList.remove('visible');
+  document.getElementById('bee').style.display = 'none';
+  document.getElementById('bee-bubble').style.display = 'none';
+  document.getElementById('honeycomb-panel').style.display = 'none';
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('auth-screen').classList.add('active');
 }
@@ -2851,6 +2861,10 @@ function showPlan(level,pct){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('plan-screen').classList.add('active');
   window.scrollTo(0,0);
+  // Plan ekranında arı ve petek göster
+  document.getElementById('bee').style.display = '';
+  document.getElementById('bee-bubble').style.display = '';
+  document.getElementById('honeycomb-panel').style.display = '';
 
   // Plan ekranını ilk kez görenler için kısa tur
   setTimeout(startPlanTour, 500);
