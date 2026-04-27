@@ -3000,7 +3000,10 @@ function showPlan(level,pct){
     : '';
 
   document.getElementById('plan-inner').innerHTML=`
-    <h2 style="margin-bottom:4px">Senin Planın</h2>
+    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">
+      <h2 style="margin:0">Senin Planın</h2>
+      <button class="btn btn-outline btn-sm" onclick="goTo('intro')" style="font-size:12px;padding:2px 10px;opacity:.7">✏️ Değiştir</button>
+    </div>
     <p style="margin-bottom:20px">${level} · Sınava <strong style="color:var(--yellow)">${d} gün</strong> kaldı · Günlük hedef: <strong style="color:var(--green)">${mins} dakika</strong></p>
     ${phaseHTML}
     <div class="daily-box">
