@@ -4792,16 +4792,25 @@ function _beeSparkle() {
 
 // ── Bee bubble (click to show stats) ──
 let _beeBubbleTimer = null;
-function _showBeeBubble() {
+function _showBeeBubble(customMsg, customDur) {
   const bubble = document.getElementById('bee-bubble');
   if (!bubble) return;
+  const isLeft = document.getElementById('bee').classList.contains('fly-left');
+
+  if (customMsg) {
+    bubble.innerHTML = customMsg;
+    bubble.className = 'show' + (isLeft ? ' fly-left' : '');
+    if (_beeBubbleTimer) clearTimeout(_beeBubbleTimer);
+    _beeBubbleTimer = setTimeout(() => { bubble.className = bubble.className.replace('show','').trim(); }, customDur || 3000);
+    return;
+  }
+
   const done   = getDone();
   const core   = ['words','grammar','read','review'];
   const doneCount = core.filter(id => done[id]).length;
   const streak = parseInt(localStorage.getItem('yds_streak') || '0');
   const weakMap = JSON.parse(localStorage.getItem('yds_weak_words') || '{}');
   const weakCount = Object.values(weakMap).filter(v => v > 0).length;
-  const isLeft = document.getElementById('bee').classList.contains('fly-left');
 
   bubble.innerHTML = `
     📅 Bugün: <b>${doneCount}/4</b> görev<br>
@@ -4947,6 +4956,12 @@ function _showCatchToast(word, x, y) {
 // ── 1. CLICK: kelime balonları + stats (haftalık özet öncelikli) ──
 document.addEventListener('click', e => {
   if (!e.target.closest('#bee') || _beeDragged) return;
+  // Giriş yapılmamışsa sadece teşvik mesajı göster
+  if (!currentUser) {
+    _showBeeBubble('Giriş yap ve çalışmaya başla! 🍯', 3500);
+    setBeeState('dance', 1200);
+    return;
+  }
   if (_pendingWeekly) { _pendingWeekly = false; _showWeeklySummary(); return; }
   setBeeState('correct', 900);
   _showBeeBubble();
