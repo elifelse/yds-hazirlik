@@ -1743,16 +1743,23 @@ function enterApp(){
     chip.style.display = 'flex';
   }
 
-  // Intro ekranını ve navigasyonu göster
-  document.getElementById('intro').classList.add('active');
+  // Navigasyonu göster
   document.getElementById('bottom-nav').style.display = 'flex';
   document.getElementById('top-nav').classList.add('active');
   document.getElementById('theme-picker-fixed').classList.add('visible');
-  // Giriş yapılmamışsa arı ve petek gizle
-  document.getElementById('bee').style.display = currentUser ? '' : 'none';
-  document.getElementById('bee-bubble').style.display = currentUser ? '' : 'none';
-  document.getElementById('honeycomb-panel').style.display = currentUser ? '' : 'none';
-  renderLvlQ();
+
+  // Daha önce seviye testi yapıldıysa direkt plana git; yoksa quiz göster
+  const _savedLevel = localStorage.getItem('yds_level');
+  if(_savedLevel){
+    const _savedPct = parseInt(localStorage.getItem('yds_pct') || '50');
+    showPlan(_savedLevel, _savedPct);
+  } else {
+    document.getElementById('bee').style.display = currentUser ? '' : 'none';
+    document.getElementById('bee-bubble').style.display = currentUser ? '' : 'none';
+    document.getElementById('honeycomb-panel').style.display = currentUser ? '' : 'none';
+    document.getElementById('intro').classList.add('active');
+    renderLvlQ();
+  }
 }
 
 async function authGoogle(){
