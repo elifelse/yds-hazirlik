@@ -130,6 +130,13 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 
 /* ── RESULT ── */
 .level-badge{font-size:48px;font-weight:900;text-align:center;margin:16px 0}
+.commit-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
+.commit-q{font-size:14px;font-weight:600;margin:0 0 10px}
+.commit-chips{display:flex;gap:8px;flex-wrap:wrap}
+.commit-chip{background:transparent;border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:13px;cursor:pointer;color:var(--text);transition:.15s}
+.commit-chip:hover{border-color:var(--accent);color:var(--accent)}
+.commit-chip.selected{background:var(--accent);border-color:var(--accent);color:#fff}
+.commit-hint{font-size:13px;color:var(--green);margin:12px 0 0;min-height:20px}
 .stat-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
 .stat-row:last-child{border:none}
 .stat-val{font-weight:700}
@@ -2486,9 +2493,17 @@ const DAILY_KEY = 'yds_daily_' + TODAY;
 
 function getDone(){ return JSON.parse(localStorage.getItem(DAILY_KEY)||'{}') }
 function setDone(obj){ localStorage.setItem(DAILY_KEY, JSON.stringify(obj)) }
+const _completeNudges = {
+  words:   ['Kelimeler tamam! Tekrar günü gelene kadar aklında kalacak. 🧠','Harika! Bu kelimeler sınav günü seni kurtarabilir. 💪','Bugünkü kelimeler bitti. Yarın burada ol! 🔥'],
+  grammar: ['Gramer bitti! Bu soruların mantığını kavradın. ✅','10 soru bitti — her doğru bir puan demek. 🎯','Gramer alışkanlığı yapıyor. Devam! 💡'],
+  read:    ['Okuma tamam! Her paragraf hız kazandırıyor. 📖','YDS\'nin en puanlı kısmını tamamladın. Süper! ⭐','Okuma parçası bitti. Yarın bir tane daha! 📄'],
+  review:['Tekrar tamam — kalıcı belleğe geçti. 🔁','Gözden geçirme en etkili öğrenme yolu. Bravo! 🌟','Bugünkü kelimeler artık çok daha sağlam. ✨'],
+};
 function markDone(taskId){
   const d = getDone(); d[taskId] = true; setDone(d);
   checkAllDone();
+  const msgs = _completeNudges[taskId];
+  if(msgs) showToast(msgs[Math.floor(Math.random()*msgs.length)], 3500);
   const level = localStorage.getItem('yds_level') || 'B1';
   const pct = parseInt(localStorage.getItem('yds_pct') || '50');
   showPlan(level, pct);
@@ -2748,6 +2763,12 @@ function closeModal(){
   document.getElementById('modal-overlay').classList.remove('open');
 }
 let pendingConfirmAction = null;
+const _exitNudges = [
+  'Bırakma şimdi! Her gün küçük bir adım büyük fark yaratır. 💪',
+  'Yarın değil, şimdi! Rutini korumak zor ama değer. 🔥',
+  'Seriniz kırılabilir — ama yarın mutlaka geri dön! ⭐',
+  'Bu alışkanlık seni sınava hazırlıyor. Yarın burada ol. 📚',
+];
 function confirmYes(){
   document.getElementById('confirm-overlay').classList.remove('open');
   if(pendingConfirmAction){
@@ -2757,6 +2778,7 @@ function confirmYes(){
   } else {
     exerciseActive = null;
     document.getElementById('modal-overlay').classList.remove('open');
+    setTimeout(()=>showToast(_exitNudges[Math.floor(Math.random()*_exitNudges.length)], 4000), 300);
   }
 }
 function confirmNo(){
@@ -2866,6 +2888,25 @@ function lvlChoose(i){
   setTimeout(()=>{ lvlCurrent++; lvlCurrent<LEVEL_QS.length?renderLvlQ():showResult(); },900);
 }
 
+function pickCommit(type, n, el){
+  localStorage.setItem('yds_commit_'+type, n);
+  el.closest('.commit-chips').querySelectorAll('.commit-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  const w = parseInt(localStorage.getItem('yds_commit_words')||'0');
+  const g = parseInt(localStorage.getItem('yds_commit_grammar')||'0');
+  if(w && g){
+    const btn = document.getElementById('show-plan-btn');
+    btn.disabled = false; btn.style.opacity='1'; btn.style.cursor='';
+    const msgs = {
+      5: 'Az ama düzenli — en etkili yol bu. Bunu yapabilirsin! 🌱',
+      10:'Mükemmel seçim! 10 kelime = günde sadece 5 dakika. 💪',
+      15:'İdeal hedef! Tutarsan sınava çok iyi hazırlanırsın. 🔥',
+      20:'Azimlisin! Zor bir günde 10 yapsan bile ilerlersin. ⭐',
+    };
+    document.getElementById('commit-hint').textContent = msgs[w] || '💪 Planın hazır!';
+  }
+}
+
 function showResult(){
   const total=lvlAnswers.reduce((a,b)=>a+b,0);
   const pct=Math.round(total/LEVEL_QS.length*100);
@@ -2884,8 +2925,19 @@ function showResult(){
     <div class="stat-row" style="border-top:1px solid var(--border);padding-top:10px">
       <strong>Toplam</strong><strong class="stat-val">${total}/${LEVEL_QS.length} (${pct}%)</strong>
     </div>
+    <div class="commit-box">
+      <p class="commit-q">Günde kaç kelime çalışmayı taahhüt edebilirsin?</p>
+      <div class="commit-chips" id="commit-words-chips">
+        ${[5,10,15,20].map(n=>`<button class="commit-chip" onclick="pickCommit('words',${n},this)">${n} kelime</button>`).join('')}
+      </div>
+      <p class="commit-q" style="margin-top:14px">Günde kaç gramer sorusu?</p>
+      <div class="commit-chips" id="commit-grammar-chips">
+        ${[5,10,15].map(n=>`<button class="commit-chip" onclick="pickCommit('grammar',${n},this)">${n} soru</button>`).join('')}
+      </div>
+      <p class="commit-hint" id="commit-hint"></p>
+    </div>
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="showPlan('${level}','${pct}')">Çalışma Planımı Gör →</button>
+      <button class="btn btn-primary" id="show-plan-btn" onclick="showPlan('${level}','${pct}')" disabled style="opacity:.4;cursor:not-allowed">Çalışma Planımı Gör →</button>
     </div>`;
   document.getElementById('prog').style.width='100%';
   goTo('result');
@@ -2914,8 +2966,10 @@ function showPlan(level,pct){
   const p3start = new Date(EXAM_DATE.getTime() - p3d*86400000);
 
   const totalWords = low ? 3000 : mid ? 2000 : 1500;
-  const dailyWords = Math.min(30, Math.max(10, Math.ceil(totalWords / Math.max(1, p1d+p2d))));
-  const dailyGrammar = d < 30 ? 20 : d < 60 ? 15 : 10;
+  const _calcWords = Math.min(20, Math.max(5, Math.ceil(totalWords / Math.max(1, p1d+p2d))));
+  const _calcGrammar = d < 30 ? 15 : d < 60 ? 10 : 5;
+  const dailyWords = parseInt(localStorage.getItem('yds_commit_words')||'0') || _calcWords;
+  const dailyGrammar = parseInt(localStorage.getItem('yds_commit_grammar')||'0') || _calcGrammar;
 
   const phases=[
     {title:'⚙️ Faz 1 — Temel İnşa',
