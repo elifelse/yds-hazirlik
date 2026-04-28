@@ -17,10 +17,14 @@
 <meta property="og:title" content="YDS Hazırlık — Ücretsiz Akıllı Hazırlık"/>
 <meta property="og:description" content="Kelime kartları, gramer testleri, okuma pratikleri ve deneme sınavlarıyla YDS skorunu artır. Tamamen ücretsiz, reklamsız."/>
 <meta property="og:url" content="https://yds-hazirlik.com/"/>
+<meta property="og:image" content="https://yds-hazirlik.com/og-image.svg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:image" content="https://yds-hazirlik.com/og-image.svg"/>
+<meta name="twitter:card" content="summary_large_image"/>
 <meta property="og:locale" content="tr_TR"/>
 
 <!-- Twitter Card -->
-<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="YDS Hazırlık — Ücretsiz Akıllı Hazırlık"/>
 <meta name="twitter:description" content="Kelime kartları, gramer testleri, okuma pratikleri ve deneme sınavlarıyla YDS skorunu artır."/>
 
@@ -31,12 +35,37 @@
   "@type": "WebApplication",
   "name": "YDS Hazırlık",
   "url": "https://yds-hazirlik.com/",
-  "description": "YDS ve e-YDS sınavına ücretsiz, akıllı hazırlık uygulaması.",
+  "description": "YDS ve e-YDS sınavına ücretsiz, akıllı hazırlık uygulaması. Kelime kartları, gramer testleri, okuma pratikleri ve deneme sınavlarıyla skorunu artır.",
   "applicationCategory": "EducationApplication",
   "operatingSystem": "Web",
+  "image": "https://yds-hazirlik.com/og-image.svg",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TRY" },
   "inLanguage": "tr",
-  "audience": { "@type": "Audience", "audienceType": "YDS ve e-YDS sınavına hazırlanan öğrenciler" }
+  "audience": { "@type": "Audience", "audienceType": "YDS ve e-YDS sınavına hazırlanan öğrenciler" },
+  "featureList": ["Günlük kelime kartları", "Gramer testleri", "Okuma pratikleri", "Deneme sınavı", "Spaced repetition tekrarı", "Streak sistemi"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "YDS sınavında kaç soru var?",
+      "acceptedAnswer": { "@type": "Answer", "text": "YDS sınavında 80 çoktan seçmeli soru bulunur. Sınav süresi 3 saattir." }
+    },
+    {
+      "@type": "Question",
+      "name": "YDS'ye hazırlanmak için günde kaç saat çalışmak gerekir?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Seviyenize göre günde 50-90 dakika düzenli çalışma yeterlidir. Tutarlılık, yoğunluktan daha önemlidir." }
+    },
+    {
+      "@type": "Question",
+      "name": "YDS ile e-YDS arasındaki fark nedir?",
+      "acceptedAnswer": { "@type": "Answer", "text": "YDS yılda 2 kez salon sınavı olarak yapılır. e-YDS ise yıl içinde birçok tarihte bilgisayar ortamında yapılır. İkisi de aynı formata sahiptir." }
+    }
+  ]
 }
 </script>
 
@@ -130,6 +159,13 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 
 /* ── RESULT ── */
 .level-badge{font-size:48px;font-weight:900;text-align:center;margin:16px 0}
+.commit-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
+.commit-q{font-size:14px;font-weight:600;margin:0 0 10px}
+.commit-chips{display:flex;gap:8px;flex-wrap:wrap}
+.commit-chip{background:transparent;border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:13px;cursor:pointer;color:var(--text);transition:.15s}
+.commit-chip:hover{border-color:var(--accent);color:var(--accent)}
+.commit-chip.selected{background:var(--accent);border-color:var(--accent);color:#fff}
+.commit-hint{font-size:13px;color:var(--green);margin:12px 0 0;min-height:20px}
 .stat-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
 .stat-row:last-child{border:none}
 .stat-val{font-weight:700}
@@ -688,6 +724,20 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .tnav-btn:hover{background:rgba(255,255,255,.07);color:var(--text)}
 .tnav-btn.primary{background:var(--blue);color:#0d1117;margin-left:8px}
 .tnav-btn.primary:hover{opacity:.85}
+.tnav-dropdown{position:relative}
+.tnav-dropdown-menu{
+  display:none;position:absolute;top:100%;left:0;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  min-width:200px;padding:6px;z-index:200;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+  padding-top:10px;
+}
+.tnav-dropdown-menu.open{display:flex;flex-direction:column}
+.tnav-dropdown-menu a{
+  display:block;padding:9px 12px;border-radius:7px;font-size:13px;font-weight:500;
+  color:var(--muted);text-decoration:none;transition:.12s;white-space:nowrap;
+}
+.tnav-dropdown-menu a:hover{background:rgba(129,140,248,.1);color:var(--text)}
 
 @media(max-width:640px){
   #top-nav{display:none !important}
@@ -1226,6 +1276,22 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
     <button class="tnav-btn" onclick="toggleDict()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Sözlük</button>
     <button class="tnav-btn" onclick="toggleGrammar()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 9.5-9.5z"/></svg>Gramer</button>
     <button class="tnav-btn" onclick="goTo('plan-screen')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Ana Sayfa</button>
+    <div class="tnav-dropdown" id="rehber-dropdown">
+      <button class="tnav-btn" onclick="toggleRehberMenu(event)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Rehber ▾</button>
+      <div class="tnav-dropdown-menu" id="rehber-menu">
+        <a href="/yds-sinav-hakkinda.html">YDS Sınavı Hakkında</a>
+        <a href="/yds-kelime-listesi.html">YDS Kelime Listesi</a>
+        <a href="/yds-gramer-konulari.html">Gramer Konuları</a>
+        <a href="/yds-okuma-teknikleri.html">Okuma Teknikleri</a>
+        <a href="/yds-30-gunluk-plan.html">30 Günlük Plan</a>
+        <a href="/yds-zaman-yonetimi.html">Zaman Yönetimi</a>
+        <a href="/yds-ielts-fark.html">YDS vs IELTS</a>
+        <a href="/yds-relative-clauses.html">Relative Clauses</a>
+        <a href="/yds-passive-voice.html">Passive Voice</a>
+        <a href="/yds-soru-tipleri.html">Soru Tipleri</a>
+        <a href="/yds-puan-hesaplama.html">Puan Hesaplama</a>
+      </div>
+    </div>
     <button class="tnav-btn" onclick="openSettingsModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Ayarlar</button>
   </div>
   <!-- Right side: theme dots + user chip -->
@@ -1308,6 +1374,49 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
         <div class="land-feat-title">Bulut Senkronizasyon</div>
         <div class="land-feat-desc">Hesap aç, tüm cihazlarında kaldığın yerden devam et.</div>
       </div>
+    </div>
+  </div>
+
+  <!-- Rehber Yazıları -->
+  <div style="width:100%;max-width:680px;padding:0 24px 32px">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:14px">&#x1F4DA; Hazırlık Rehberleri</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+      <a href="/yds-sinav-hakkinda.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--text);transition:border-color .15s">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px">YDS Sınavı Hakkında</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.4">Format, başvuru ve dikkat edilecekler.</div>
+      </a>
+      <a href="/yds-kelime-listesi.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--text);transition:border-color .15s">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px">YDS Kelime Listesi</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.4">100+ akademik kelime ve anlamları.</div>
+      </a>
+      <a href="/yds-soru-tipleri.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--text);transition:border-color .15s">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px">YDS Soru Tipleri</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.4">6 soru tipinin stratejisi ve örnekler.</div>
+      </a>
+      <a href="/yds-puan-hesaplama.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--text);transition:border-color .15s">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px">Puan Hesaplama</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.4">Kaç doğru kaç puan? Hedef tablosu.</div>
+      </a>
+      <a href="/yds-30-gunluk-plan.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--text);transition:border-color .15s">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px">30 Günlük Plan</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.4">Sınava kaç gün kaldığına göre plan.</div>
+      </a>
+      <a href="/yds-gramer-konulari.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--text);transition:border-color .15s">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px">Gramer Konuları</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.4">En çok çıkan gramer yapıları.</div>
+      </a>
+      <a href="/yds-passive-voice.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--text);transition:border-color .15s">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px">Passive Voice</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.4">Edilgen yapı, modallar ve tuzaklar.</div>
+      </a>
+      <a href="/yds-relative-clauses.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--text);transition:border-color .15s">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px">Relative Clauses</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.4">Who, which, that, whose — tüm kurallar.</div>
+      </a>
+      <a href="/yds-okuma-teknikleri.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--text);transition:border-color .15s">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px">Okuma Teknikleri</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.4">Hızlı okuma ve anlama stratejileri.</div>
+      </a>
     </div>
   </div>
 
@@ -1689,6 +1798,9 @@ async function initAuth(){
     }
     if(!session && currentUser){
       currentUser = null;
+      document.getElementById('bee').style.display = 'none';
+      document.getElementById('bee-bubble').style.display = 'none';
+      document.getElementById('honeycomb-panel').style.display = 'none';
     }
   });
 }
@@ -1713,12 +1825,23 @@ function enterApp(){
     chip.style.display = 'flex';
   }
 
-  // Intro ekranını ve navigasyonu göster
-  document.getElementById('intro').classList.add('active');
+  // Navigasyonu göster
   document.getElementById('bottom-nav').style.display = 'flex';
   document.getElementById('top-nav').classList.add('active');
   document.getElementById('theme-picker-fixed').classList.add('visible');
-  renderLvlQ();
+
+  // Daha önce seviye testi yapıldıysa direkt plana git; yoksa quiz göster
+  const _savedLevel = localStorage.getItem('yds_level');
+  if(_savedLevel){
+    const _savedPct = parseInt(localStorage.getItem('yds_pct') || '50');
+    showPlan(_savedLevel, _savedPct);
+  } else {
+    document.getElementById('bee').style.display = currentUser ? '' : 'none';
+    document.getElementById('bee-bubble').style.display = currentUser ? '' : 'none';
+    document.getElementById('honeycomb-panel').style.display = currentUser ? '' : 'none';
+    document.getElementById('intro').classList.add('active');
+    renderLvlQ();
+  }
 }
 
 async function authGoogle(){
@@ -1829,6 +1952,9 @@ async function authSignOut(){
   currentUser = null;
   document.getElementById('user-chip').style.display = 'none';
   document.getElementById('theme-picker-fixed').classList.remove('visible');
+  document.getElementById('bee').style.display = 'none';
+  document.getElementById('bee-bubble').style.display = 'none';
+  document.getElementById('honeycomb-panel').style.display = 'none';
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('auth-screen').classList.add('active');
 }
@@ -1886,8 +2012,8 @@ function initExamDate(){
   if(exam && exam.date) EXAM_DATE = new Date(exam.date + 'T09:00:00');
 }
 
-// 6 kategori × 20 kelime = 120 kelime — günlük rotasyon
-const VOCAB_SETS = [
+// C1 kelime setleri (6 set × 20 kelime)
+const VOCAB_SETS_C1 = [
   { label:'Genel Akademik', words:[
     {word:'unprecedented', pos:'adj', tr:'benzersiz, daha önce görülmemiş',  ex:'The pandemic caused unprecedented disruption to global supply chains.'},
     {word:'exacerbate',    pos:'v',   tr:'kötüleştirmek, şiddetlendirmek',   ex:'Cutting the budget will only exacerbate the existing problems.'},
@@ -2088,11 +2214,156 @@ const VOCAB_SETS = [
   ]},
 ];
 
-// Günlük set: yılın kaçıncı günü olduğuna göre dönüyor
+// B1 kelime setleri (2 set × 20 kelime — temel akademik)
+const VOCAB_SETS_B1 = [
+  { label:'Temel Akademik 1', words:[
+    {word:'achieve',    pos:'v',   tr:'başarmak, elde etmek',            ex:'Students must work hard to achieve good results in the exam.'},
+    {word:'affect',     pos:'v',   tr:'etkilemek',                        ex:'Lack of sleep can seriously affect your concentration.'},
+    {word:'analyse',    pos:'v',   tr:'analiz etmek, incelemek',          ex:'The scientist began to analyse the data from the experiment.'},
+    {word:'approach',   pos:'n',   tr:'yaklaşım, yöntem',                 ex:'A different approach to the problem might yield better results.'},
+    {word:'benefit',    pos:'n',   tr:'fayda, yarar',                     ex:'Regular exercise has many benefits for both body and mind.'},
+    {word:'cause',      pos:'v',   tr:'neden olmak, yol açmak',           ex:'Pollution can cause serious health problems in urban areas.'},
+    {word:'consider',   pos:'v',   tr:'göz önünde bulundurmak',           ex:'You should consider all the options before making a decision.'},
+    {word:'create',     pos:'v',   tr:'oluşturmak, yaratmak',             ex:'Technology has helped create new opportunities for young people.'},
+    {word:'define',     pos:'v',   tr:'tanımlamak',                       ex:'It is important to clearly define the key terms in your essay.'},
+    {word:'develop',    pos:'v',   tr:'geliştirmek',                      ex:'Scientists are working to develop a new vaccine for the disease.'},
+    {word:'discuss',    pos:'v',   tr:'tartışmak, ele almak',             ex:'The report discusses the main causes of climate change.'},
+    {word:'establish',  pos:'v',   tr:'kurmak, oluşturmak',               ex:'The organisation was established to support local communities.'},
+    {word:'explain',    pos:'v',   tr:'açıklamak',                        ex:'The teacher explained the concept in simple terms.'},
+    {word:'identify',   pos:'v',   tr:'belirlemek, tespit etmek',         ex:'Researchers have identified three main risk factors for the disease.'},
+    {word:'improve',    pos:'v',   tr:'geliştirmek, iyileştirmek',        ex:'Reading regularly can help improve your vocabulary.'},
+    {word:'include',    pos:'v',   tr:'içermek, kapsamak',                ex:'The course includes both written and oral assessments.'},
+    {word:'increase',   pos:'v',   tr:'artmak, artırmak',                 ex:'The population of the city has increased rapidly over the past decade.'},
+    {word:'indicate',   pos:'v',   tr:'belirtmek, göstermek',             ex:'The results indicate that the treatment is effective.'},
+    {word:'provide',    pos:'v',   tr:'sağlamak, temin etmek',            ex:'The government should provide more funding for education.'},
+    {word:'require',    pos:'v',   tr:'gerektirmek, ihtiyaç duymak',      ex:'This job requires at least three years of experience.'},
+  ], quiz:[
+    {q:'<strong>"Achieve"</strong> kelimesi ne anlama gelir?',
+     opts:['Açıklamak','Başarmak, elde etmek','Artırmak','Belirlemek'],ans:1},
+    {q:'"Lack of sleep can seriously _____ your concentration." — Doğru kelime?',
+     opts:['create','require','affect','define'],ans:2},
+    {q:'Which word means <strong>"tanımlamak"</strong>?',
+     opts:['discuss','indicate','define','include'],ans:2},
+    {q:'"Researchers have _____ three main risk factors." — Uygun kelime?',
+     opts:['developed','identified','provided','established'],ans:1},
+    {q:'<strong>"Indicate"</strong> kelimesinin Türkçe anlamı nedir?',
+     opts:['Gerektirmek','İçermek','Belirtmek, göstermek','Kurmak'],ans:2},
+  ]},
+  { label:'Temel Akademik 2', words:[
+    {word:'apply',      pos:'v',   tr:'uygulamak; başvurmak',             ex:'You can apply these techniques to improve your writing skills.'},
+    {word:'assume',     pos:'v',   tr:'varsaymak, kabul etmek',           ex:'Do not assume that all readers have background knowledge of the topic.'},
+    {word:'compare',    pos:'v',   tr:'karşılaştırmak',                   ex:'The study compares the test results of two different groups.'},
+    {word:'complete',   pos:'v',   tr:'tamamlamak',                       ex:'Students must complete all assignments to pass the course.'},
+    {word:'describe',   pos:'v',   tr:'tanımlamak, betimlemek',           ex:'The report describes the main findings of the research.'},
+    {word:'determine',  pos:'v',   tr:'belirlemek, saptamak',             ex:'Further tests are needed to determine the cause of the problem.'},
+    {word:'evaluate',   pos:'v',   tr:'değerlendirmek',                   ex:'Teachers must evaluate each student\'s progress individually.'},
+    {word:'examine',    pos:'v',   tr:'incelemek, araştırmak',            ex:'The committee will examine the evidence carefully before deciding.'},
+    {word:'express',    pos:'v',   tr:'ifade etmek, anlatmak',            ex:'It is important to express your ideas clearly in an academic essay.'},
+    {word:'focus',      pos:'v',   tr:'odaklanmak',                       ex:'The research focuses on the effects of diet on mental health.'},
+    {word:'form',       pos:'v',   tr:'oluşturmak, biçimlendirmek',       ex:'Ice begins to form on the lake during the coldest months.'},
+    {word:'function',   pos:'v',   tr:'işlev görmek, çalışmak',           ex:'The human brain functions differently during sleep.'},
+    {word:'occur',      pos:'v',   tr:'gerçekleşmek, oluşmak',            ex:'Earthquakes occur frequently in this region.'},
+    {word:'present',    pos:'v',   tr:'sunmak, ortaya koymak',            ex:'The professor presented the findings at an international conference.'},
+    {word:'purpose',    pos:'n',   tr:'amaç, hedef',                      ex:'The purpose of this essay is to examine the causes of poverty.'},
+    {word:'refer',      pos:'v',   tr:'atıfta bulunmak, değinmek',        ex:'The author refers to several earlier studies in the introduction.'},
+    {word:'result',     pos:'n',   tr:'sonuç',                            ex:'The results of the study were published in a leading journal.'},
+    {word:'show',       pos:'v',   tr:'göstermek, ortaya koymak',         ex:'The data shows a clear link between exercise and mental health.'},
+    {word:'suggest',    pos:'v',   tr:'önermek; ima etmek',               ex:'The evidence suggests that the drug is both safe and effective.'},
+    {word:'support',    pos:'v',   tr:'desteklemek',                      ex:'The findings support the hypothesis that sleep improves memory.'},
+  ], quiz:[
+    {q:'<strong>"Evaluate"</strong> kelimesi ne anlama gelir?',
+     opts:['Uygulamak','Değerlendirmek','Karşılaştırmak','Odaklanmak'],ans:1},
+    {q:'"The study _____ the results of two different groups." — Doğru kelime?',
+     opts:['assumes','focuses','compares','describes'],ans:2},
+    {q:'Which word means <strong>"önermek; ima etmek"</strong>?',
+     opts:['support','refer','suggest','present'],ans:2},
+    {q:'"Earthquakes _____ frequently in this region." — Uygun kelime?',
+     opts:['form','occur','function','express'],ans:1},
+    {q:'<strong>"Purpose"</strong> kelimesinin Türkçe anlamı nedir?',
+     opts:['Sonuç','Amaç, hedef','İşlev','Atıf'],ans:1},
+  ]},
+];
+
+// B2 kelime setleri (2 set × 20 kelime — orta-üst akademik)
+const VOCAB_SETS_B2 = [
+  { label:'Orta Akademik 1', words:[
+    {word:'acknowledge', pos:'v',  tr:'kabul etmek, teslim etmek',       ex:'The report acknowledges that further research is needed.'},
+    {word:'acquire',     pos:'v',  tr:'edinmek, kazanmak',                ex:'Children acquire language skills naturally through interaction.'},
+    {word:'appropriate', pos:'adj',tr:'uygun, yerinde',                   ex:'It is important to use appropriate vocabulary in academic writing.'},
+    {word:'contribute',  pos:'v',  tr:'katkıda bulunmak',                 ex:'Regular physical activity can contribute to a longer and healthier life.'},
+    {word:'demonstrate', pos:'v',  tr:'göstermek, kanıtlamak',            ex:'The experiment demonstrated a clear relationship between the two variables.'},
+    {word:'emphasise',   pos:'v',  tr:'vurgulamak',                       ex:'The professor emphasised the importance of citing sources correctly.'},
+    {word:'enhance',     pos:'v',  tr:'geliştirmek, artırmak',            ex:'Technology can enhance the learning experience in the classroom.'},
+    {word:'facilitate',  pos:'v',  tr:'kolaylaştırmak',                   ex:'Good communication facilitates cooperation between team members.'},
+    {word:'framework',   pos:'n',  tr:'çerçeve, yapı, sistem',            ex:'The study is based on a theoretical framework developed by earlier researchers.'},
+    {word:'illustrate',  pos:'v',  tr:'örneklemek, açıklamak',            ex:'The graph illustrates the steady rise in global temperatures.'},
+    {word:'implement',   pos:'v',  tr:'uygulamaya koymak',                ex:'The school has implemented a new policy to reduce mobile phone use.'},
+    {word:'investigate', pos:'v',  tr:'araştırmak, soruşturmak',          ex:'Scientists are investigating the long-term effects of the medication.'},
+    {word:'justify',     pos:'v',  tr:'gerekçe göstermek, haklı kılmak',  ex:'You must justify your argument with relevant evidence.'},
+    {word:'maintain',    pos:'v',  tr:'sürdürmek, korumak',               ex:'It is difficult to maintain motivation throughout a long project.'},
+    {word:'modify',      pos:'v',  tr:'değiştirmek, uyarlamak',           ex:'The researchers modified the experiment after the initial results were inconclusive.'},
+    {word:'perspective', pos:'n',  tr:'bakış açısı, perspektif',          ex:'It is useful to consider the issue from a different perspective.'},
+    {word:'relevant',    pos:'adj',tr:'ilgili, alakalı',                   ex:'Only include relevant information in your academic essay.'},
+    {word:'reveal',      pos:'v',  tr:'ortaya çıkarmak, açığa çıkarmak',  ex:'The investigation revealed serious flaws in the original research.'},
+    {word:'significant', pos:'adj',tr:'önemli, anlamlı, kayda değer',     ex:'There was a significant improvement in the patients\' condition.'},
+    {word:'vary',        pos:'v',  tr:'farklılık göstermek, değişmek',    ex:'Opinions on the subject vary widely among experts.'},
+  ], quiz:[
+    {q:'<strong>"Facilitate"</strong> kelimesi ne anlama gelir?',
+     opts:['Vurgulamak','Kolaylaştırmak','Uygulamaya koymak','Araştırmak'],ans:1},
+    {q:'"The experiment _____ a clear relationship between the variables." — Doğru kelime?',
+     opts:['justified','revealed','demonstrated','modified'],ans:2},
+    {q:'Which word means <strong>"bakış açısı, perspektif"</strong>?',
+     opts:['framework','context','perspective','principle'],ans:2},
+    {q:'"You must _____ your argument with relevant evidence." — Uygun kelime?',
+     opts:['maintain','implement','enhance','justify'],ans:3},
+    {q:'<strong>"Significant"</strong> kelimesinin Türkçe anlamı nedir?',
+     opts:['Uygun','İlgili','Önemli, kayda değer','Teorik'],ans:2},
+  ]},
+  { label:'Orta Akademik 2', words:[
+    {word:'clarify',     pos:'v',  tr:'açıklığa kavuşturmak',             ex:'Could you clarify what you mean by that statement?'},
+    {word:'consistent',  pos:'adj',tr:'tutarlı, değişmez',                 ex:'The results were consistent across all three trials.'},
+    {word:'context',     pos:'n',  tr:'bağlam, ortam',                    ex:'It is important to consider these findings within their historical context.'},
+    {word:'contrast',    pos:'v',  tr:'karşıtlık oluşturmak; karşılaştırmak', ex:'The essay contrasts urban and rural lifestyles in modern Turkey.'},
+    {word:'derive',      pos:'v',  tr:'elde etmek, türetmek',             ex:'Much of modern scientific vocabulary is derived from Latin and Greek.'},
+    {word:'diverse',     pos:'adj',tr:'çeşitli, farklı',                   ex:'The university attracts students from diverse cultural backgrounds.'},
+    {word:'evident',     pos:'adj',tr:'açık, belirgin, aşikar',            ex:'It was evident from the data that the new method was more effective.'},
+    {word:'furthermore', pos:'adv',tr:'üstelik, ayrıca, bunun yanı sıra', ex:'The project was delayed; furthermore, the costs exceeded the budget.'},
+    {word:'imply',       pos:'v',  tr:'ima etmek, anlamına gelmek',       ex:'The results imply that further study is required.'},
+    {word:'interpret',   pos:'v',  tr:'yorumlamak, anlamlandırmak',       ex:'Different researchers may interpret the same data in different ways.'},
+    {word:'nevertheless',pos:'adv',tr:'buna rağmen, yine de',             ex:'The task was challenging; nevertheless, the team completed it on time.'},
+    {word:'obtain',      pos:'v',  tr:'elde etmek, sağlamak',             ex:'It is becoming increasingly difficult to obtain clean drinking water.'},
+    {word:'precise',     pos:'adj',tr:'kesin, tam, hassas',               ex:'The instructions must be precise to ensure consistent results.'},
+    {word:'primary',     pos:'adj',tr:'birincil, ana, temel',             ex:'The primary aim of the study is to identify key risk factors.'},
+    {word:'propose',     pos:'v',  tr:'önermek, öneride bulunmak',        ex:'The researchers proposed a new model to explain the observed patterns.'},
+    {word:'sequence',    pos:'n',  tr:'sıra, dizi, ardışıklık',           ex:'The teacher explained the sequence of events leading to the conflict.'},
+    {word:'specific',    pos:'adj',tr:'belirli, özel, spesifik',          ex:'The report makes specific recommendations for improving the system.'},
+    {word:'thereby',     pos:'adv',tr:'böylece, bu sayede',               ex:'The drug reduces inflammation, thereby improving the patient\'s mobility.'},
+    {word:'whereas',     pos:'conj',tr:'oysa, halbuki, buna karşın',      ex:'Some people prefer cities, whereas others prefer the countryside.'},
+    {word:'acknowledge', pos:'v',  tr:'kabul etmek, teslim etmek',       ex:'The author acknowledges the limitations of the study.'},
+  ], quiz:[
+    {q:'<strong>"Nevertheless"</strong> kelimesi ne anlama gelir?',
+     opts:['Üstelik, ayrıca','Oysa, halbuki','Buna rağmen, yine de','Böylece'],ans:2},
+    {q:'"Different researchers may _____ the same data differently." — Doğru kelime?',
+     opts:['propose','interpret','clarify','contrast'],ans:1},
+    {q:'Which word means <strong>"çeşitli, farklı"</strong>?',
+     opts:['precise','evident','diverse','consistent'],ans:2},
+    {q:'"The project was delayed; _____, costs exceeded the budget." — Uygun kelime?',
+     opts:['whereas','thereby','furthermore','nevertheless'],ans:2},
+    {q:'<strong>"Primary"</strong> kelimesinin Türkçe anlamı nedir?',
+     opts:['Belirli, özel','Tutarlı','Birincil, ana, temel','Kesin, hassas'],ans:2},
+  ]},
+];
+
+// Seviyeye göre kelime seti seçimi
 const _dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(),0,0))/(1000*60*60*24));
-const _todaySet  = VOCAB_SETS[_dayOfYear % VOCAB_SETS.length];
-const VOCAB      = _todaySet.words;
-const VOCAB_QUIZ = _todaySet.quiz;
+function _getVocabSet(){
+  const lv = localStorage.getItem('yds_level') || 'B1';
+  const sets = lv === 'C1' ? VOCAB_SETS_C1 : lv === 'B2' ? VOCAB_SETS_B2 : VOCAB_SETS_B1;
+  return sets[_dayOfYear % sets.length];
+}
+let _todaySet  = _getVocabSet();
+let VOCAB      = _todaySet.words;
+let VOCAB_QUIZ = _todaySet.quiz;
 
 // 10 gramer sorusu — son YDS sınavlarında (2022-2025) sıkça çıkan kalıplar
 const GRAMMAR_QS = [
@@ -2297,9 +2568,17 @@ const DAILY_KEY = 'yds_daily_' + TODAY;
 
 function getDone(){ return JSON.parse(localStorage.getItem(DAILY_KEY)||'{}') }
 function setDone(obj){ localStorage.setItem(DAILY_KEY, JSON.stringify(obj)) }
+const _completeNudges = {
+  words:   ['Kelimeler tamam! Tekrar günü gelene kadar aklında kalacak. 🧠','Harika! Bu kelimeler sınav günü seni kurtarabilir. 💪','Bugünkü kelimeler bitti. Yarın burada ol! 🔥'],
+  grammar: ['Gramer bitti! Bu soruların mantığını kavradın. ✅','10 soru bitti — her doğru bir puan demek. 🎯','Gramer alışkanlığı yapıyor. Devam! 💡'],
+  read:    ['Okuma tamam! Her paragraf hız kazandırıyor. 📖','YDS\'nin en puanlı kısmını tamamladın. Süper! ⭐','Okuma parçası bitti. Yarın bir tane daha! 📄'],
+  review:['Tekrar tamam — kalıcı belleğe geçti. 🔁','Gözden geçirme en etkili öğrenme yolu. Bravo! 🌟','Bugünkü kelimeler artık çok daha sağlam. ✨'],
+};
 function markDone(taskId){
   const d = getDone(); d[taskId] = true; setDone(d);
   checkAllDone();
+  const msgs = _completeNudges[taskId];
+  if(msgs) showToast(msgs[Math.floor(Math.random()*msgs.length)], 3500);
   const level = localStorage.getItem('yds_level') || 'B1';
   const pct = parseInt(localStorage.getItem('yds_pct') || '50');
   showPlan(level, pct);
@@ -2559,6 +2838,12 @@ function closeModal(){
   document.getElementById('modal-overlay').classList.remove('open');
 }
 let pendingConfirmAction = null;
+const _exitNudges = [
+  'Bırakma şimdi! Her gün küçük bir adım büyük fark yaratır. 💪',
+  'Yarın değil, şimdi! Rutini korumak zor ama değer. 🔥',
+  'Seriniz kırılabilir — ama yarın mutlaka geri dön! ⭐',
+  'Bu alışkanlık seni sınava hazırlıyor. Yarın burada ol. 📚',
+];
 function confirmYes(){
   document.getElementById('confirm-overlay').classList.remove('open');
   if(pendingConfirmAction){
@@ -2568,6 +2853,7 @@ function confirmYes(){
   } else {
     exerciseActive = null;
     document.getElementById('modal-overlay').classList.remove('open');
+    setTimeout(()=>showToast(_exitNudges[Math.floor(Math.random()*_exitNudges.length)], 4000), 300);
   }
 }
 function confirmNo(){
@@ -2677,6 +2963,25 @@ function lvlChoose(i){
   setTimeout(()=>{ lvlCurrent++; lvlCurrent<LEVEL_QS.length?renderLvlQ():showResult(); },900);
 }
 
+function pickCommit(type, n, el){
+  localStorage.setItem('yds_commit_'+type, n);
+  el.closest('.commit-chips').querySelectorAll('.commit-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  const w = parseInt(localStorage.getItem('yds_commit_words')||'0');
+  const g = parseInt(localStorage.getItem('yds_commit_grammar')||'0');
+  if(w && g){
+    const btn = document.getElementById('show-plan-btn');
+    btn.disabled = false; btn.style.opacity='1'; btn.style.cursor='';
+    const msgs = {
+      5: 'Az ama düzenli — en etkili yol bu. Bunu yapabilirsin! 🌱',
+      10:'Mükemmel seçim! 10 kelime = günde sadece 5 dakika. 💪',
+      15:'İdeal hedef! Tutarsan sınava çok iyi hazırlanırsın. 🔥',
+      20:'Azimlisin! Zor bir günde 10 yapsan bile ilerlersin. ⭐',
+    };
+    document.getElementById('commit-hint').textContent = msgs[w] || '💪 Planın hazır!';
+  }
+}
+
 function showResult(){
   const total=lvlAnswers.reduce((a,b)=>a+b,0);
   const pct=Math.round(total/LEVEL_QS.length*100);
@@ -2695,8 +3000,19 @@ function showResult(){
     <div class="stat-row" style="border-top:1px solid var(--border);padding-top:10px">
       <strong>Toplam</strong><strong class="stat-val">${total}/${LEVEL_QS.length} (${pct}%)</strong>
     </div>
+    <div class="commit-box">
+      <p class="commit-q">Günde kaç kelime çalışmayı taahhüt edebilirsin?</p>
+      <div class="commit-chips" id="commit-words-chips">
+        ${[5,10,15,20].map(n=>`<button class="commit-chip" onclick="pickCommit('words',${n},this)">${n} kelime</button>`).join('')}
+      </div>
+      <p class="commit-q" style="margin-top:14px">Günde kaç gramer sorusu?</p>
+      <div class="commit-chips" id="commit-grammar-chips">
+        ${[5,10,15].map(n=>`<button class="commit-chip" onclick="pickCommit('grammar',${n},this)">${n} soru</button>`).join('')}
+      </div>
+      <p class="commit-hint" id="commit-hint"></p>
+    </div>
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="showPlan('${level}','${pct}')">Çalışma Planımı Gör →</button>
+      <button class="btn btn-primary" id="show-plan-btn" onclick="showPlan('${level}','${pct}')" disabled style="opacity:.4;cursor:not-allowed">Çalışma Planımı Gör →</button>
     </div>`;
   document.getElementById('prog').style.width='100%';
   goTo('result');
@@ -2712,29 +3028,47 @@ function showPlan(level,pct){
   const d=daysLeft(), low=pct<=40, mid=pct<=65, mins=low?90:mid?70:50;
   const done=getDone(), streak=parseInt(localStorage.getItem('yds_streak')||'0');
 
+  // Sınava kalan süreye göre dinamik faz hesabı
+  const p3d = Math.min(21, Math.max(14, Math.floor(d * 0.15)));
+  const p12d = Math.max(1, d - p3d);
+  const p1d = Math.max(7, Math.floor(p12d * (low ? 0.45 : mid ? 0.38 : 0.28)));
+  const p2d = Math.max(7, p12d - p1d);
+  const p1w = Math.max(1, Math.round(p1d/7)), p2w = Math.max(1, Math.round(p2d/7)), p3w = Math.max(1, Math.round(p3d/7));
+  const _fmt = dt => dt.toLocaleDateString('tr-TR',{day:'numeric',month:'long'});
+  const _now = new Date();
+  const p1end = new Date(_now.getTime() + p1d*86400000);
+  const p2end = new Date(_now.getTime() + (p1d+p2d)*86400000);
+  const p3start = new Date(EXAM_DATE.getTime() - p3d*86400000);
+
+  const totalWords = low ? 3000 : mid ? 2000 : 1500;
+  const _calcWords = Math.min(20, Math.max(5, Math.ceil(totalWords / Math.max(1, p1d+p2d))));
+  const _calcGrammar = d < 30 ? 15 : d < 60 ? 10 : 5;
+  const dailyWords = parseInt(localStorage.getItem('yds_commit_words')||'0') || _calcWords;
+  const dailyGrammar = parseInt(localStorage.getItem('yds_commit_grammar')||'0') || _calcGrammar;
+
   const phases=[
     {title:'⚙️ Faz 1 — Temel İnşa',
-     dates:low?'Haftalar 1-6 (~42 gün)':mid?'Haftalar 1-4 (~28 gün)':'Haftalar 1-2 (~14 gün)',
+     dates:`Haftalar 1–${p1w} (~${p1d} gün · ${_fmt(_now)} – ${_fmt(p1end)})`,
      color:'#58a6ff',
-     tasks:low?['3000 kelimelik YDS listesi (günde 20 kelime)','Temel tense\'ler: Perfect, Passive, Conditionals','Günde 1 kolay okuma (BBC Learning English)','Çeviri: Türkçe → İngilizce basit cümleler']
-           :mid?['YDS akademik kelime listesi (günde 15 kelime)','İleri gramer: Inversion, Subjunctive, Clauses','Günde 1 orta seviye makale okuma','Paragraf tamamlama ve ana fikir pratiği']
-           :['C1 akademik kelime çalışması','YDS çıkmış sorular (son 5 yıl)','Zaman yönetimi: soru başına süre takibi','Zayıf alan analizi ve hedefli tekrar']},
+     tasks:low?[`${totalWords} kelimelik YDS listesi (günde ${dailyWords} kelime)`,'Temel tense\'ler: Perfect, Passive, Conditionals','Günde 1 kolay okuma (BBC Learning English)','Çeviri: Türkçe → İngilizce basit cümleler']
+           :mid?[`YDS akademik kelime listesi (günde ${dailyWords} kelime)`,'İleri gramer: Inversion, Subjunctive, Clauses','Günde 1 orta seviye makale okuma','Paragraf tamamlama ve ana fikir pratiği']
+           :[`C1 akademik kelime çalışması (günde ${dailyWords} kelime)`,'YDS çıkmış sorular (son 5 yıl)','Zaman yönetimi: soru başına süre takibi','Zayıf alan analizi ve hedefli tekrar']},
     {title:'📚 Faz 2 — Soru Tipleri',
-     dates:low?'Haftalar 7-13 (~50 gün)':mid?'Haftalar 5-10 (~42 gün)':'Haftalar 3-8 (~42 gün)',
+     dates:`Haftalar ${p1w+1}–${p1w+p2w} (~${p2d} gün · ${_fmt(p1end)} – ${_fmt(p2end)})`,
      color:'#bc8cff',
-     tasks:['YDS soru tipleri: boşluk doldurma, anlam bütünlüğü, paragraf sıralama','Günde 10 dilbilgisi sorusu (ÖSYM arşivinden)','Günde 1 okuma parçası + tüm soruları çöz','Yanlış cevapları defterine yaz, her hafta tekrar bak']},
+     tasks:['YDS soru tipleri: boşluk doldurma, anlam bütünlüğü, paragraf sıralama',`Günde ${dailyGrammar} dilbilgisi sorusu (ÖSYM arşivinden)`,'Günde 1 okuma parçası + tüm soruları çöz','Yanlış cevapları defterine yaz, her hafta tekrar bak']},
     {title:'🎯 Faz 3 — Deneme & Pratik',
-     dates:'Son 3 hafta (Ağustos başı)',
+     dates:`Son ${p3d} gün (~${p3w} hafta · ${_fmt(p3start)} itibaren)`,
      color:'#3fb950',
      tasks:['Haftada 2 tam YDS denemesi (180 dk, gerçek koşullar)','Deneme sonrası hata analizi','Hız: 3 saatte 80 soruyu bitirme pratiği','Sınav stratejisi: önce kolay, zoru sona bırak']},
   ];
 
   const dailyDefs=[
-    {id:'words',   icon:'📖', label:'20 yeni kelime öğren',         btn:'Başla →', fn:'openWordsModule()'},
-    {id:'grammar', icon:'✏️', label:'10 dilbilgisi sorusu çöz',     btn:'Başla →', fn:'openGrammarModule()'},
-    {id:'read',    icon:'📄', label:'Okuma parçası oku + soruları çöz', btn:'Başla →', fn:'openReadingModule()'},
-    {id:'review',  icon:'🔁', label:'Bugünkü kelimeleri tekrar et', btn:'Başla →', fn:'openReviewModule()'},
-    {id:'streak',  icon:'🔥', label:'Tüm görevler tamamlandı!',     btn:null,      fn:null},
+    {id:'words',   icon:'📖', label:`${dailyWords} yeni kelime öğren`,       btn:'Başla →', fn:'openWordsModule()'},
+    {id:'grammar', icon:'✏️', label:`${dailyGrammar} dilbilgisi sorusu çöz`, btn:'Başla →', fn:'openGrammarModule()'},
+    {id:'read',    icon:'📄', label:'Okuma parçası oku + soruları çöz',      btn:'Başla →', fn:'openReadingModule()'},
+    {id:'review',  icon:'🔁', label:'Bugünkü kelimeleri tekrar et',          btn:'Başla →', fn:'openReviewModule()'},
+    {id:'streak',  icon:'🔥', label:'Tüm görevler tamamlandı!',              btn:null,      fn:null},
   ];
 
   const phaseHTML=phases.map(p=>`
@@ -2795,7 +3129,10 @@ function showPlan(level,pct){
     : '';
 
   document.getElementById('plan-inner').innerHTML=`
-    <h2 style="margin-bottom:4px">Senin Planın</h2>
+    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">
+      <h2 style="margin:0">Senin Planın</h2>
+      <button class="btn btn-outline btn-sm" onclick="goTo('intro')" style="font-size:12px;padding:2px 10px;opacity:.7">✏️ Değiştir</button>
+    </div>
     <p style="margin-bottom:20px">${level} · Sınava <strong style="color:var(--yellow)">${d} gün</strong> kaldı · Günlük hedef: <strong style="color:var(--green)">${mins} dakika</strong></p>
     ${phaseHTML}
     <div class="daily-box">
@@ -2824,6 +3161,10 @@ function showPlan(level,pct){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('plan-screen').classList.add('active');
   window.scrollTo(0,0);
+  // Plan ekranında arı ve petek göster
+  document.getElementById('bee').style.display = '';
+  document.getElementById('bee-bubble').style.display = '';
+  document.getElementById('honeycomb-panel').style.display = '';
 
   // Plan ekranını ilk kez görenler için kısa tur
   setTimeout(startPlanTour, 500);
@@ -2836,6 +3177,7 @@ let vocabIdx=0, vocabPhase='cards'; // cards → quiz
 
 function openWordsModule(){
   _setBeeModule('vocab');
+  const _set=_getVocabSet(); VOCAB=_set.words; VOCAB_QUIZ=_set.quiz; _todaySet=_set;
   vocabIdx=0; vocabPhase='cards';
   exerciseActive='words';
   openModal(`📖 ${_todaySet.label} — 20 Kelime`, '', true);
@@ -3120,6 +3462,7 @@ function buildReviewQuiz(){
 
 function openReviewModule(){
   _setBeeModule('review');
+  const _set=_getVocabSet(); VOCAB=_set.words; VOCAB_QUIZ=_set.quiz; _todaySet=_set;
   rvQuiz=buildReviewQuiz();
   rvIdx=0; rvScore=0;
   exerciseActive='review';
@@ -4765,16 +5108,25 @@ function _beeSparkle() {
 
 // ── Bee bubble (click to show stats) ──
 let _beeBubbleTimer = null;
-function _showBeeBubble() {
+function _showBeeBubble(customMsg, customDur) {
   const bubble = document.getElementById('bee-bubble');
   if (!bubble) return;
+  const isLeft = document.getElementById('bee').classList.contains('fly-left');
+
+  if (customMsg) {
+    bubble.innerHTML = customMsg;
+    bubble.className = 'show' + (isLeft ? ' fly-left' : '');
+    if (_beeBubbleTimer) clearTimeout(_beeBubbleTimer);
+    _beeBubbleTimer = setTimeout(() => { bubble.className = bubble.className.replace('show','').trim(); }, customDur || 3000);
+    return;
+  }
+
   const done   = getDone();
   const core   = ['words','grammar','read','review'];
   const doneCount = core.filter(id => done[id]).length;
   const streak = parseInt(localStorage.getItem('yds_streak') || '0');
   const weakMap = JSON.parse(localStorage.getItem('yds_weak_words') || '{}');
   const weakCount = Object.values(weakMap).filter(v => v > 0).length;
-  const isLeft = document.getElementById('bee').classList.contains('fly-left');
 
   bubble.innerHTML = `
     📅 Bugün: <b>${doneCount}/4</b> görev<br>
@@ -4920,6 +5272,12 @@ function _showCatchToast(word, x, y) {
 // ── 1. CLICK: kelime balonları + stats (haftalık özet öncelikli) ──
 document.addEventListener('click', e => {
   if (!e.target.closest('#bee') || _beeDragged) return;
+  // Giriş yapılmamışsa sadece teşvik mesajı göster
+  if (!currentUser) {
+    _showBeeBubble('Giriş yap ve çalışmaya başla! 🍯', 3500);
+    setBeeState('dance', 1200);
+    return;
+  }
   if (_pendingWeekly) { _pendingWeekly = false; _showWeeklySummary(); return; }
   setBeeState('correct', 900);
   _showBeeBubble();
@@ -5450,6 +5808,15 @@ function _showTestReport(log, errors) {
   `;
   document.body.appendChild(panel);
 }
+
+function toggleRehberMenu(e) {
+  e.stopPropagation();
+  const menu = document.getElementById('rehber-menu');
+  menu.classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  document.getElementById('rehber-menu')?.classList.remove('open');
+});
 </script>
 
 <!-- PWA install banner (Android Chrome) -->
