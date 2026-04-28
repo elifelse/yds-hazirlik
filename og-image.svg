@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#58a6ff"/>
+      <stop offset="100%" style="stop-color:#bc8cff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- decorative circles -->
+  <circle cx="980" cy="120" r="200" fill="#58a6ff" opacity="0.06"/>
+  <circle cx="1100" cy="500" r="150" fill="#bc8cff" opacity="0.05"/>
+  <circle cx="100" cy="520" r="120" fill="#3fb950" opacity="0.05"/>
+
+  <!-- top accent line -->
+  <rect x="80" y="80" width="120" height="5" rx="3" fill="url(#accent)"/>
+
+  <!-- bee emoji -->
+  <text x="80" y="220" font-size="96" font-family="Segoe UI Emoji, Apple Color Emoji, sans-serif">🐝</text>
+
+  <!-- main title -->
+  <text x="210" y="195" font-size="72" font-weight="900" font-family="system-ui, -apple-system, sans-serif" fill="#ffffff" letter-spacing="-2">YDS Hazırlık</text>
+
+  <!-- subtitle -->
+  <text x="210" y="245" font-size="28" font-family="system-ui, -apple-system, sans-serif" fill="#8b949e">Ücretsiz · Akıllı · Kişiselleştirilmiş</text>
+
+  <!-- divider -->
+  <rect x="80" y="290" width="1040" height="1" fill="#30363d"/>
+
+  <!-- feature pills -->
+  <!-- pill 1 -->
+  <rect x="80" y="320" width="200" height="48" rx="24" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
+  <text x="180" y="351" text-anchor="middle" font-size="20" font-family="system-ui, sans-serif" fill="#58a6ff">📖 Kelime</text>
+
+  <!-- pill 2 -->
+  <rect x="300" y="320" width="200" height="48" rx="24" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
+  <text x="400" y="351" text-anchor="middle" font-size="20" font-family="system-ui, sans-serif" fill="#bc8cff">✏️ Gramer</text>
+
+  <!-- pill 3 -->
+  <rect x="520" y="320" width="200" height="48" rx="24" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
+  <text x="620" y="351" text-anchor="middle" font-size="20" font-family="system-ui, sans-serif" fill="#3fb950">📄 Okuma</text>
+
+  <!-- pill 4 -->
+  <rect x="740" y="320" width="220" height="48" rx="24" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
+  <text x="850" y="351" text-anchor="middle" font-size="20" font-family="system-ui, sans-serif" fill="#f9ca24">🎯 Deneme</text>
+
+  <!-- pill 5 -->
+  <rect x="980" y="320" width="140" height="48" rx="24" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
+  <text x="1050" y="351" text-anchor="middle" font-size="20" font-family="system-ui, sans-serif" fill="#ff6b6b">🔥 Seri</text>
+
+  <!-- description -->
+  <text x="80" y="430" font-size="26" font-family="system-ui, sans-serif" fill="#8b949e">Kelime kartları, gramer testleri, okuma pratikleri ve</text>
+  <text x="80" y="468" font-size="26" font-family="system-ui, sans-serif" fill="#8b949e">deneme sınavlarıyla YDS &amp; e-YDS skorunu artır.</text>
+
+  <!-- bottom url -->
+  <text x="80" y="560" font-size="22" font-family="system-ui, sans-serif" fill="#484f58">yds-hazirlik.com</text>
+
+  <!-- bottom right badge -->
+  <rect x="950" y="530" width="170" height="44" rx="22" fill="#238636" opacity="0.9"/>
+  <text x="1035" y="558" text-anchor="middle" font-size="18" font-weight="700" font-family="system-ui, sans-serif" fill="#ffffff">Tamamen Ücretsiz</text>
+</svg>
