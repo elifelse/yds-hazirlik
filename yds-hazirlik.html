@@ -1576,6 +1576,14 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
     <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:16px">
       Kesin tarihler için <strong>ösym.gov.tr</strong>'yi kontrol edin.
     </p>
+
+    <a id="intro-tool-banner" href="/yds-puan-hesaplama.html" style="display:none;margin-top:14px;align-items:center;justify-content:space-between;gap:10px;background:rgba(124,106,247,.07);border:1px solid rgba(124,106,247,.2);border-radius:10px;padding:12px 16px;text-decoration:none;color:var(--text)">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:2px">🧮 Puan Hesaplama Aracı</div>
+        <div style="font-size:11px;color:var(--muted)">Hedef puanın için kaç doğru yapman gerekiyor?</div>
+      </div>
+      <span style="color:var(--accent);font-size:16px">→</span>
+    </a>
   </div>
 </div>
 
@@ -1841,6 +1849,9 @@ function enterApp(){
     document.getElementById('honeycomb-panel').style.display = currentUser ? '' : 'none';
     document.getElementById('intro').classList.add('active');
     renderLvlQ();
+    // Intro altında araç linkini göster
+    const _toolBanner = document.getElementById('intro-tool-banner');
+    if(_toolBanner) _toolBanner.style.display = 'block';
   }
 }
 
@@ -3152,6 +3163,13 @@ function showPlan(level,pct){
       <!-- AdSense kodu buraya gelecek -->
       reklam alanı
     </div>
+    <a href="/yds-puan-hesaplama.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(124,106,247,.08);border:1px solid rgba(124,106,247,.22);border-radius:12px;padding:14px 18px;text-decoration:none;margin-bottom:14px">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:3px">🧮 YDS Puan Hesaplama</div>
+        <div style="font-size:12px;color:var(--muted)">Kaç doğru kaç puan eder? Hedefini belirle.</div>
+      </div>
+      <span style="font-size:18px;opacity:.6">→</span>
+    </a>
     <div class="btn-row">
       <button class="btn btn-outline btn-sm" onclick="openStrategyModal()">📋 Sınav Stratejisi</button>
       <button class="btn btn-outline btn-sm" onclick="goTo('intro')">← Başa Dön</button>

@@ -214,10 +214,10 @@
       <div class="result-bar-wrap">
         <div class="result-bar" id="result-bar" style="width:0%"></div>
       </div>
-      <div class="cta-result">
+      <div class="cta-result" id="cta-result-box" style="display:none">
         <p>
-          <strong>&#x1F3AF; Hedefine ulaşmak için plan yap</strong>
-          Günlük çalışma planı, kelime kartları ve deneme sınavları ücretsiz.
+          <strong id="cta-result-title">&#x1F3AF; Hedefine ulaşmak için plan yap</strong>
+          <span id="cta-result-desc">Günlük çalışma planı, kelime kartları ve deneme sınavları ücretsiz.</span>
         </p>
         <a href="/">30 Günlük Planı Başlat &rarr;</a>
       </div>
@@ -382,9 +382,21 @@
 
     var res = document.getElementById("result");
     res.className = "result";
-    // force reflow for animation
     void res.offsetWidth;
     res.className = "result show";
+
+    // CTA: seviyeye göre dinamik mesaj
+    var ctaMsgs = {
+      "lv-low":  { title: "📚 Başlangıç için plan kritik", desc: "Düzenli çalışmayla 2-3 ayda 15-20 puan kazanılır. Kişiselleştirilmiş planını şimdi başlat." },
+      "lv-mid":  { title: "📈 70 puana ulaşmak için hazırlık planı", desc: "İyi bir temelin var. Günde 30 dakika sistematik çalışmayla akademik eşiği geçebilirsin." },
+      "lv-high": { title: "🏆 Puanını daha da artır", desc: "Zayıf konuları tespit etmek ve takrar yapmak için günlük planını kullan." }
+    };
+    var msg = ctaMsgs[lv.cls] || ctaMsgs["lv-mid"];
+    document.getElementById("cta-result-title").textContent = msg.title;
+    document.getElementById("cta-result-desc").textContent  = msg.desc;
+    var ctaBox = document.getElementById("cta-result-box");
+    ctaBox.style.display = "flex";
+    setTimeout(function(){ ctaBox.scrollIntoView({ behavior:"smooth", block:"nearest" }); }, 350);
   }
 </script>
 
