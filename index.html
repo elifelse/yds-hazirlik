@@ -1714,7 +1714,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
     </div>
   </div>
   <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px;padding-right:4px">
-    <span style="font-size:12px;color:var(--muted);cursor:pointer;opacity:.7" onclick="roamDismiss()">geç →</span>
+    <span style="font-size:12px;color:var(--text);cursor:pointer;opacity:.85;background:rgba(255,255,255,.06);padding:3px 8px;border-radius:6px;border:1px solid var(--border)" onclick="roamDismiss()">geç →</span>
     <lottie-player src="/quiz-character.json" background="transparent" speed="1"
       style="width:110px;height:83px;cursor:pointer;margin-bottom:-4px"
       loop autoplay onclick="roamDismiss()">
@@ -4725,7 +4725,7 @@ function roamAnswer(correct, chosen, ansIdx, type, data){
         : `Doğru: "${data.opts[data.ans]}" — ${data.hint}`;
       document.getElementById('roam-result-sub').textContent = correctStr;
       const actionHTML = isVocab
-        ? `<button class="roam-action-btn" onclick="roamDismiss();openVocabDrill && openVocabDrill()">📚 Kelime Çalış →</button>`
+        ? `<button class="roam-action-btn" onclick="roamDismiss();openWordsModule()">📚 Kelime Çalış →</button>`
         : `<button class="roam-action-btn" onclick="roamDismiss();toggleGrammar()">✏️ Gramer Rehberi →</button>`;
       document.getElementById('roam-result-action').innerHTML = actionHTML;
     }
