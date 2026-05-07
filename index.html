@@ -1266,6 +1266,20 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 }
 #rv-submit:hover{opacity:.88;}
 #rv-submit:disabled{opacity:.4;cursor:default;}
+/* ── ROAMING TUTOR ── */
+#roam-wrap{position:fixed;z-index:8800;display:none;flex-direction:column;align-items:flex-end;gap:6px;max-width:280px}
+.roam-bubble{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,.4);font-size:14px;line-height:1.5;width:260px;animation:roamIn .4s cubic-bezier(.34,1.56,.64,1)}
+.roam-char-emoji{font-size:38px;cursor:pointer;animation:roamFloat 2.5s ease-in-out infinite;user-select:none;display:block;text-align:right}
+.roam-type-btn{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.roam-type-btn:hover{background:rgba(129,140,248,.15);border-color:var(--accent)}
+.roam-opt-btn{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:13px;text-align:left;cursor:pointer;transition:.15s;margin-bottom:5px}
+.roam-opt-btn:hover:not(:disabled){background:rgba(129,140,248,.12);border-color:var(--accent)}
+.roam-opt-btn:disabled{cursor:default}
+.roam-opt-btn.correct{background:rgba(63,185,80,.15)!important;border-color:var(--green)!important;color:var(--green)!important}
+.roam-opt-btn.wrong{background:rgba(248,81,73,.1)!important;border-color:var(--red)!important;color:var(--red)!important}
+.roam-action-btn{padding:9px 14px;border-radius:8px;border:none;background:var(--accent);color:#0d1117;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
+@keyframes roamIn{from{transform:scale(.6) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+@keyframes roamFloat{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-6px) rotate(4deg)}}
 </style>
 </head>
 <body>
@@ -1674,6 +1688,36 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
   <div id="gram-content"></div>
 </div>
 
+<!-- ═══════════════════ ROAMING TUTOR ═══════════════════ -->
+<div id="roam-wrap">
+  <div class="roam-bubble">
+    <!-- PHASE 1: Tip seç -->
+    <div id="roam-phase-intro">
+      <p style="font-weight:700;margin-bottom:4px;font-size:15px">Sana bir sorum var! 🤔</p>
+      <p style="color:var(--muted);font-size:12px;margin-bottom:12px">Ne sorayım?</p>
+      <div style="display:flex;gap:8px">
+        <button class="roam-type-btn" onclick="roamPickType('vocab')">📚 Kelime</button>
+        <button class="roam-type-btn" onclick="roamPickType('grammar')">✏️ Gramer</button>
+      </div>
+    </div>
+    <!-- PHASE 2: Soru -->
+    <div id="roam-phase-q" style="display:none">
+      <p id="roam-q-text" style="font-weight:600;margin-bottom:12px;line-height:1.5"></p>
+      <div id="roam-q-opts"></div>
+    </div>
+    <!-- PHASE 3: Sonuç -->
+    <div id="roam-phase-result" style="display:none">
+      <p id="roam-result-title" style="font-weight:700;font-size:15px;margin-bottom:6px"></p>
+      <p id="roam-result-sub" style="font-size:13px;color:var(--muted);line-height:1.5;white-space:pre-line"></p>
+      <div id="roam-result-action"></div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;padding-right:4px">
+    <span style="font-size:12px;color:var(--muted);cursor:pointer;opacity:.7" onclick="roamDismiss()">geç →</span>
+    <span class="roam-char-emoji">🦉</span>
+  </div>
+</div>
+
 <!-- ═══════════════════ BOTTOM NAV ═══════════════════ -->
 <nav id="bottom-nav">
   <button class="bnav-item" onclick="openDeneme()">
@@ -1848,6 +1892,7 @@ function enterApp(){
   document.getElementById('bottom-nav').style.display = 'flex';
   document.getElementById('top-nav').classList.add('active');
   document.getElementById('theme-picker-fixed').classList.add('visible');
+  roamStart(); // 5 dakikada bir soru soran tutor
 
   // Daha önce seviye testi yapıldıysa direkt plana git; yoksa quiz göster
   const _savedLevel = localStorage.getItem('yds_level');
@@ -4546,6 +4591,141 @@ function openSkipModal(){
 function skipToLevel(level, pct){
   closeModal();
   showPlan(level, pct);
+}
+
+// ══════════════════════════════════════════════════════
+//  ROAMING TUTOR
+// ══════════════════════════════════════════════════════
+const ROAM_GRAMMAR_QS = [
+  {q:'The report _____ by the team last week.',opts:['written','was written','has written','writes'],ans:1,hint:'Passive voice (past simple)'},
+  {q:'If I _____ you, I would study harder.',opts:['am','were','was','be'],ans:1,hint:'Second conditional'},
+  {q:'She _____ here for 5 years by next month.',opts:['lives','lived','will have lived','has lived'],ans:2,hint:'Future perfect'},
+  {q:'_____ honest person should admit mistakes.',opts:['A','An','The','—'],ans:1,hint:'Article: "an" before vowel sound'},
+  {q:'The scientist _____ won the Nobel Prize made history.',opts:['who','which','what','whose'],ans:0,hint:'Relative clause (kişi → who)'},
+  {q:'By the time we arrived, the concert _____.',opts:['ends','ended','had ended','has ended'],ans:2,hint:'Past perfect (önce olan eylem)'},
+  {q:'He insisted on _____ the bill himself.',opts:['pay','paid','to pay','paying'],ans:3,hint:'Preposition + gerund (-ing)'},
+  {q:'_____ she had studied all night, she failed.',opts:['Even though','Despite','Because','So'],ans:0,hint:'Contrast clause'},
+  {q:'The results _____ analyzed by tomorrow.',opts:['will analyzed','will be analyzed','are analyzing','analyze'],ans:1,hint:'Passive voice (future)'},
+  {q:'This is _____ most difficult exam I have taken.',opts:['a','an','the','—'],ans:2,hint:'Superlative → "the"'},
+  {q:'I wish I _____ more time to prepare.',opts:['have','had','will have','am having'],ans:1,hint:'Wish + past simple'},
+  {q:'The film, _____ won three awards, was brilliant.',opts:['who','that','which','what'],ans:2,hint:'Non-defining relative clause'},
+  {q:'He is _____ tired _____ continue working.',opts:['so/that','too/to','enough/to','such/that'],ans:1,hint:'too … to (fazla … için)'},
+  {q:'_____ the heavy rain, they continued the match.',opts:['Although','Despite','However','Since'],ans:1,hint:'Despite + noun/gerund'},
+  {q:'She suggested _____ a different approach.',opts:['try','tried','to try','trying'],ans:3,hint:'suggest + gerund'},
+  {q:'The book _____ I told you about is out of print.',opts:['who','—','what','whose'],ans:1,hint:'Object relative clause: that/which ya da sıfır'},
+  {q:'No sooner _____ she arrived _____ it started raining.',opts:['had/than','did/when','was/then','—/when'],ans:0,hint:'No sooner … than (inversion)'},
+  {q:'_____ working late, he finished the project on time.',opts:['Despite','By','Although','Since'],ans:1,hint:'By + gerund (nasıl yapıldığını anlatır)'},
+];
+
+let roamTimer = null;
+
+function roamStart(){
+  if(roamTimer) clearTimeout(roamTimer);
+  roamTimer = setTimeout(roamShow, 5 * 60 * 1000); // 5 dakika
+}
+
+function roamShow(){
+  // Aktif quiz veya auth ekranındaysa ertele
+  const quizActive = document.getElementById('quiz').classList.contains('active');
+  const authActive = document.getElementById('auth-screen').classList.contains('active');
+  if(quizActive || authActive){
+    roamTimer = setTimeout(roamShow, 90 * 1000);
+    return;
+  }
+
+  const wrap = document.getElementById('roam-wrap');
+  // Rastgele köşe (mobil: sadece alt, masaüstü: 3 seçenek)
+  const isMob = window.innerWidth <= 640;
+  const positions = isMob
+    ? [{bottom:'76px',right:'12px'},{bottom:'76px',left:'12px'}]
+    : [{bottom:'24px',right:'24px'},{bottom:'24px',left:'24px'},{top:'70px',right:'24px'}];
+  const p = positions[Math.floor(Math.random() * positions.length)];
+  wrap.style.bottom = p.bottom||''; wrap.style.top = p.top||'';
+  wrap.style.left  = p.left ||''; wrap.style.right = p.right||'';
+
+  // Fazları sıfırla
+  document.getElementById('roam-phase-intro').style.display  = 'block';
+  document.getElementById('roam-phase-q').style.display      = 'none';
+  document.getElementById('roam-phase-result').style.display = 'none';
+  wrap.style.display = 'flex';
+
+  // Bir sonraki için timer
+  roamTimer = setTimeout(roamShow, 5 * 60 * 1000);
+}
+
+function roamPickType(type){
+  document.getElementById('roam-phase-intro').style.display = 'none';
+  document.getElementById('roam-phase-q').style.display     = 'block';
+  type === 'vocab' ? roamAskVocab() : roamAskGrammar();
+}
+
+function roamAskVocab(){
+  const pool = [...WORDS].sort(()=>Math.random()-.5);
+  const correct = pool[0];
+  const correctTr = correct.tr.split(',')[0].trim();
+  const wrongs = pool.slice(1,4).map(w=>w.tr.split(',')[0].trim());
+  const opts = [...wrongs, correctTr].sort(()=>Math.random()-.5);
+  const ansIdx = opts.indexOf(correctTr);
+
+  document.getElementById('roam-q-text').textContent = `"${correct.word}" kelimesinin Türkçesi nedir?`;
+  const c = document.getElementById('roam-q-opts');
+  c.innerHTML = '';
+  opts.forEach((opt,i)=>{
+    const b = document.createElement('button');
+    b.className='roam-opt-btn'; b.textContent=opt;
+    b.onclick=()=>roamAnswer(i===ansIdx, i, ansIdx, 'vocab', correct);
+    c.appendChild(b);
+  });
+}
+
+function roamAskGrammar(){
+  const q = ROAM_GRAMMAR_QS[Math.floor(Math.random()*ROAM_GRAMMAR_QS.length)];
+  document.getElementById('roam-q-text').textContent = q.q;
+  const c = document.getElementById('roam-q-opts');
+  c.innerHTML = '';
+  q.opts.forEach((opt,i)=>{
+    const b = document.createElement('button');
+    b.className='roam-opt-btn'; b.textContent=opt;
+    b.onclick=()=>roamAnswer(i===q.ans, i, q.ans, 'grammar', q);
+    c.appendChild(b);
+  });
+}
+
+function roamAnswer(correct, chosen, ansIdx, type, data){
+  // Tüm butonları kilitle, doğru/yanlışı renklendir
+  document.querySelectorAll('.roam-opt-btn').forEach((b,i)=>{
+    b.disabled = true;
+    if(i === ansIdx) b.classList.add('correct');
+    else if(i === chosen && !correct) b.classList.add('wrong');
+  });
+
+  setTimeout(()=>{
+    document.getElementById('roam-phase-q').style.display      = 'none';
+    document.getElementById('roam-phase-result').style.display = 'block';
+
+    if(correct){
+      document.getElementById('roam-result-title').textContent = '🎉 Harika! Doğru!';
+      document.getElementById('roam-result-sub').textContent   = 'Böyle devam! YDS\'yi geçersin. 💪';
+      document.getElementById('roam-result-action').innerHTML  = '';
+      launchKonfeti();
+      setTimeout(roamDismiss, 2500);
+    } else {
+      document.getElementById('roam-result-title').textContent = '😅 Bu sefer olmadı.';
+      const isVocab = type === 'vocab';
+      const correctStr = isVocab
+        ? `Doğru: "${data.tr.split(',')[0].trim()}"`
+        : `Doğru: "${data.opts[data.ans]}" — ${data.hint}`;
+      document.getElementById('roam-result-sub').textContent = correctStr;
+      const actionHTML = isVocab
+        ? `<button class="roam-action-btn" onclick="roamDismiss();openVocabDrill && openVocabDrill()">📚 Kelime Çalış →</button>`
+        : `<button class="roam-action-btn" onclick="roamDismiss();toggleGrammar()">✏️ Gramer Rehberi →</button>`;
+      document.getElementById('roam-result-action').innerHTML = actionHTML;
+    }
+  }, 600);
+}
+
+function roamDismiss(){
+  document.getElementById('roam-wrap').style.display = 'none';
 }
 
 // ══════════════════════════════════════════════════════
