@@ -4640,9 +4640,10 @@ function roamShow(){
   const wrap = document.getElementById('roam-wrap');
   // Rastgele köşe (mobil: sadece alt, masaüstü: 3 seçenek)
   const isMob = window.innerWidth <= 640;
+  // Sağ alt köşe arının yeri (bottom:90px right:20px) — oradan kaçın
   const positions = isMob
-    ? [{bottom:'76px',right:'12px'},{bottom:'76px',left:'12px'}]
-    : [{bottom:'24px',right:'24px'},{bottom:'24px',left:'24px'},{top:'70px',right:'24px'}];
+    ? [{bottom:'76px',left:'12px'}]
+    : [{bottom:'24px',left:'24px'},{top:'70px',right:'24px'},{top:'70px',left:'24px'}];
   const p = positions[Math.floor(Math.random() * positions.length)];
   wrap.style.bottom = p.bottom||''; wrap.style.top = p.top||'';
   wrap.style.left  = p.left ||''; wrap.style.right = p.right||'';
@@ -4664,10 +4665,13 @@ function roamPickType(type){
 }
 
 function roamAskVocab(){
-  const pool = [...WORDS].sort(()=>Math.random()-.5);
-  const correct = pool[0];
+  // VOCAB_SETS_C1/B1/B2 içindeki tüm kelimeleri düzleştir
+  const allWords = [...VOCAB_SETS_C1, ...VOCAB_SETS_B1, ...VOCAB_SETS_B2]
+    .flatMap(s => s.words)
+    .sort(()=>Math.random()-.5);
+  const correct = allWords[0];
   const correctTr = correct.tr.split(',')[0].trim();
-  const wrongs = pool.slice(1,4).map(w=>w.tr.split(',')[0].trim());
+  const wrongs = allWords.slice(1,4).map(w=>w.tr.split(',')[0].trim());
   const opts = [...wrongs, correctTr].sort(()=>Math.random()-.5);
   const ansIdx = opts.indexOf(correctTr);
 
