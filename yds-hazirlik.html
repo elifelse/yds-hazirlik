@@ -350,7 +350,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .land-bottom p{color:var(--muted);font-size:14px;margin-bottom:20px}
 
 /* ── AUTH EKRANI ── */
-#auth-screen{display:none;min-height:100vh;background:var(--bg);align-items:center;justify-content:center;padding:24px 16px}
+#auth-screen{display:none;position:fixed;inset:0;z-index:9500;background:var(--bg);align-items:center;justify-content:center;padding:24px 16px;overflow-y:auto}
 #auth-screen.active{display:flex}
 .auth-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 24px;width:100%;max-width:400px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .auth-logo{font-size:48px;margin-bottom:8px}
