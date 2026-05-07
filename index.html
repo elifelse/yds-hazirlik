@@ -96,11 +96,15 @@
   --bg:#f6f8fa;--card:#ffffff;--border:#d0d7de;
   --green:#1a7f37;--yellow:#9a6700;--red:#d1242f;
   --blue:#0969da;--purple:#8250df;--text:#1f2328;--muted:#636c76;
+  --card-front:linear-gradient(135deg,#dbeafe,#eff6ff);--card-front-border:rgba(9,105,218,.25);
+  --card-back:linear-gradient(135deg,#dcfce7,#f0fdf4);--card-back-border:rgba(26,127,55,.25);
 }
 [data-theme="sepia"]{
   --bg:#f4efe6;--card:#fdf8f0;--border:#d9cdb8;
   --green:#2d6a3f;--yellow:#8a6000;--red:#c0392b;
   --blue:#1a5276;--purple:#6c3483;--text:#2c2416;--muted:#7d6e58;
+  --card-front:linear-gradient(135deg,#e8e0d0,#f2ebe0);--card-front-border:rgba(26,82,118,.2);
+  --card-back:linear-gradient(135deg,#dff0e0,#edf7ee);--card-back-border:rgba(45,106,63,.2);
 }
 body{background:var(--bg);background-image:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(129,140,248,.07) 0%,transparent 100%);color:var(--text);font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;font-feature-settings:'cv02','cv03','cv04','cv11';min-height:100vh;padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
 button,input,select,textarea{font-family:inherit}
@@ -458,8 +462,8 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
   align-items:center;justify-content:center;padding:24px;
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
 }
-.card-front{background:linear-gradient(135deg,#1a2332,#1e2d40);border:1px solid rgba(88,166,255,.3)}
-.card-back {background:linear-gradient(135deg,#1a2a1f,#1e3325);border:1px solid rgba(63,185,80,.3);transform:rotateY(180deg)}
+.card-front{background:var(--card-front,linear-gradient(135deg,#1a2332,#1e2d40));border:1px solid var(--card-front-border,rgba(88,166,255,.3))}
+.card-back {background:var(--card-back,linear-gradient(135deg,#1a2a1f,#1e3325));border:1px solid var(--card-back-border,rgba(63,185,80,.3));transform:rotateY(180deg)}
 .card-word{font-size:clamp(26px,6vw,42px);font-weight:800;color:var(--blue);margin-bottom:8px;text-align:center}
 .card-pos {font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
 .card-meaning{font-size:clamp(18px,4vw,26px);font-weight:700;color:var(--green);margin-bottom:10px;text-align:center}
@@ -1288,6 +1292,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
         <a href="/yds-ielts-fark.html">YDS vs IELTS</a>
         <a href="/yds-relative-clauses.html">Relative Clauses</a>
         <a href="/yds-passive-voice.html">Passive Voice</a>
+        <a href="/yds-articles-kullanimi.html">Articles (a/an/the)</a>
         <a href="/yds-soru-tipleri.html">Soru Tipleri</a>
         <a href="/yds-puan-hesaplama.html">Puan Hesaplama</a>
       </div>
@@ -1301,6 +1306,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
       <button class="tpf-btn t-light" id="tpf-light-nav" onclick="setTheme('light')" title="Açık"></button>
       <button class="tpf-btn t-sepia" id="tpf-sepia-nav" onclick="setTheme('sepia')" title="Sepya"></button>
     </div>
+    <button id="nav-login-btn" class="tnav-btn primary" onclick="showAuthInApp()" style="display:none">🔑 Giriş Yap</button>
     <div id="user-chip" onclick="authSignOut()" style="display:none"></div>
   </div>
 </nav>
@@ -1823,14 +1829,18 @@ function enterApp(){
   document.getElementById('auth-back-wrap').style.display = 'none';
   showAuthStatus('', '');
 
-  // Kullanıcı chip
+  // Kullanıcı chip + nav login butonu
   const chip = document.getElementById('user-chip');
+  const navLoginBtn = document.getElementById('nav-login-btn');
   if(currentUser){
     const email = currentUser.email || '';
     const name = email ? email.split('@')[0] : 'Hesap';
     const initial = name.charAt(0).toUpperCase();
     chip.innerHTML = `<div class="uc-avatar">${initial}</div><span class="uc-name">${name}</span><span class="uc-exit">· Çıkış</span>`;
     chip.style.display = 'flex';
+    if(navLoginBtn) navLoginBtn.style.display = 'none';
+  } else {
+    if(navLoginBtn) navLoginBtn.style.display = 'flex';
   }
 
   // Navigasyonu göster
@@ -1962,6 +1972,8 @@ async function authSignOut(){
   if(supa && currentUser) await supa.auth.signOut();
   currentUser = null;
   document.getElementById('user-chip').style.display = 'none';
+  const _nlb = document.getElementById('nav-login-btn');
+  if(_nlb) _nlb.style.display = 'none';
   document.getElementById('theme-picker-fixed').classList.remove('visible');
   document.getElementById('bee').style.display = 'none';
   document.getElementById('bee-bubble').style.display = 'none';
@@ -2825,6 +2837,14 @@ function goTo(id){
     const lv=localStorage.getItem('yds_level')||'B1';
     const pt=parseInt(localStorage.getItem('yds_pct')||'50');
     showPlan(lv,pt);
+    return;
+  }
+  if(id==='quiz'){
+    lvlCurrent=0; lvlAnswers=[]; lvlTagScores={};
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById('quiz').classList.add('active');
+    window.scrollTo(0,0);
+    renderLvlQ();
     return;
   }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
