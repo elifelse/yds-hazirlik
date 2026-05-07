@@ -1,7 +1,7 @@
 // YDS Hazırlık — Service Worker
 // Uygulamayı önbelleğe alır, internet olmadan da çalışmasını sağlar
 
-const CACHE_NAME = 'yds-hazirlik-v2';
+const CACHE_NAME = 'yds-hazirlik-v3';
 const ASSETS = [
   '/',
   '/index.html'
@@ -43,25 +43,35 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
+  // HTML istekleri için network-first: her zaman güncel versiyonu getir
+  const isHTML = event.request.url.endsWith('.html') ||
+                 event.request.url === location.origin + '/' ||
+                 event.request.url === location.origin;
 
-      return fetch(event.request).then(response => {
-        // Sadece başarılı HTML/JS/CSS yanıtlarını önbelleğe al
-        if (
-          response.ok &&
-          (event.request.url.endsWith('.html') ||
-           event.request.url.endsWith('.js') ||
-           event.request.url.endsWith('.css') ||
-           event.request.url === '/' ||
-           event.request.url === location.origin + '/')
-        ) {
+  if (isHTML) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        if (response.ok) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         }
         return response;
-      }).catch(() => cached || new Response('Offline', {status: 503}));
+      }).catch(() => caches.match(event.request).then(c => c || new Response('Offline', {status: 503})))
+    );
+    return;
+  }
+
+  // Diğer dosyalar (JS, CSS, font): önce cache, yoksa network
+  event.respondWith(
+    caches.match(event.request).then(cached => {
+      if (cached) return cached;
+      return fetch(event.request).then(response => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        }
+        return response;
+      }).catch(() => new Response('Offline', {status: 503}));
     })
   );
 });
