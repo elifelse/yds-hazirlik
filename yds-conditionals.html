@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<script>(function(){var t=localStorage.getItem("yds_theme");if(t&&t!=="dark")document.documentElement.setAttribute("data-theme",t);})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YDS'de Conditionals (If Clauses) – Tip 0, 1, 2, 3 ve Mixed | YDS Hazırlık</title>
+  <meta name="description" content="YDS'de conditionals nasıl çözülür? Zero, first, second, third ve mixed conditionals, unless/provided that kullanımı ve sınavda çıkan tuzaklar örneklerle.">
+  <meta name="keywords" content="YDS conditionals, YDS if clause, YDS koşul cümleleri, YDS mixed conditional, unless YDS, YDS gramer conditionals, first conditional YDS, third conditional YDS">
+  <meta name="author" content="YDS Hazırlık">
+  <link rel="canonical" href="https://yds-hazirlik.com/yds-conditionals.html">
+  <meta property="og:title" content="YDS Conditionals – If Clause Tipleri, Tuzaklar, Örnek Sorular">
+  <meta property="og:description" content="YDS'de koşul cümlelerini (conditionals) nasıl çözersin? Tüm tipler, mixed conditionals ve unless kullanımı.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yds-hazirlik.com/yds-conditionals.html">
+  <meta property="og:image" content="https://yds-hazirlik.com/og-image.svg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://yds-hazirlik.com/og-image.svg"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "YDS Conditionals – If Clause Tipleri, Mixed Conditionals ve Sınav Tuzakları",
+    "description": "YDS gramer bölümünde sık çıkan koşul cümleleri (conditionals): Zero, First, Second, Third ve Mixed Conditional yapıları, unless ve provided that kullanımı.",
+    "url": "https://yds-hazirlik.com/yds-conditionals.html",
+    "publisher": {"@type": "Organization", "name": "YDS Hazırlık", "url": "https://yds-hazirlik.com"}
+  }
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0e101e;--card:#161929;--border:#2a2d45;--text:#e8eaf0;--muted:#8b90a8;--accent:#7c6af7;--accent2:#f7c948;--green:#4caf7d;--red:#e05c5c;--radius:12px}
+    body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.75;font-size:16px}
+    nav{background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+    .nav-brand{font-weight:700;font-size:1.1rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+    .nav-cta{background:var(--accent);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-size:.875rem;font-weight:600}
+    .hero{max-width:860px;margin:0 auto;padding:56px 24px 32px}
+    .hero-badge{display:inline-block;background:rgba(124,106,247,.12);color:var(--accent);border:1px solid rgba(124,106,247,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:16px}
+    h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.25;margin-bottom:16px}
+    h1 em{font-style:normal;color:var(--accent2)}
+    .hero-lead{font-size:1.05rem;color:var(--muted);max-width:680px;margin-bottom:32px}
+    .content{max-width:860px;margin:0 auto;padding:0 24px 80px}
+    .section{margin-bottom:48px}
+    h2.section-title{font-size:1.35rem;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px}
+    h3.sub-title{font-size:1.05rem;font-weight:700;color:var(--accent);margin:24px 0 12px}
+    p{margin-bottom:12px;font-size:.97rem}
+    .rule-table{width:100%;border-collapse:collapse;font-size:.92rem;margin:12px 0}
+    .rule-table th{padding:10px 14px;text-align:left;font-size:.78rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);border-bottom:1px solid var(--border);background:rgba(124,106,247,.07)}
+    .rule-table td{padding:10px 14px;border-bottom:1px solid rgba(42,45,69,.6);vertical-align:top}
+    .rule-table tr:hover td{background:rgba(124,106,247,.04)}
+    code{background:rgba(124,106,247,.15);color:var(--accent);padding:2px 8px;border-radius:4px;font-family:'SF Mono',Monaco,monospace;font-size:.88em}
+    .example-box{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius);padding:16px 20px;margin:12px 0}
+    .example-box .sentence{font-size:.95rem;margin-bottom:6px}
+    .example-box .note{font-size:.83rem;color:var(--muted)}
+    .example-box em{font-style:normal;color:var(--accent2);font-weight:600}
+    .correct{color:var(--green)}
+    .wrong{color:var(--red)}
+    .trap-card{background:rgba(224,92,92,.07);border:1px solid rgba(224,92,92,.2);border-radius:var(--radius);padding:18px 20px;margin:12px 0}
+    .trap-card h4{color:var(--red);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+    .trap-card p,.trap-card li{font-size:.9rem;color:var(--muted)}
+    .trap-card ul{padding-left:20px;margin-top:6px}
+    .tip-box{background:rgba(76,175,125,.07);border:1px solid rgba(76,175,125,.2);border-left:4px solid var(--green);border-radius:var(--radius);padding:16px 20px;margin:20px 0;font-size:.95rem}
+    .tip-box strong{color:var(--green)}
+    .formula-box{background:rgba(124,106,247,.08);border:1px solid rgba(124,106,247,.25);border-radius:var(--radius);padding:18px 22px;margin:14px 0;text-align:center;font-size:1.05rem;font-weight:600;letter-spacing:.3px}
+    .formula-box code{background:rgba(124,106,247,.2);font-size:.95em}
+    .quiz-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:12px 0}
+    .quiz-item p{margin-bottom:12px;font-size:.95rem}
+    .quiz-item .answer{font-size:.88rem;color:var(--muted);border-top:1px solid var(--border);padding-top:10px;margin-top:10px}
+    .quiz-item .answer strong{color:var(--green)}
+    .cta-banner{background:linear-gradient(135deg,rgba(124,106,247,.15) 0%,rgba(247,201,72,.08) 100%);border:1px solid var(--border);border-radius:16px;padding:36px 32px;text-align:center;margin:48px 0}
+    .cta-banner h3{font-size:1.3rem;margin-bottom:10px}
+    .cta-banner p{color:var(--muted);margin-bottom:24px;font-size:.95rem}
+    .cta-btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:14px 32px;border-radius:10px;font-weight:700;font-size:1rem}
+    footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;color:var(--muted);font-size:.85rem}
+    footer a{color:var(--accent);text-decoration:none}
+    [data-theme="light"]{--bg:#f6f8fa;--card:#ffffff;--border:#d0d7de;--text:#1f2328;--muted:#636c76;--accent:#5a4fcf;--accent2:#9a6700;--green:#1a7f37;--red:#d1242f}
+    [data-theme="sepia"]{--bg:#f4efe6;--card:#fdf8f0;--border:#d9cdb8;--text:#2c2416;--muted:#7d6e58;--accent:#5a4fcf;--accent2:#8a6000;--green:#2d6a3f;--red:#c0392b}
+    .related-section{margin:48px 0 32px}
+    .related-title{font-size:18px;font-weight:700;margin-bottom:16px;color:var(--text)}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .related-card{display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;color:var(--text);transition:border-color .15s,transform .15s}
+    .related-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .related-card-title{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--accent)}
+    .related-card-desc{font-size:13px;color:var(--muted);line-height:1.45}
+    .type-badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.75rem;font-weight:700;letter-spacing:.4px;margin-bottom:8px;text-transform:uppercase}
+    .badge-zero{background:rgba(76,175,125,.15);color:var(--green)}
+    .badge-one{background:rgba(124,106,247,.15);color:var(--accent)}
+    .badge-two{background:rgba(247,201,72,.12);color:var(--accent2)}
+    .badge-three{background:rgba(224,92,92,.12);color:var(--red)}
+    .badge-mixed{background:rgba(100,180,255,.12);color:#64b4ff}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="/">&#x1F41D; YDS Hazırlık</a>
+  <a class="nav-cta" href="/">Uygulamaya Git</a>
+</nav>
+<header class="hero">
+  <div class="hero-badge">Gramer Konusu</div>
+  <h1>YDS'de<br><em>Conditionals</em></h1>
+  <p class="hero-lead">Koşul cümleleri (if clauses), YDS gramer bölümünün en sık çıkan konularından biri. Zero'dan mixed conditional'a kadar tüm tipler, sınav tuzakları ve çözüm stratejisi burada.</p>
+</header>
+<main class="content">
+
+  <!-- GENEL BAKIŞ -->
+  <section class="section">
+    <h2 class="section-title">&#x1F4CA; Conditional Tiplerine Genel Bakış</h2>
+    <table class="rule-table">
+      <thead>
+        <tr>
+          <th>Tip</th>
+          <th>If-clause</th>
+          <th>Main Clause</th>
+          <th>Anlam</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Zero</strong></td>
+          <td>If + Present Simple</td>
+          <td>Present Simple</td>
+          <td>Genel gerçekler, bilimsel yasalar</td>
+        </tr>
+        <tr>
+          <td><strong>First</strong></td>
+          <td>If + Present Simple</td>
+          <td>will + V1</td>
+          <td>Gerçekçi gelecek koşul</td>
+        </tr>
+        <tr>
+          <td><strong>Second</strong></td>
+          <td>If + Past Simple</td>
+          <td>would + V1</td>
+          <td>Hayali / gerçek dışı şimdiki durum</td>
+        </tr>
+        <tr>
+          <td><strong>Third</strong></td>
+          <td>If + Past Perfect</td>
+          <td>would have + V3</td>
+          <td>Geçmişe dair pişmanlık / gerçek dışı</td>
+        </tr>
+        <tr>
+          <td><strong>Mixed</strong></td>
+          <td>If + Past Perfect</td>
+          <td>would + V1</td>
+          <td>Geçmişteki durum → şimdiki sonuç</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip-box"><strong>YDS'de en çok:</strong> Second, Third ve Mixed conditional soruları çıkar. Zero ve First daha basit olduğu için genellikle tuzak seçeneği olarak kullanılır.</div>
+  </section>
+
+  <!-- ZERO CONDITIONAL -->
+  <section class="section">
+    <h2 class="section-title">&#x1F7E2; Zero Conditional</h2>
+    <div class="type-badge badge-zero">Tip 0</div>
+    <p>Her zaman doğru olan gerçekler, bilimsel yasalar ve genel alışkanlıklar için kullanılır. Her iki cümlede de <strong>Present Simple</strong> kullanılır. "If" yerine "when" kullanılabilir.</p>
+
+    <div class="formula-box">
+      If + <code>Present Simple</code> &nbsp;,&nbsp; <code>Present Simple</code>
+    </div>
+
+    <div class="example-box">
+      <div class="sentence">If you <em>heat</em> water to 100°C, it <em>boils</em>.</div>
+      <div class="note">Bilimsel yasa — her zaman doğru. "When" ile de kullanılabilir.</div>
+    </div>
+    <div class="example-box">
+      <div class="sentence">If plants <em>don't get</em> enough sunlight, they <em>die</em>.</div>
+      <div class="note">Genel gerçek — koşul sağlandığında sonuç değişmez.</div>
+    </div>
+    <div class="tip-box"><strong>YDS'de Zero Conditional:</strong> Bilim ve doğa metinlerinde sıkça geçer. Seçeneklerde "heats/heated" farkına dikkat et — Zero'da her iki fiil de simple present.</div>
+  </section>
+
+  <!-- FIRST CONDITIONAL -->
+  <section class="section">
+    <h2 class="section-title">&#x1F535; First Conditional</h2>
+    <div class="type-badge badge-one">Tip 1</div>
+    <p>Gerçekleşmesi mümkün olan gelecek koşullar için kullanılır. If-clause'da Present Simple, ana cümlede <strong>will + V1</strong> kullanılır.</p>
+
+    <div class="formula-box">
+      If + <code>Present Simple</code> &nbsp;,&nbsp; <code>will + V1</code>
+    </div>
+
+    <div class="example-box">
+      <div class="sentence">If the temperature <em>drops</em> below zero, the pipes <em>will freeze</em>.</div>
+      <div class="note">Gerçekleşebilir koşul → gelecekte olası sonuç.</div>
+    </div>
+    <div class="example-box">
+      <div class="sentence">If researchers <em>find</em> a cure, millions of lives <em>will be saved</em>.</div>
+      <div class="note">"will be saved" = First Conditional + Passive kombinasyonu. YDS'de sık çıkar.</div>
+    </div>
+
+    <div class="trap-card">
+      <h4>&#x26A0;&#xFE0F; If-clause'da will kullanılmaz</h4>
+      <p>If-clause içinde "will" kesinlikle olmaz.<br>
+      <span class="wrong">&#x2717;</span> If it <em>will rain</em>, we will stay inside.<br>
+      <span class="correct">&#x2713;</span> If it <em>rains</em>, we will stay inside.</p>
+    </div>
+
+    <div class="tip-box"><strong>Will yerine gelebilecekler:</strong> <code>can</code>, <code>may</code>, <code>might</code>, <code>should</code> da First Conditional ana cümlesinde kullanılabilir. "If you study hard, you <em>may pass</em>" geçerli.</div>
+  </section>
+
+  <!-- SECOND CONDITIONAL -->
+  <section class="section">
+    <h2 class="section-title">&#x1F7E1; Second Conditional</h2>
+    <div class="type-badge badge-two">Tip 2</div>
+    <p>Şu anda gerçek olmayan ya da gerçekleşmesi pek mümkün görünmeyen durumları ifade eder. If-clause'da <strong>Past Simple</strong>, ana cümlede <strong>would + V1</strong> kullanılır.</p>
+
+    <div class="formula-box">
+      If + <code>Past Simple</code> &nbsp;,&nbsp; <code>would + V1</code>
+    </div>
+
+    <div class="example-box">
+      <div class="sentence">If I <em>were</em> a scientist, I <em>would dedicate</em> my life to cancer research.</div>
+      <div class="note">Gerçek dışı şimdiki durum — şu an bilim insanı değilim.</div>
+    </div>
+    <div class="example-box">
+      <div class="sentence">If the government <em>invested</em> more in education, unemployment <em>would decrease</em>.</div>
+      <div class="note">Pek mümkün görünmeyen ya da eleştirel bir koşul.</div>
+    </div>
+
+    <div class="trap-card">
+      <h4>&#x26A0;&#xFE0F; "Were" her özneyle kullanılır</h4>
+      <p>Formal ve akademik yazıda (YDS metinlerinde) tüm öznelerle <code>were</code> kullanılır — "was" değil.<br>
+      <span class="wrong">&#x2717;</span> If she <em>was</em> taller, she would play basketball.<br>
+      <span class="correct">&#x2713;</span> If she <em>were</span> taller, she would play basketball.</p>
+    </div>
+
+    <div class="trap-card">
+      <h4>&#x26A0;&#xFE0F; Would'dan sonra V1 kullanılır — V3 değil</h4>
+      <ul>
+        <li><span class="wrong">&#x2717;</span> If he studied, he would <em>passed</em>.</li>
+        <li><span class="correct">&#x2713;</span> If he studied, he would <em>pass</em>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- THIRD CONDITIONAL -->
+  <section class="section">
+    <h2 class="section-title">&#x1F534; Third Conditional</h2>
+    <div class="type-badge badge-three">Tip 3</div>
+    <p>Geçmişte gerçekleşmemiş durumları ve pişmanlıkları ifade eder. If-clause'da <strong>Past Perfect</strong>, ana cümlede <strong>would have + V3</strong> kullanılır. YDS'nin en çok tuzak kurduğu conditional tipidir.</p>
+
+    <div class="formula-box">
+      If + <code>Past Perfect (had + V3)</code> &nbsp;,&nbsp; <code>would have + V3</code>
+    </div>
+
+    <div class="example-box">
+      <div class="sentence">If scientists <em>had discovered</em> the vaccine earlier, thousands of lives <em>would have been saved</em>.</div>
+      <div class="note">Geçmişte olmayan bir durum → gerçekleşmemiş sonuç. "would have been saved" = Third Conditional + Passive.</div>
+    </div>
+    <div class="example-box">
+      <div class="sentence">If the experiment <em>had been conducted</em> properly, the results <em>would have been</em> more reliable.</div>
+      <div class="note">If-clause'da da passive kullanılabilir: "had been conducted".</div>
+    </div>
+
+    <div class="trap-card">
+      <h4>&#x26A0;&#xFE0F; "Would have + V3" yapısını karıştırma</h4>
+      <ul>
+        <li><span class="wrong">&#x2717;</span> If he had studied, he would <em>have pass</em>.</li>
+        <li><span class="wrong">&#x2717;</span> If he had studied, he would <em>passed</em>.</li>
+        <li><span class="correct">&#x2713;</span> If he had studied, he would <em>have passed</em>.</li>
+      </ul>
+    </div>
+
+    <div class="tip-box"><strong>Could have / might have:</strong> "Would have" yerine <code>could have + V3</code> veya <code>might have + V3</code> da kullanılabilir. "If the funding had been approved, the project <em>could have been completed</em> on time." — YDS'de anlam yakınlığı sorularında bu değişim sorulur.</div>
+  </section>
+
+  <!-- MIXED CONDITIONAL -->
+  <section class="section">
+    <h2 class="section-title">&#x1F7E6; Mixed Conditional</h2>
+    <div class="type-badge badge-mixed">Mixed</div>
+    <p>Geçmişte olan (ya da olmayan) bir durumun <strong>şimdiki</strong> sonucunu ifade eder. YDS'de en zor ve en çok çıkan conditional tipidir. If-clause'da <strong>Past Perfect</strong>, ana cümlede <strong>would + V1</strong> kullanılır.</p>
+
+    <div class="formula-box">
+      If + <code>Past Perfect (had + V3)</code> &nbsp;,&nbsp; <code>would + V1</code>
+    </div>
+
+    <div class="example-box">
+      <div class="sentence">If she <em>had chosen</em> a different career path, she <em>would be</em> happier now.</div>
+      <div class="note">Geçmişteki seçim (had chosen) → şimdiki durum (would be). "Now" ipucu Mixed Conditional'ı gösterir.</div>
+    </div>
+    <div class="example-box">
+      <div class="sentence">If the initial research <em>had been more thorough</em>, we <em>would not be facing</em> these problems today.</div>
+      <div class="note">"Today" → şimdiki sonuç. If-clause geçmişte = Mixed Conditional.</div>
+    </div>
+
+    <table class="rule-table">
+      <thead><tr><th>Tip</th><th>If-clause</th><th>Main Clause</th><th>Zaman ilişkisi</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Third</strong></td><td>had + V3</td><td>would have + V3</td><td>Geçmiş koşul → geçmiş sonuç</td></tr>
+        <tr><td><strong>Mixed</strong></td><td>had + V3</td><td>would + V1</td><td>Geçmiş koşul → <em>şimdiki</em> sonuç</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><strong>Mixed Conditional ipucu:</strong> Cümlede "now", "today", "still", "currently" gibi zaman zarfları varsa → Mixed Conditional düşün. Ana cümlede "would have" değil "would" gelir.</div>
+  </section>
+
+  <!-- UNLESS / PROVIDED THAT -->
+  <section class="section">
+    <h2 class="section-title">&#x1F517; Unless, Provided That ve Diğer Conditional Bağlaçları</h2>
+    <p>YDS anlam yakınlığı sorularında "if" yerine başka bağlaçlar kullanılarak aynı anlam ifade edilir. Bu dönüşümleri bilmek kritik.</p>
+
+    <h3 class="sub-title">Unless = If ... not</h3>
+    <div class="example-box">
+      <div class="sentence">Unless the funding <em>is approved</em>, the project will be cancelled.</div>
+      <div class="sentence" style="margin-top:8px">= If the funding <em>is not approved</em>, the project will be cancelled.</div>
+      <div class="note">"Unless" zaten olumsuzluk içerir — yanına "not" ekleme.</div>
+    </div>
+
+    <div class="trap-card">
+      <h4>&#x26A0;&#xFE0F; Unless + olumsuz fiil YANLIŞ</h4>
+      <ul>
+        <li><span class="wrong">&#x2717;</span> Unless he <em>doesn't study</em>, he will fail.</li>
+        <li><span class="correct">&#x2713;</span> Unless he <em>studies</em>, he will fail.</li>
+        <li><span class="correct">&#x2713;</span> If he <em>doesn't study</em>, he will fail.</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-title">Diğer Conditional Bağlaçları</h3>
+    <table class="rule-table">
+      <thead><tr><th>Bağlaç</th><th>Anlam</th><th>Örnek</th></tr></thead>
+      <tbody>
+        <tr><td><code>provided (that)</code></td><td>...koşuluyla, ancak ... ise</td><td>Provided that all tests pass, the drug will be approved.</td></tr>
+        <tr><td><code>as long as</code></td><td>...olduğu sürece</td><td>As long as demand exists, prices will remain high.</td></tr>
+        <tr><td><code>on condition that</code></td><td>...şartıyla</td><td>She agreed on condition that her name was kept private.</td></tr>
+        <tr><td><code>supposing (that)</code></td><td>diyelim ki, farz et ki</td><td>Supposing the results were negative, what would you do?</td></tr>
+        <tr><td><code>in case</code></td><td>...ihtimaline karşı (önlem)</td><td>Take an umbrella in case it rains. (= ihtimale karşı)</td></tr>
+        <tr><td><code>even if</code></td><td>...olsa bile</td><td>Even if it rains, the match will continue.</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box"><strong>YDS'de anlam yakınlığı:</strong> "Provided that" ve "as long as" birbirinin yerine kullanılabilir ve "if" ile genellikle eş anlamlıdır. "Unless" ise "if not" ile eş anlamlıdır. Bu dönüşümler parafraz sorularında kesinlikle çıkar.</div>
+  </section>
+
+  <!-- INVERTED CONDITIONALS -->
+  <section class="section">
+    <h2 class="section-title">&#x1F504; Inverted Conditionals (If'siz Koşul Cümleleri)</h2>
+    <p>Akademik YDS metinlerinde "if" kullanılmadan koşul cümlesi kurulabilir. Bu yapılar <strong>anlam yakınlığı</strong> sorularında çıkar — "if" ile olan versiyona dönüştürmen gerekir.</p>
+
+    <table class="rule-table">
+      <thead><tr><th>Normal</th><th>Inverted (If'siz)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>If <em>I were</em> you, I would reconsider.</td>
+          <td><em>Were I</em> you, I would reconsider.</td>
+        </tr>
+        <tr>
+          <td>If <em>he had known</em> the truth, he would have acted differently.</td>
+          <td><em>Had he known</em> the truth, he would have acted differently.</td>
+        </tr>
+        <tr>
+          <td>If <em>it should rain</em>, the event will be postponed.</td>
+          <td><em>Should it rain</em>, the event will be postponed.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><strong>Kural:</strong> Yardımcı fiil (were / had / should) cümle başına geçer, "if" düşer. "Had he known..." = "If he had known..." — anlam aynı. YDS anlam yakınlığı sorularında bu dönüşüm doğrudan sorulur.</div>
+  </section>
+
+  <!-- ÖRNEK SORULAR -->
+  <section class="section">
+    <h2 class="section-title">&#x1F9EA; YDS Örnek Soruları</h2>
+
+    <div class="quiz-item">
+      <p>If the clinical trials ______ more carefully, the side effects ______ earlier.</p>
+      <p style="font-size:.88rem;color:var(--muted)">A) were conducted / would have been detected &nbsp; B) had been conducted / would have been detected &nbsp; C) had been conducted / would be detected &nbsp; D) were conducted / will be detected</p>
+      <div class="answer"><strong>Cevap: B</strong> — Her iki boşluk da geçmişe dair gerçek dışı → Third Conditional. "had been conducted" (geçmiş + passive) + "would have been detected" (geçmiş sonuç + passive). A Second Conditional yapısı (şimdiki). C Mixed Conditional olur ama "earlier" geçmişe işaret ediyor. D First Conditional yanlış zaman.</div>
+    </div>
+
+    <div class="quiz-item">
+      <p>______ the researchers allocated sufficient funding, they would be conducting large-scale trials now.</p>
+      <p style="font-size:.88rem;color:var(--muted)">A) Should &nbsp; B) Were &nbsp; C) Had &nbsp; D) If</p>
+      <div class="answer"><strong>Cevap: C</strong> — "Would be conducting now" = şimdiki sonuç → Mixed Conditional. If-clause'da Past Perfect gerekli → inverted: "Had the researchers allocated..." = "If the researchers had allocated...". "Were" Second Conditional. "Should" First Conditional inverted. "If" gram. doğru ama inverted yapıda "If" kullanılmaz.</div>
+    </div>
+
+    <div class="quiz-item">
+      <p>______ the policy changes, the number of affected citizens might decrease significantly.</p>
+      <p style="font-size:.88rem;color:var(--muted)">A) Unless the government implements &nbsp; B) Unless the government does not implement &nbsp; C) If the government implements &nbsp; D) Even if the government implements</p>
+      <div class="answer"><strong>Cevap: A</strong> — "Unless" zaten olumsuzluk içerir, "if not" ile eşdeğer. B yanlış: "unless + not" çifte olumsuzluk hatası. C doğru anlam vermez: "if implements → decrease" mantık hatalı (politika uygulanmazsa azalır). D "even if" = olsa bile — anlam farklı.</div>
+    </div>
+
+    <div class="quiz-item">
+      <p>The passage implies that if the early warning systems ______ in place at the time, the damage ______ significantly.</p>
+      <p style="font-size:.88rem;color:var(--muted)">A) were / would be reduced &nbsp; B) had been / would have been reduced &nbsp; C) have been / will be reduced &nbsp; D) are / would reduce</p>
+      <div class="answer"><strong>Cevap: B</strong> — "At the time" = geçmişteki belirli bir an → Third Conditional. "had been in place" + "would have been reduced" (passive). A Second Conditional (şimdiki). C Present Perfect + Future — zaman uyumsuzluğu. D Present + would — Third değil.</div>
+    </div>
+
+    <div class="quiz-item">
+      <p>The sentence "Provided that the experiment yields consistent results, the hypothesis will be confirmed" is closest in meaning to:</p>
+      <p style="font-size:.88rem;color:var(--muted)">A) The hypothesis will be confirmed even if the results are inconsistent. &nbsp; B) The hypothesis will be confirmed as long as the results are consistent. &nbsp; C) The hypothesis would be confirmed if the results had been consistent. &nbsp; D) Unless the results are consistent, the hypothesis will be confirmed.</p>
+      <div class="answer"><strong>Cevap: B</strong> — "Provided that" = "as long as" = "if" (koşul bağlacı). B anlam olarak aynı. A "even if inconsistent" tam tersi anlam. C Third Conditional — geçmişe kaydırmış, anlam değişiyor. D "unless consistent → confirmed" mantık hatası (unless = if not).</div>
+    </div>
+  </section>
+
+  <!-- SINAV STRATEJİSİ -->
+  <section class="section">
+    <h2 class="section-title">&#x1F3AF; YDS'de Conditional Soruları Nasıl Çözülür?</h2>
+
+    <h3 class="sub-title">Adım 1: Zaman çerçevesini belirle</h3>
+    <p>Cümledeki zaman zarflarına bak: "now / today / currently" → Mixed veya Second. "at that time / then / yesterday" → Third. "tomorrow / next year / in the future" → First.</p>
+
+    <h3 class="sub-title">Adım 2: Gerçek mi, hayal mi?</h3>
+    <p>Durum gerçekleşmiş ya da gerçekleşebilir görünüyorsa → Zero veya First. Gerçek dışı, hayal ya da pişmanlık ise → Second, Third veya Mixed.</p>
+
+    <h3 class="sub-title">Adım 3: If-clause ve main clause'un uyumunu kontrol et</h3>
+    <div class="example-box">
+      <div class="sentence">If + <em>Past Simple</em> → would + V1 (Second)</div>
+      <div class="sentence" style="margin-top:6px">If + <em>Past Perfect</em> → would have + V3 (Third)</div>
+      <div class="sentence" style="margin-top:6px">If + <em>Past Perfect</em> → would + V1 (Mixed — şimdiki sonuç)</div>
+      <div class="note">İki tarafın zaman uyumunu kontrol etmeden seçenek işaretleme.</div>
+    </div>
+
+    <h3 class="sub-title">Adım 4: Anlam yakınlığı sorularında bağlaç dönüşümüne dikkat et</h3>
+    <p>"Unless" → "if not", "provided that" → "if", "as long as" → "if" dönüşümlerini ezberle. Inverted yapılarda ("Had she known..." = "If she had known...") anlamın değişmediğini hatırla.</p>
+
+    <div class="tip-box"><strong>Son kontrol:</strong> Would'dan sonra her zaman <code>V1</code> (base form) gelir. "Would passed / would went" gibi yazımlar kesinlikle yanlış. Seçeneklerde bu hatayı gördüğünde hemen elendirebilirsin.</div>
+  </section>
+
+  <div class="cta-banner">
+    <h3>&#x1F3AF; Conditionals Sorularını Pratikle Pekiştir</h3>
+    <p>Teoriyi öğrenmek yetmez — soru çözmek gerekiyor. YDS Hazırlık uygulamasındaki gramer modülünde conditional sorularını çöz, anında geri bildirim al.</p>
+    <a href="/" class="cta-btn">Uygulamayı Aç &rarr;</a>
+  </div>
+
+  <section class="related-section">
+    <div class="related-title">&#x1F4DA; İlgili Yazılar</div>
+    <div class="related-grid">
+      <a href="/yds-passive-voice.html" class="related-card">
+        <div class="related-card-title">YDS Passive Voice</div>
+        <div class="related-card-desc">Edilgen yapı, by-phrase, modal passive ve impersonal passive.</div>
+      </a>
+      <a href="/yds-relative-clauses.html" class="related-card">
+        <div class="related-card-title">YDS Relative Clauses</div>
+        <div class="related-card-desc">Who, which, that, whose — sıfat cümleleri ve tuzaklar.</div>
+      </a>
+      <a href="/yds-gramer-konulari.html" class="related-card">
+        <div class="related-card-title">YDS Gramer Konuları</div>
+        <div class="related-card-desc">Sınavda öncelikli gramer konularının tam listesi ve ağırlıkları.</div>
+      </a>
+      <a href="/yds-soru-tipleri.html" class="related-card">
+        <div class="related-card-title">YDS Soru Tipleri</div>
+        <div class="related-card-desc">Tüm soru tiplerinin stratejisi ve çözüm teknikleri.</div>
+      </a>
+    </div>
+  </section>
+
+</main>
+<footer>
+  <p><a href="/">YDS Hazırlık</a> &mdash; Tamamen &uuml;cretsiz, reklams&iacute;z YDS &amp; e-YDS haz&iacute;rl&iacute;k.</p>
+</footer>
+</body>
+</html>
