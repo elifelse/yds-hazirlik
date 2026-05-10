@@ -1309,6 +1309,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
         <a href="/yds-relative-clauses.html">Relative Clauses</a>
         <a href="/yds-passive-voice.html">Passive Voice</a>
         <a href="/yds-articles-kullanimi.html">Articles (a/an/the)</a>
+        <a href="/yds-conditionals.html">Conditionals (If Clauses)</a>
         <a href="/yds-soru-tipleri.html">Soru Tipleri</a>
         <a href="/yds-puan-hesaplama.html">Puan Hesaplama</a>
       </div>
@@ -3240,6 +3241,26 @@ function showPlan(level,pct){
       </div>
       <span style="font-size:18px;opacity:.6">→</span>
     </a>
+    <div style="margin:24px 0 8px">
+      <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px">📚 Rehber Yazılar</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px">
+        ${[
+          {href:'/yds-sinav-hakkinda.html',     label:'YDS Sınavı Hakkında'},
+          {href:'/yds-kelime-listesi.html',      label:'YDS Kelime Listesi'},
+          {href:'/yds-gramer-konulari.html',     label:'Gramer Konuları'},
+          {href:'/yds-passive-voice.html',       label:'Passive Voice'},
+          {href:'/yds-relative-clauses.html',    label:'Relative Clauses'},
+          {href:'/yds-conditionals.html',        label:'Conditionals'},
+          {href:'/yds-articles-kullanimi.html',  label:'Articles (a/an/the)'},
+          {href:'/yds-okuma-teknikleri.html',    label:'Okuma Teknikleri'},
+          {href:'/yds-soru-tipleri.html',        label:'Soru Tipleri'},
+          {href:'/yds-puan-hesaplama.html',      label:'Puan Hesaplama'},
+          {href:'/yds-30-gunluk-plan.html',      label:'30 Günlük Plan'},
+          {href:'/yds-zaman-yonetimi.html',      label:'Zaman Yönetimi'},
+          {href:'/yds-ielts-fark.html',          label:'YDS vs IELTS'},
+        ].map(l=>`<a href="${l.href}" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:12px;font-weight:600;color:var(--muted);text-decoration:none;transition:.15s" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">${l.label}</a>`).join('')}
+      </div>
+    </div>
     <div class="btn-row">
       <button class="btn btn-outline btn-sm" onclick="openStrategyModal()">📋 Sınav Stratejisi</button>
       <button class="btn btn-outline btn-sm" onclick="goTo('intro')">← Başa Dön</button>
