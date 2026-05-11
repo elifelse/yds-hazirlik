@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<script>(function(){var t=localStorage.getItem("yds_theme");if(t&&t!=="dark")document.documentElement.setAttribute("data-theme",t);})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YDS İlerleme Grafiği – Deneme Sonuçları Takibi | YDS Hazırlık</title>
+  <meta name="description" content="YDS deneme sınavı sonuçlarını zaman içinde takip et. Bölüm bazlı trend analizi, en yüksek puan, ortalama ve gelişim grafiği.">
+  <meta name="keywords" content="YDS ilerleme takibi, YDS puan grafiği, YDS deneme sonuçları, YDS gelişim analizi">
+  <meta name="author" content="YDS Hazırlık">
+  <link rel="canonical" href="https://yds-hazirlik.com/yds-ilerleme-grafigi.html">
+  <link rel="alternate" hreflang="tr" href="https://yds-hazirlik.com/yds-ilerleme-grafigi.html">
+  <meta property="og:title" content="YDS İlerleme Grafiği – Deneme Sonuçları Takibi">
+  <meta property="og:description" content="YDS deneme puanlarını grafik üzerinde takip et, hangi bölümde ilerlediğini gör.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yds-hazirlik.com/yds-ilerleme-grafigi.html">
+  <meta property="og:image" content="https://yds-hazirlik.com/og-image.svg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://yds-hazirlik.com/og-image.svg"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0e101e;--card:#161929;--border:#2a2d45;--text:#e8eaf0;--muted:#8b90a8;
+      --accent:#7c6af7;--accent2:#f7c948;--green:#4caf7d;--red:#e05c5c;
+      --blue:#4a9eff;--orange:#f7944a;--pink:#f76aaa;--radius:12px;
+      --c-kelime:#7c6af7;--c-gramer:#4a9eff;--c-okuma:#4caf7d;--c-paragraf:#f7944a;--c-cumle:#f76aaa;
+    }
+    body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;font-size:16px}
+    nav{background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+    .nav-brand{font-weight:700;font-size:1.1rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+    .nav-cta{background:var(--accent);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-size:.875rem;font-weight:600}
+
+    .hero{max-width:900px;margin:0 auto;padding:48px 24px 20px}
+    .hero-badge{display:inline-block;background:rgba(124,106,247,.12);color:var(--accent);border:1px solid rgba(124,106,247,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:16px}
+    h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;line-height:1.25;margin-bottom:12px}
+    h1 em{font-style:normal;color:var(--accent2)}
+    .hero-lead{font-size:.97rem;color:var(--muted);max-width:640px}
+
+    .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+    /* ── Stats row ── */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0}
+    @media(max-width:580px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+    .stat-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+    .stat-value{font-size:1.7rem;font-weight:800;line-height:1}
+    .stat-sub{font-size:.75rem;color:var(--muted);margin-top:4px}
+    .up{color:var(--green)}.down{color:var(--red)}.flat{color:var(--muted)}
+
+    /* ── Main chart ── */
+    .chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;position:relative}
+    .chart-card h2{font-size:1rem;font-weight:700;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .chart-legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .legend-item{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted)}
+    .legend-dot{width:10px;height:10px;border-radius:50%}
+    .legend-dash{width:20px;height:2px;border-top:2px dashed}
+    canvas{display:block;width:100%;cursor:crosshair}
+    .tooltip-box{position:absolute;background:rgba(22,25,41,.97);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:.82rem;pointer-events:none;opacity:0;transition:opacity .12s;white-space:nowrap;z-index:10}
+    .tooltip-date{color:var(--muted);margin-bottom:4px;font-size:.75rem}
+    .tooltip-row{display:flex;align-items:center;gap:8px;margin-top:3px}
+    .tooltip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .tooltip-name{color:var(--muted);flex:1}
+    .tooltip-val{font-weight:700}
+
+    /* ── Section sparklines ── */
+    .sparks-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+    @media(max-width:680px){.sparks-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:380px){.sparks-grid{grid-template-columns:1fr}}
+    .spark-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 14px;text-align:center}
+    .spark-name{font-size:.78rem;font-weight:700;margin-bottom:2px}
+    .spark-pct{font-size:1.4rem;font-weight:800;line-height:1.1;margin-bottom:8px}
+    .spark-canvas{display:block;width:100%;height:44px}
+    .spark-trend{font-size:.72rem;margin-top:6px}
+
+    /* ── Target line legend ── */
+    .target-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(247,201,72,.08);border:1px solid rgba(247,201,72,.25);border-radius:6px;padding:3px 10px;font-size:.78rem;color:var(--accent2)}
+
+    /* ── Empty state ── */
+    .empty-state{text-align:center;padding:60px 24px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:28px 0}
+    .empty-icon{font-size:3rem;margin-bottom:16px;opacity:.5}
+    .empty-title{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+    .empty-lead{color:var(--muted);font-size:.9rem;margin-bottom:24px;max-width:440px;margin-left:auto;margin-right:auto}
+    .cta-btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 28px;border-radius:10px;font-weight:700;font-size:.95rem}
+
+    /* ── Themes ── */
+    [data-theme="light"]{--bg:#f6f8fa;--card:#ffffff;--border:#d0d7de;--text:#1f2328;--muted:#636c76;--accent:#5a4fcf;--accent2:#9a6700;--green:#1a7f37;--red:#d1242f}
+    [data-theme="sepia"]{--bg:#f4efe6;--card:#fdf8f0;--border:#d9cdb8;--text:#2c2416;--muted:#7d6e58;--accent:#5a4fcf;--accent2:#8a6000;--green:#2d6a3f;--red:#c0392b}
+
+    footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;color:var(--muted);font-size:.85rem}
+    footer a{color:var(--accent);text-decoration:none}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="/"><span>🐝</span> YDS Hazırlık</a>
+  <a class="nav-cta" href="/yds-deneme-analizi.html">Deneme Analizi</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge">İlerleme Grafiği</div>
+  <h1>Puanın <em>nereye</em> gidiyor?</h1>
+  <p class="hero-lead">Deneme analizi aracıyla kaydettiğin sonuçları burada görürsün. Her bölümde ne kadar ilerlediğini, nerede durduğunu grafik üzerinde takip et.</p>
+</header>
+
+<main class="wrap">
+
+  <div id="emptyState" class="empty-state" style="display:none">
+    <div class="empty-icon">📊</div>
+    <div class="empty-title">Henüz kayıtlı sonuç yok</div>
+    <p class="empty-lead">Deneme analizi aracına deneme puanlarını gir ve "Kaydet" butonuna bas. Kaydettikçe burada grafik oluşmaya başlar.</p>
+    <a class="cta-btn" href="/yds-deneme-analizi.html">Deneme Analizi Yap &rarr;</a>
+  </div>
+
+  <div id="dashboard" style="display:none">
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">En Yüksek</div>
+        <div class="stat-value" id="statMax">—</div>
+        <div class="stat-sub" id="statMaxDate"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ortalama</div>
+        <div class="stat-value" id="statAvg">—</div>
+        <div class="stat-sub" id="statAvgSub"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Son Deneme</div>
+        <div class="stat-value" id="statLast">—</div>
+        <div class="stat-sub" id="statLastDate"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Trend</div>
+        <div class="stat-value" id="statTrend">—</div>
+        <div class="stat-sub" id="statTrendSub"></div>
+      </div>
+    </div>
+
+    <!-- Main chart -->
+    <div class="chart-card">
+      <h2>
+        <span>Toplam Puan Grafiği</span>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Toplam Puan</div>
+          <div class="legend-item"><div class="legend-dash" style="border-color:var(--accent2)"></div><span class="target-badge">Hedef 70 puan</span></div>
+        </div>
+      </h2>
+      <canvas id="mainChart" height="260"></canvas>
+      <div class="tooltip-box" id="mainTooltip">
+        <div class="tooltip-date" id="ttDate"></div>
+        <div id="ttRows"></div>
+      </div>
+    </div>
+
+    <!-- Section sparklines -->
+    <div class="sparks-grid" id="sparksGrid"></div>
+
+    <!-- Section chart -->
+    <div class="chart-card">
+      <h2>
+        <span>Bölüm Bazlı Yüzdeler</span>
+        <div class="chart-legend" id="secLegend"></div>
+      </h2>
+      <canvas id="secChart" height="240"></canvas>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <p style="margin-bottom:8px">
+    <a href="/">YDS Hazırlık</a> &nbsp;·&nbsp;
+    <a href="/yds-deneme-analizi.html">Deneme Analizi</a> &nbsp;·&nbsp;
+    <a href="/yds-gramer-konulari.html">Gramer</a> &nbsp;·&nbsp;
+    <a href="/yds-kelime-listesi.html">Kelime Listesi</a>
+  </p>
+  <p>&copy; 2026 YDS Hazırlık — Tamamen ücretsiz</p>
+</footer>
+
+<script>
+const SECTIONS = [
+  { id:'kelime',   label:'Kelime',        color:'#7c6af7', short:'Kel.' },
+  { id:'gramer',   label:'Gramer',        color:'#4a9eff', short:'Gra.' },
+  { id:'okuma',    label:'Okuma',         color:'#4caf7d', short:'Oku.' },
+  { id:'paragraf', label:'Paragraf T.',   color:'#f7944a', short:'Par.' },
+  { id:'cumle',    label:'Cümle T.',      color:'#f76aaa', short:'Cüm.' },
+];
+
+// ── Read data ────────────────────────────────────────────────
+function getData() {
+  try { return JSON.parse(localStorage.getItem('yds_deneme_results') || '[]'); }
+  catch { return []; }
+}
+
+// Data is stored newest-first; we want oldest-first for chart
+function getChronological() {
+  return [...getData()].reverse();
+}
+
+// ── CSS var helper ────────────────────────────────────────────
+function cssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+// ── Init ─────────────────────────────────────────────────────
+function init() {
+  const raw = getData();
+  if (!raw.length) {
+    document.getElementById('emptyState').style.display = '';
+    document.getElementById('dashboard').style.display  = 'none';
+    return;
+  }
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('dashboard').style.display  = '';
+
+  const data = getChronological();
+  renderStats(data);
+  buildSparks(data);
+  buildSecLegend();
+  requestAnimationFrame(() => {
+    drawMainChart(data);
+    drawSecChart(data);
+  });
+}
+
+// ── Stats ────────────────────────────────────────────────────
+function renderStats(data) {
+  const scores = data.map(d => d.score);
+  const max = Math.max(...scores);
+  const min = Math.min(...scores);
+  const avg = scores.reduce((a,b)=>a+b,0) / scores.length;
+  const last = data[data.length-1];
+  const maxItem = data.find(d => d.score === max);
+
+  document.getElementById('statMax').textContent = max.toFixed(1);
+  document.getElementById('statMaxDate').textContent = maxItem ? maxItem.date : '';
+  document.getElementById('statAvg').textContent = avg.toFixed(1);
+  document.getElementById('statAvgSub').textContent = `${scores.length} denemeden`;
+  document.getElementById('statLast').textContent = last.score.toFixed(1);
+  document.getElementById('statLastDate').textContent = last.date;
+
+  // Trend: compare first half avg vs second half avg
+  let trendVal = '→', trendCls = 'flat', trendSub = 'Stabil';
+  if (data.length >= 2) {
+    const diff = data[data.length-1].score - data[0].score;
+    if (diff > 2)       { trendVal='↑'; trendCls='up';   trendSub=`+${diff.toFixed(1)} puan`; }
+    else if (diff < -2) { trendVal='↓'; trendCls='down';  trendSub=`${diff.toFixed(1)} puan`; }
+    else                { trendVal='→'; trendCls='flat'; trendSub='Değişim az'; }
+  }
+  const tv = document.getElementById('statTrend');
+  tv.textContent = trendVal;
+  tv.className = `stat-value ${trendCls}`;
+  document.getElementById('statTrendSub').textContent = trendSub;
+}
+
+// ── Sparklines ────────────────────────────────────────────────
+function buildSparks(data) {
+  const grid = document.getElementById('sparksGrid');
+  grid.innerHTML = '';
+  SECTIONS.forEach(sec => {
+    const vals = data.map(d => {
+      const s = d.sections && d.sections.find(x => x.id === sec.id);
+      return s ? s.pct : null;
+    }).filter(v => v !== null);
+
+    const lastVal = vals.length ? vals[vals.length-1] : null;
+    const trendDiff = vals.length >= 2 ? vals[vals.length-1] - vals[0] : 0;
+    const trendStr = vals.length >= 2
+      ? (trendDiff > 2 ? `↑ +${trendDiff.toFixed(0)}%` : trendDiff < -2 ? `↓ ${trendDiff.toFixed(0)}%` : '→ Stabil')
+      : '';
+
+    const card = document.createElement('div');
+    card.className = 'spark-card';
+    card.innerHTML = `
+      <div class="spark-name" style="color:${sec.color}">${sec.label}</div>
+      <div class="spark-pct" style="color:${sec.color}">${lastVal !== null ? lastVal.toFixed(0)+'%' : '—'}</div>
+      <canvas class="spark-canvas" id="spark-${sec.id}" height="44"></canvas>
+      <div class="spark-trend" style="color:${trendDiff>2?'var(--green)':trendDiff<-2?'var(--red)':'var(--muted)'}">${trendStr}</div>
+    `;
+    grid.appendChild(card);
+
+    requestAnimationFrame(() => drawSparkline(sec, vals));
+  });
+}
+
+function drawSparkline(sec, vals) {
+  const canvas = document.getElementById('spark-' + sec.id);
+  if (!canvas || !vals.length) return;
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.offsetWidth;
+  const h = 44;
+  canvas.width  = w * dpr;
+  canvas.height = h * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0,0,w,h);
+
+  if (vals.length < 2) {
+    // Single dot
+    ctx.beginPath();
+    ctx.arc(w/2, h/2, 4, 0, Math.PI*2);
+    ctx.fillStyle = sec.color;
+    ctx.fill();
+    return;
+  }
+
+  const pad = 6;
+  const lo = Math.max(0, Math.min(...vals) - 10);
+  const hi = Math.min(100, Math.max(...vals) + 10);
+  const range = hi - lo || 10;
+
+  const xs = vals.map((_,i) => pad + i * ((w - pad*2) / (vals.length-1)));
+  const ys = vals.map(v => (h - pad) - (v - lo) / range * (h - pad*2));
+
+  // Fill
+  ctx.beginPath();
+  ctx.moveTo(xs[0], ys[0]);
+  for (let i=1; i<xs.length; i++) ctx.lineTo(xs[i], ys[i]);
+  ctx.lineTo(xs[xs.length-1], h);
+  ctx.lineTo(xs[0], h);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0,0,0,h);
+  grad.addColorStop(0, sec.color + '55');
+  grad.addColorStop(1, sec.color + '00');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  ctx.moveTo(xs[0], ys[0]);
+  for (let i=1; i<xs.length; i++) ctx.lineTo(xs[i], ys[i]);
+  ctx.strokeStyle = sec.color;
+  ctx.lineWidth = 2;
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+
+  // Last dot
+  const lx = xs[xs.length-1], ly = ys[ys.length-1];
+  ctx.beginPath();
+  ctx.arc(lx, ly, 3.5, 0, Math.PI*2);
+  ctx.fillStyle = sec.color;
+  ctx.fill();
+}
+
+// ── Main chart ────────────────────────────────────────────────
+let mainChartData = [];
+
+function drawMainChart(data) {
+  mainChartData = data;
+  const canvas = document.getElementById('mainChart');
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.offsetWidth;
+  const h = 260;
+  canvas.width  = w * dpr;
+  canvas.height = h * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad = { top:20, right:20, bottom:44, left:44 };
+  const cw = w - pad.left - pad.right;
+  const ch = h - pad.top - pad.bottom;
+
+  const textCol  = cssVar('--text');
+  const mutedCol = cssVar('--muted');
+  const borderCol= cssVar('--border');
+  const accentCol= '#7c6af7';
+  const targetCol= '#f7c948';
+
+  ctx.clearRect(0,0,w,h);
+
+  // Grid lines & Y labels
+  const yTicks = [0, 25, 50, 70, 75, 100];
+  ctx.font = `11px -apple-system,sans-serif`;
+  yTicks.forEach(y => {
+    const py = pad.top + ch - (y/100)*ch;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, py);
+    ctx.lineTo(pad.left+cw, py);
+    ctx.strokeStyle = y===70 ? targetCol+'44' : borderCol;
+    ctx.lineWidth = y===70 ? 1.5 : 1;
+    ctx.setLineDash(y===70 ? [5,4] : []);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = y===70 ? targetCol : mutedCol;
+    ctx.textAlign = 'right';
+    ctx.fillText(y, pad.left-6, py+4);
+  });
+
+  if (!data.length) return;
+
+  const scores = data.map(d => d.score);
+  const xs = data.map((_,i) => pad.left + (data.length===1 ? cw/2 : i*(cw/(data.length-1))));
+  const ys = scores.map(s => pad.top + ch - (s/100)*ch);
+
+  // Area fill
+  ctx.beginPath();
+  ctx.moveTo(xs[0], ys[0]);
+  for (let i=1;i<xs.length;i++) ctx.lineTo(xs[i], ys[i]);
+  ctx.lineTo(xs[xs.length-1], pad.top+ch);
+  ctx.lineTo(xs[0], pad.top+ch);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0,pad.top,0,pad.top+ch);
+  grad.addColorStop(0, accentCol+'44');
+  grad.addColorStop(1, accentCol+'05');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Score line
+  ctx.beginPath();
+  ctx.moveTo(xs[0], ys[0]);
+  for (let i=1;i<xs.length;i++) ctx.lineTo(xs[i], ys[i]);
+  ctx.strokeStyle = accentCol;
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+
+  // Dots
+  scores.forEach((s,i) => {
+    ctx.beginPath();
+    ctx.arc(xs[i], ys[i], 4.5, 0, Math.PI*2);
+    ctx.fillStyle = accentCol;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(xs[i], ys[i], 2.5, 0, Math.PI*2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+  });
+
+  // X labels (dates)
+  const maxLabels = Math.min(data.length, Math.floor(cw/60));
+  const step = Math.ceil(data.length / maxLabels);
+  ctx.fillStyle = mutedCol;
+  ctx.textAlign = 'center';
+  data.forEach((d,i) => {
+    if (i % step !== 0 && i !== data.length-1) return;
+    const label = d.date.slice(5); // MM-DD
+    ctx.fillText(label, xs[i], pad.top+ch+18);
+  });
+}
+
+// ── Section chart ─────────────────────────────────────────────
+function buildSecLegend() {
+  const leg = document.getElementById('secLegend');
+  leg.innerHTML = SECTIONS.map(s =>
+    `<div class="legend-item"><div class="legend-dot" style="background:${s.color}"></div>${s.short}</div>`
+  ).join('');
+}
+
+function drawSecChart(data) {
+  const canvas = document.getElementById('secChart');
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.offsetWidth;
+  const h = 240;
+  canvas.width  = w * dpr;
+  canvas.height = h * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad = { top:20, right:20, bottom:44, left:44 };
+  const cw = w - pad.left - pad.right;
+  const ch = h - pad.top - pad.bottom;
+
+  const mutedCol  = cssVar('--muted');
+  const borderCol = cssVar('--border');
+
+  ctx.clearRect(0,0,w,h);
+
+  // Grid
+  [0,25,50,75,100].forEach(y => {
+    const py = pad.top + ch - (y/100)*ch;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, py);
+    ctx.lineTo(pad.left+cw, py);
+    ctx.strokeStyle = borderCol;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = mutedCol;
+    ctx.font = `11px -apple-system,sans-serif`;
+    ctx.textAlign = 'right';
+    ctx.fillText(y+'%', pad.left-6, py+4);
+  });
+
+  if (!data.length) return;
+
+  const xs = data.map((_,i) => pad.left + (data.length===1 ? cw/2 : i*(cw/(data.length-1))));
+
+  SECTIONS.forEach(sec => {
+    const vals = data.map(d => {
+      const s = d.sections && d.sections.find(x => x.id === sec.id);
+      return s ? s.pct : null;
+    });
+
+    // Filter out nulls for drawing
+    const pts = [];
+    vals.forEach((v,i) => { if (v !== null) pts.push({ x: xs[i], y: pad.top + ch - (v/100)*ch, v }); });
+    if (pts.length < 1) return;
+
+    // Line
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.strokeStyle = sec.color;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+
+    // Dots
+    pts.forEach(pt => {
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI*2);
+      ctx.fillStyle = sec.color;
+      ctx.fill();
+    });
+  });
+
+  // X labels
+  const maxLabels = Math.min(data.length, Math.floor(cw/60));
+  const step = Math.ceil(data.length / maxLabels);
+  ctx.fillStyle = mutedCol;
+  ctx.textAlign = 'center';
+  ctx.font = `11px -apple-system,sans-serif`;
+  data.forEach((d,i) => {
+    if (i % step !== 0 && i !== data.length-1) return;
+    ctx.fillText(d.date.slice(5), xs[i], pad.top+ch+18);
+  });
+}
+
+// ── Tooltip on main chart ─────────────────────────────────────
+function setupTooltip() {
+  const canvas = document.getElementById('mainChart');
+  const tooltip = document.getElementById('mainTooltip');
+
+  function onMove(e) {
+    const data = mainChartData;
+    if (!data.length) return;
+
+    const rect  = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const mx = clientX - rect.left;
+
+    const dpr = window.devicePixelRatio || 1;
+    const w = canvas.offsetWidth;
+    const pad = { left:44, right:20, top:20, bottom:44 };
+    const cw = w - pad.left - pad.right;
+
+    // Find nearest point
+    const xs = data.map((_,i) => pad.left + (data.length===1 ? cw/2 : i*(cw/(data.length-1))));
+    let nearest = 0;
+    let minDist = Infinity;
+    xs.forEach((x,i) => {
+      const d = Math.abs(x - mx);
+      if (d < minDist) { minDist = d; nearest = i; }
+    });
+
+    if (minDist > cw / data.length + 10) {
+      tooltip.style.opacity = '0';
+      return;
+    }
+
+    const item = data[nearest];
+    document.getElementById('ttDate').textContent = item.date;
+    const rows = [
+      `<div class="tooltip-row"><div class="tooltip-dot" style="background:#7c6af7"></div><span class="tooltip-name">Toplam</span><span class="tooltip-val">${item.score.toFixed(1)}</span></div>`
+    ];
+    if (item.sections) {
+      SECTIONS.forEach(sec => {
+        const s = item.sections.find(x => x.id === sec.id);
+        if (s) rows.push(`<div class="tooltip-row"><div class="tooltip-dot" style="background:${sec.color}"></div><span class="tooltip-name">${sec.label}</span><span class="tooltip-val">${s.pct.toFixed(0)}%</span></div>`);
+      });
+    }
+    document.getElementById('ttRows').innerHTML = rows.join('');
+
+    // Position tooltip
+    const tx = xs[nearest];
+    const tipW = 170;
+    let left = tx + 14;
+    if (left + tipW > w) left = tx - tipW - 10;
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = '48px';
+    tooltip.style.opacity = '1';
+  }
+
+  function onLeave() { tooltip.style.opacity = '0'; }
+
+  canvas.addEventListener('mousemove', onMove);
+  canvas.addEventListener('mouseleave', onLeave);
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); onMove(e); }, { passive:false });
+  canvas.addEventListener('touchend', onLeave);
+}
+
+// ── Resize handling ───────────────────────────────────────────
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    const data = getChronological();
+    if (!data.length) return;
+    drawMainChart(data);
+    drawSecChart(data);
+    SECTIONS.forEach(sec => {
+      const vals = data.map(d => {
+        const s = d.sections && d.sections.find(x => x.id === sec.id);
+        return s ? s.pct : null;
+      }).filter(v => v !== null);
+      drawSparkline(sec, vals);
+    });
+  }, 150);
+});
+
+// ── Boot ──────────────────────────────────────────────────────
+init();
+setupTooltip();
+</script>
+</body>
+</html>
