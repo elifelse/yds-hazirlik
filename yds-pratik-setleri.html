@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<script>(function(){var t=localStorage.getItem("yds_theme");if(t&&t!=="dark")document.documentElement.setAttribute("data-theme",t);})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YDS Pratik Setleri – Soru Tipine Göre Alıştırma | YDS Hazırlık</title>
+  <meta name="description" content="YDS soru tiplerine göre pratik yap: kelime, gramer, okuma, paragraf tamamlama, cümle tamamlama. Her soru tipine odaklı alıştırma setleri.">
+  <meta name="keywords" content="YDS pratik soruları, YDS kelime soruları, YDS gramer soruları, YDS okuma, YDS paragraf tamamlama, YDS cümle tamamlama">
+  <meta name="author" content="YDS Hazırlık">
+  <link rel="canonical" href="https://yds-hazirlik.com/yds-pratik-setleri.html">
+  <link rel="alternate" hreflang="tr" href="https://yds-hazirlik.com/yds-pratik-setleri.html">
+  <meta property="og:title" content="YDS Pratik Setleri – Soru Tipine Göre Alıştırma">
+  <meta property="og:description" content="YDS soru tiplerine göre pratik yap. Kelime, gramer, okuma ve daha fazlası.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yds-hazirlik.com/yds-pratik-setleri.html">
+  <meta property="og:image" content="https://yds-hazirlik.com/og-image.svg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://yds-hazirlik.com/og-image.svg"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0e101e;--card:#161929;--border:#2a2d45;--text:#e8eaf0;
+      --muted:#8b90a8;--accent:#7c6af7;--accent2:#f7c948;
+      --green:#4caf7d;--red:#e05c5c;--blue:#4a9eff;--radius:12px;
+      --green-bg:rgba(76,175,125,.1);--red-bg:rgba(224,92,92,.1);
+    }
+    body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;font-size:16px}
+    nav{background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+    .nav-brand{font-weight:700;font-size:1.1rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+    .nav-cta{background:var(--accent);color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;font-size:.875rem;font-weight:600}
+
+    .hero{max-width:860px;margin:0 auto;padding:48px 24px 20px}
+    .hero-badge{display:inline-block;background:rgba(124,106,247,.12);color:var(--accent);border:1px solid rgba(124,106,247,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:16px}
+    h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;line-height:1.25;margin-bottom:12px}
+    h1 em{font-style:normal;color:var(--accent2)}
+    .hero-lead{font-size:.97rem;color:var(--muted);max-width:640px}
+
+    .wrap{max-width:860px;margin:0 auto;padding:0 24px 80px}
+
+    /* ── Type selector ── */
+    #typePicker{margin:28px 0}
+    .type-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    @media(max-width:680px){.type-grid{grid-template-columns:repeat(2,1fr)}}
+    .type-card{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:20px 14px;cursor:pointer;text-align:center;transition:border-color .15s,transform .1s;user-select:none}
+    .type-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .type-card.active{border-color:var(--accent);background:rgba(124,106,247,.08)}
+    .type-icon{font-size:1.8rem;margin-bottom:8px}
+    .type-name{font-size:.88rem;font-weight:700;margin-bottom:3px}
+    .type-count{font-size:.75rem;color:var(--muted)}
+    .start-btn{display:block;width:100%;margin-top:16px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:14px;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .15s}
+    .start-btn:disabled{opacity:.35;cursor:not-allowed}
+
+    /* ── Quiz area ── */
+    #quizArea{display:none}
+
+    .progress-bar-wrap{margin-bottom:20px}
+    .progress-meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-bottom:8px}
+    .progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+    .progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s}
+
+    /* ── Passage (reading) ── */
+    .passage-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:18px;font-size:.93rem;line-height:1.85;color:var(--text)}
+    .passage-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;font-weight:600}
+    .passage-gap{display:inline-block;width:120px;height:2px;background:var(--accent);vertical-align:middle;margin:0 4px;position:relative}
+    .passage-gap::before{content:'(?)';font-size:.8rem;color:var(--accent);position:absolute;top:-10px;left:50%;transform:translateX(-50%)}
+
+    /* ── Question card ── */
+    .q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px 28px;margin-bottom:14px}
+    .q-type-badge{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 10px;border-radius:6px;margin-bottom:14px}
+    .q-text{font-size:1rem;line-height:1.7;margin-bottom:20px;font-weight:500}
+    .q-blank{display:inline-block;border-bottom:2px solid var(--accent);min-width:90px;margin:0 4px;color:var(--accent);font-weight:700}
+
+    .options-list{display:flex;flex-direction:column;gap:10px}
+    .opt-btn{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 18px;cursor:pointer;text-align:left;font-size:.93rem;color:var(--text);transition:border-color .12s,background .12s;display:flex;align-items:flex-start;gap:12px;line-height:1.5}
+    .opt-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(124,106,247,.06)}
+    .opt-letter{font-weight:700;min-width:18px;color:var(--muted);flex-shrink:0}
+    .opt-btn.correct{border-color:var(--green);background:var(--green-bg)}
+    .opt-btn.correct .opt-letter{color:var(--green)}
+    .opt-btn.wrong{border-color:var(--red);background:var(--red-bg)}
+    .opt-btn.wrong .opt-letter{color:var(--red)}
+    .opt-btn:disabled{cursor:default}
+
+    /* ── Explanation ── */
+    .explanation{display:none;margin-top:16px;padding:14px 18px;border-radius:10px;font-size:.9rem;line-height:1.6}
+    .explanation.show{display:block}
+    .explanation.correct-exp{background:var(--green-bg);border-left:3px solid var(--green)}
+    .explanation.wrong-exp{background:var(--red-bg);border-left:3px solid var(--red)}
+    .exp-title{font-weight:700;margin-bottom:4px}
+
+    .next-btn{display:none;margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .15s}
+    .next-btn.show{display:inline-block}
+    .next-btn:hover{opacity:.88}
+
+    /* ── Result screen ── */
+    #resultArea{display:none}
+    .result-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px 32px;text-align:center;margin:28px 0}
+    .result-score{font-size:3.5rem;font-weight:800;line-height:1;margin-bottom:8px}
+    .result-sub{color:var(--muted);margin-bottom:24px}
+    .result-bar-list{display:flex;flex-direction:column;gap:8px;margin:20px 0 28px;text-align:left}
+    .result-bar-row{display:flex;align-items:center;gap:12px;font-size:.88rem}
+    .result-bar-label{width:80px;color:var(--muted);flex-shrink:0}
+    .result-bar-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+    .result-bar-fill{height:100%;border-radius:4px;transition:width .5s}
+    .result-pct{width:36px;text-align:right;font-weight:700}
+    .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn-retry{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 26px;font-size:.95rem;font-weight:700;cursor:pointer}
+    .btn-other{background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:10px;padding:12px 26px;font-size:.95rem;font-weight:700;cursor:pointer}
+
+    /* ── Themes ── */
+    [data-theme="light"]{--bg:#f6f8fa;--card:#ffffff;--border:#d0d7de;--text:#1f2328;--muted:#636c76;--accent:#5a4fcf;--accent2:#9a6700;--green:#1a7f37;--red:#d1242f;--green-bg:rgba(26,127,55,.08);--red-bg:rgba(209,36,47,.07)}
+    [data-theme="sepia"]{--bg:#f4efe6;--card:#fdf8f0;--border:#d9cdb8;--text:#2c2416;--muted:#7d6e58;--accent:#5a4fcf;--accent2:#8a6000;--green:#2d6a3f;--red:#c0392b;--green-bg:rgba(45,106,63,.08);--red-bg:rgba(192,57,43,.07)}
+
+    footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;color:var(--muted);font-size:.85rem}
+    footer a{color:var(--accent);text-decoration:none}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="/"><span>🐝</span> YDS Hazırlık</a>
+  <a class="nav-cta" href="/">Ana Sayfa</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge">Pratik Setleri</div>
+  <h1>Zayıf olduğun tipten <em>başla</em></h1>
+  <p class="hero-lead">Bir soru tipi seç ve doğrudan o tipte pratik yap. Her sorunun ardından açıklama ve Türkçe karşılık veriliyor.</p>
+</header>
+
+<main class="wrap">
+
+  <!-- Type picker -->
+  <div id="typePicker">
+    <div class="type-grid">
+      <div class="type-card" data-type="kelime" onclick="selectType('kelime',this)">
+        <div class="type-icon">📝</div>
+        <div class="type-name">Kelime</div>
+        <div class="type-count">12 soru</div>
+      </div>
+      <div class="type-card" data-type="gramer" onclick="selectType('gramer',this)">
+        <div class="type-icon">⚙️</div>
+        <div class="type-name">Gramer</div>
+        <div class="type-count">12 soru</div>
+      </div>
+      <div class="type-card" data-type="okuma" onclick="selectType('okuma',this)">
+        <div class="type-icon">📖</div>
+        <div class="type-name">Okuma</div>
+        <div class="type-count">6 soru</div>
+      </div>
+      <div class="type-card" data-type="paragraf" onclick="selectType('paragraf',this)">
+        <div class="type-icon">🔗</div>
+        <div class="type-name">Paragraf T.</div>
+        <div class="type-count">8 soru</div>
+      </div>
+      <div class="type-card" data-type="cumle" onclick="selectType('cumle',this)">
+        <div class="type-icon">✏️</div>
+        <div class="type-name">Cümle T.</div>
+        <div class="type-count">10 soru</div>
+      </div>
+    </div>
+    <button class="start-btn" id="startBtn" disabled onclick="startQuiz()">Başla</button>
+  </div>
+
+  <!-- Quiz -->
+  <div id="quizArea">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta">
+        <span id="progText">1 / 10</span>
+        <span id="scoreText">0 doğru</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+    </div>
+
+    <div id="passageWrap" style="display:none">
+      <div class="passage-box">
+        <div class="passage-label">Okuma Parçası</div>
+        <div id="passageText"></div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-type-badge" id="typeBadge"></div>
+      <div class="q-text" id="qText"></div>
+      <div class="options-list" id="optionsList"></div>
+      <div class="explanation" id="expBox">
+        <div class="exp-title" id="expTitle"></div>
+        <div id="expBody"></div>
+      </div>
+    </div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Sonraki Soru →</button>
+  </div>
+
+  <!-- Result -->
+  <div id="resultArea">
+    <div class="result-card">
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-sub" id="resultSub"></div>
+      <div class="result-bar-list" id="resultBars"></div>
+      <div class="result-actions">
+        <button class="btn-retry" onclick="retryQuiz()">Tekrar Çöz</button>
+        <button class="btn-other" onclick="backToSelector()">Başka Tip Seç</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p style="margin-bottom:8px">
+    <a href="/">YDS Hazırlık</a> &nbsp;·&nbsp;
+    <a href="/yds-deneme-analizi.html">Deneme Analizi</a> &nbsp;·&nbsp;
+    <a href="/yds-gramer-konulari.html">Gramer Konuları</a> &nbsp;·&nbsp;
+    <a href="/yds-kelime-listesi.html">Kelime Listesi</a>
+  </p>
+  <p>&copy; 2026 YDS Hazırlık — Tamamen ücretsiz</p>
+</footer>
+
+<script>
+// ── Question Bank ────────────────────────────────────────────────────────────
+
+const BANK = {
+
+kelime: [
+  { text: "The researcher's findings were so ___ that they overturned decades of accepted scientific theory.",
+    opts:['trivial','groundbreaking','predictable','ambiguous'], ans:1,
+    exp:'<b>groundbreaking</b> (çığır açan) — araştırmanın onlarca yıllık kabul görmüş teoriyi alt üst etmesi ancak çığır açan bir bulguyla mümkündür.' },
+  { text: "The organization decided to ___ its resources more efficiently to address the growing demand.",
+    opts:['allocate','deplete','ignore','scatter'], ans:0,
+    exp:'<b>allocate</b> (tahsis etmek) — kaynakları verimli biçimde dağıtmak/tahsis etmek.' },
+  { text: "Despite ___ opposition from local residents, the city council approved the construction project.",
+    opts:['enthusiastic','fierce','mild','indirect'], ans:1,
+    exp:'<b>fierce</b> (şiddetli) — "fierce opposition" YDS\'de çok sık görülen bir collocation\'dır.' },
+  { text: "Scientists are working to ___ the spread of the invasive species before it causes irreversible damage.",
+    opts:['encourage','monitor','curb','accelerate'], ans:2,
+    exp:'<b>curb</b> (frenlemek, kısıtlamak) — "curb the spread" yaygın bir ifadedir. Monitor ve encourage anlam olarak uymuyor.' },
+  { text: "The evidence against the suspect was ___, leaving the jury with little doubt about the verdict.",
+    opts:['circumstantial','insufficient','overwhelming','ambiguous'], ans:2,
+    exp:'<b>overwhelming</b> (ezici, çok güçlü) — "little doubt" ile yalnızca "overwhelming" uyuşur; diğerleri şüpheyi artırır.' },
+  { text: "A good leader should be able to ___ conflict between team members rather than ignoring it.",
+    opts:['provoke','overlook','mediate','intensify'], ans:2,
+    exp:'<b>mediate</b> (arabuluculuk etmek) — "rather than ignoring" ipucu, sorunla aktif biçimde ilgilenilmesi gerektiğini gösterir.' },
+  { text: "The new safety regulations were ___ in response to a series of industrial accidents.",
+    opts:['proposed','implemented','drafted','reviewed'], ans:1,
+    exp:'<b>implemented</b> (uygulamaya konuldu) — kaza serisi → doğrudan hayata geçirildi. Proposed/drafted henüz uygulanmamış demek.' },
+  { text: "The politician's speech was full of ___ promises that were unlikely to be fulfilled.",
+    opts:['realistic','hollow','ambitious','concrete'], ans:1,
+    exp:'<b>hollow</b> (boş, içi boş) — "unlikely to be fulfilled" ipucu; hollow promise = gerçekleşmeyecek boş söz.' },
+  { text: "The ancient ruins were so well ___ that visitors could imagine life there thousands of years ago.",
+    opts:['restored','demolished','collapsed','excavated'], ans:0,
+    exp:'<b>restored</b> (restore edilmiş) — ziyaretçilerin yaşamı hayal edebilmesi iyi korunmuş/restore edilmiş bir yapı gerektirir.' },
+  { text: "The company's decision to ___ its operations overseas led to significant job losses at home.",
+    opts:['expand','relocate','evaluate','maintain'], ans:1,
+    exp:'<b>relocate</b> (taşımak) — "overseas" + "job losses at home" → operasyonları yurt dışına taşımak.' },
+  { text: "The report highlighted the need to ___ the gap between theory and practice in education.",
+    opts:['widen','measure','bridge','maintain'], ans:2,
+    exp:'<b>bridge</b> (köprü kurmak, kapatmak) — "bridge the gap" çok sık görülen bir collocation.' },
+  { text: "The documentary presented a ___ account of the events, avoiding any form of bias or exaggeration.",
+    opts:['biased','balanced','partial','provocative'], ans:1,
+    exp:'<b>balanced</b> (dengeli) — "avoiding any form of bias or exaggeration" doğrudan dengeli bir anlatıma işaret eder.' },
+],
+
+gramer: [
+  { text: "By the time the rescue team arrived, the survivors ___ in the mountains for three days.",
+    opts:['waited','were waiting','had been waiting','have waited'], ans:2,
+    exp:'"By the time" + past tense → <b>past perfect continuous</b>. O ana kadar kesintisiz devam eden eylem.' },
+  { text: "The report, ___ was presented to the board last week, contained several important recommendations.",
+    opts:['which','that','who','whose'], ans:0,
+    exp:'Virgülden sonra non-restrictive relative clause → <b>which</b>. "That" virgüllü cümlelerde kullanılmaz.' },
+  { text: "Had the government taken action sooner, the crisis ___ so severe.",
+    opts:['would not become','had not become','would not have become','will not become'], ans:2,
+    exp:'Inverted Type 3 conditional (Had + V3 → would have + V3). Gerçekleşmemiş geçmiş koşul.' },
+  { text: "The scientists suggested that the funding ___ increased to support further research.",
+    opts:['is','was','be','were'], ans:2,
+    exp:'"Suggest that" sonrası subjunctive mood → bare infinitive = <b>be</b>. (is/was değil)' },
+  { text: "___ for the timely intervention of emergency services, the fire would have spread to the entire building.",
+    opts:['Had it not been','It had not been','If it had not been','Were it not'], ans:0,
+    exp:'<b>Had it not been for</b> = inverted conditional. "If it had not been for" un devrik hali.' },
+  { text: "The new legislation makes it ___ for companies to disclose their environmental impact.",
+    opts:['obligate','obligatory','obligation','obligated'], ans:1,
+    exp:'"Makes it + adjective" yapısı → <b>obligatory</b> (zorunlu). "Obligate" fiil, "obligation" isim.' },
+  { text: "No sooner ___ the announcement than the stock market began to react.",
+    opts:['had they made','they had made','have they made','they made'], ans:0,
+    exp:'"No sooner... than" → inversion + past perfect: <b>had they made</b>.' },
+  { text: "The building ___ in 1895 still stands as a monument to Victorian architecture.",
+    opts:['was constructed','constructed','constructing','having constructed'], ans:1,
+    exp:'"The building constructed in 1895" = reduced relative clause (which was constructed). <b>constructed</b>.' },
+  { text: "The professor asked the students to submit their essays before leaving the room, ___ none of them had completed.",
+    opts:['which','that','what','where'], ans:0,
+    exp:'Önceki tüm cümleyi niteleyen non-restrictive clause → <b>which</b>. "That" bu işlevi üstlenemez.' },
+  { text: "It is essential that every student ___ a valid ID card when entering the examination hall.",
+    opts:['carries','carry','will carry','is carrying'], ans:1,
+    exp:'"It is essential that" sonrası subjunctive → <b>carry</b> (bare infinitive, s eki olmadan).' },
+  { text: "___ to improve air quality, many cities have introduced congestion charges for private vehicles.",
+    opts:['Aimed','Having aimed','Aiming','To aiming'], ans:2,
+    exp:'"Aiming to improve..." = dangling participle değil, main subject şehirler olduğundan <b>Aiming</b> doğru.' },
+  { text: "The study confirmed that regular exercise not only improves physical health ___ enhances cognitive function.",
+    opts:['but also','as well','besides','in addition'], ans:0,
+    exp:'"Not only... <b>but also</b>..." korelasyon yapısı. Diğer seçenekler bu yapıyla kullanılmaz.' },
+],
+
+okuma: [
+  {
+    passage: "The concept of 'blue zones' was introduced by researcher Dan Buettner, who identified five regions where people consistently live longer and healthier lives than average. These areas include Sardinia in Italy, Okinawa in Japan, Loma Linda in California, Ikaria in Greece, and the Nicoya Peninsula in Costa Rica. Researchers have found that inhabitants of these zones share certain lifestyle characteristics. They tend to engage in regular, low-intensity physical activity as part of their daily routines rather than structured exercise programmes. They eat mostly plant-based diets and consume moderate amounts of food. Strong social networks and a sense of community play an essential role in their well-being. Additionally, most blue zone residents have a clear sense of purpose in life, which researchers believe contributes significantly to their longevity.",
+    questions: [
+      { text:"According to the passage, which of the following is NOT mentioned as a characteristic shared by people living in blue zones?",
+        opts:['A diet rich in plant-based foods','Regular participation in organised sports activities','Strong community ties and social connections','Having a defined sense of life purpose'],
+        ans:1,
+        exp:'"Rather than structured exercise" ifadesi organize spor aktivitelerinin <b>bir özellik olmadığını</b> açıkça belirtir.' },
+      { text:'The word "longevity" in the last sentence most closely means:',
+        opts:['happiness','resilience','long life','prosperity'],
+        ans:2,
+        exp:'<b>longevity</b> = uzun ömür (long life). "Blue zone sakinlerinin uzun ömrüne katkı sağlar."' },
+      { text:'Which of the following best summarises the main idea of the passage?',
+        opts:['Five specific regions have been identified where residents share certain habits that contribute to longer lives.','Dan Buettner conducted experiments to prove that diet is the most important factor in longevity.','People in blue zones have access to better healthcare facilities than those in other regions.','The key to a long life lies primarily in avoiding processed foods.'],
+        ans:0,
+        exp:'Parça beş bölgeyi ve sakinlerin ortak yaşam tarzı özelliklerini tanıtmaktadır. En iyi özet A seçeneğidir.' },
+    ]
+  },
+  {
+    passage: "Artificial intelligence is increasingly being used in medical diagnosis, with some systems now able to detect diseases such as cancer, diabetic retinopathy, and certain heart conditions with accuracy comparable to or even exceeding that of experienced physicians. This development raises important questions about the future role of doctors in healthcare. While AI systems excel at pattern recognition in large datasets, they still lack the ability to communicate empathetically with patients, consider complex social factors affecting health, or make nuanced judgements in ambiguous situations. Most medical professionals argue that AI should be viewed as a powerful tool that enhances rather than replaces human medical expertise. The ideal model appears to be one in which AI handles time-consuming data analysis while physicians focus on patient interaction and complex decision-making.",
+    questions: [
+      { text:'According to the passage, AI medical diagnostic systems:',
+        opts:['are still far less accurate than experienced physicians in detecting diseases.','can match or surpass physicians in accuracy for certain conditions.','are primarily used for administrative tasks in medical settings.','have been rejected by most medical professionals as unreliable.'],
+        ans:1,
+        exp:'"Accuracy comparable to or even exceeding that of experienced physicians" → <b>B doğru</b>.' },
+      { text:"The author's main point about the relationship between AI and doctors is that:",
+        opts:['AI systems will eventually replace doctors in most medical fields.','AI should complement rather than substitute human medical expertise.','Doctors should receive additional training to compete with AI.','The accuracy of AI systems is the primary concern in medical settings.'],
+        ans:1,
+        exp:'"Enhances rather than replaces" → AI insan uzmanlığını <b>tamamlamalı</b>, yerini almamalı.' },
+      { text:'Which of the following is implied about the current limitations of AI in medicine?',
+        opts:['AI systems cannot process large amounts of medical data efficiently.','AI lacks the ability to understand the emotional and social aspects of patient care.','AI diagnostic tools are too expensive for most healthcare facilities.','Medical professionals are unwilling to accept AI in their practice.'],
+        ans:1,
+        exp:'"Lack the ability to communicate empathetically... consider complex social factors" → <b>duygusal ve sosyal boyut</b> eksikliği.' },
+    ]
+  },
+],
+
+paragraf: [
+  { passage:'Global temperatures have risen by approximately 1.1 degrees Celsius since pre-industrial times. This warming is primarily caused by the burning of fossil fuels, which releases large amounts of carbon dioxide into the atmosphere. ---- As a result, coastal cities around the world are developing adaptation strategies to cope with these challenges.',
+    text:'Boşluğa hangi cümle getirilmelidir?',
+    opts:['Scientists have developed new methods to measure ocean temperatures accurately.','The rising temperatures are causing glaciers to melt and sea levels to rise.','Many governments have pledged to reduce their carbon emissions significantly.','Renewable energy sources are becoming increasingly affordable worldwide.'],
+    ans:1,
+    exp:'Isınma → buzulların erimesi → deniz seviyesi yükselmesi → kıyı kentleri adaptasyon. Mantıksal zincir <b>B</b>\'yi gerektirir.' },
+  { passage:'The human brain continues to develop well into a person\'s mid-twenties. ---- This is why teenagers often engage in impulsive behaviour and struggle to assess risks accurately. Understanding this biological reality has led many educators and policymakers to reconsider how they approach adolescent development.',
+    text:'Boşluğa hangi cümle getirilmelidir?',
+    opts:['Memory consolidation primarily occurs during sleep, particularly in the hippocampus.','The prefrontal cortex, responsible for decision-making, is among the last regions to mature.','Emotional intelligence can be developed through targeted educational programmes.','Adolescents require approximately eight to ten hours of sleep per night.'],
+    ans:1,
+    exp:'Prefrontal cortex (karar verme) geç gelişir → ergenler dürtüsel davranır. <b>B</b> bu bağlantıyı doğrudan sağlar.' },
+  { passage:'Libraries have undergone a dramatic transformation in recent decades. ---- However, this shift has not diminished their role as community centres; rather, it has allowed them to serve a broader range of needs, from digital literacy training to hosting community events.',
+    text:'Boşluğa hangi cümle getirilmelidir?',
+    opts:['Reading habits among young people have significantly declined over the past decade.','Many libraries have closed their doors due to insufficient government funding.','The focus has shifted from housing physical books to providing access to digital resources.','Librarians are increasingly required to have advanced degrees in information science.'],
+    ans:2,
+    exp:'"This shift" ve "however" bağlacı, fiziksel kitaptan dijital kaynaklara geçişi (C) işaret eder.' },
+  { passage:'Antibiotics have saved countless lives since their discovery. However, their overuse and misuse have led to a dangerous phenomenon known as antibiotic resistance. ---- Without urgent action, common infections that were once easily treatable could become life-threatening.',
+    text:'Boşluğa hangi cümle getirilmelidir?',
+    opts:['Penicillin was first discovered by Alexander Fleming in 1928.','Bacteria have evolved to withstand the drugs that were once effective against them.','The pharmaceutical industry has invested heavily in developing new antibiotics.','Patients should always complete their prescribed course of antibiotics.'],
+    ans:1,
+    exp:'Direnç → bakterilerin ilaçlara karşı evrimleşmesi (B) → tedavi edilemeyen enfeksiyonlar. Doğrudan nedensel bağlantı.' },
+  { passage:'Urbanisation is accelerating rapidly across the developing world. As people move from rural areas to cities in search of better economic opportunities, urban centres face increasing pressure on infrastructure and services. ---- This has prompted urban planners to rethink how cities are designed and managed.',
+    text:'Boşluğa hangi cümle getirilmelidir?',
+    opts:['Rural communities often struggle to retain their young population.','Traffic congestion costs cities billions of dollars in lost productivity each year.','Issues such as housing shortages, traffic congestion, and pollution have intensified.','Smart city technologies offer innovative solutions to modern urban challenges.'],
+    ans:2,
+    exp:'"Increasing pressure" → somutlaşma olarak konut sıkıntısı, trafik ve kirlilik (C). "This has prompted" devamını da mantıksal kılar.' },
+  { passage:'Sleep is often the first thing people sacrifice when life gets busy. Yet research consistently shows that chronic sleep deprivation has severe consequences for both physical and mental health. ---- Given this evidence, experts argue that sleep should be treated as a public health priority rather than a personal lifestyle choice.',
+    text:'Boşluğa hangi cümle getirilmelidir?',
+    opts:['Many adults report feeling tired even after what they consider a full night of sleep.','Studies link insufficient sleep to obesity, heart disease, impaired memory, and depression.','Teenagers are biologically predisposed to staying up late and sleeping in.','The average adult requires between seven and nine hours of sleep per night.'],
+    ans:1,
+    exp:'"Severe consequences" → somut sağlık zararları (B): obezite, kalp hastalığı, bellek, depresyon. Sonraki cümledeki "this evidence" B\'yi gerektirir.' },
+  { passage:'Over the past century, life expectancy in most countries has risen dramatically. Advances in medicine, improvements in sanitation, and better nutrition have all played crucial roles. ---- Despite these gains, significant inequalities in health outcomes persist between rich and poor nations.',
+    text:'Boşluğa hangi cümle getirilmelidir?',
+    opts:['As a result, many governments are now focusing on controlling infectious diseases.','The development of vaccines alone has prevented millions of premature deaths.','Consequently, populations around the world are ageing at an unprecedented rate.','However, chronic diseases such as diabetes and cancer continue to increase globally.'],
+    ans:2,
+    exp:'"Artan yaşam beklentisi + yaşlanan nüfus" bağlantısı açıktır. "Despite these gains" ile kurulan kontrast C sonrasında anlam kazanır.' },
+  { passage:'The term "digital divide" refers to the gap between those who have reliable access to digital technologies and those who do not. ---- Without bridging this divide, efforts to make education, healthcare, and economic opportunities more equitable will fall short, as these services increasingly rely on digital platforms.',
+    text:'Boşluğa hangi cümle getirilmelidir?',
+    opts:['Social media platforms have been criticised for spreading misinformation rapidly.','This gap exists not only between countries but also within them, along lines of income, age, and geography.','Governments have invested heavily in expanding broadband infrastructure in rural areas.','Young people today are far more comfortable using digital devices than older generations.'],
+    ans:1,
+    exp:'Uçurumun boyutlarını açıklayan B, "bridging this divide" ifadesinin bağlamını ve "without bridging" kısmını anlam olarak destekler.' },
+],
+
+cumle: [
+  { text:"Although the experiment was initially considered a failure, ----",
+    opts:['the researchers had given up on finding a solution.','the results eventually led to a major scientific breakthrough.','nobody was able to conduct further tests on the substance.','the funding for the project was immediately withdrawn.'],
+    ans:1,
+    exp:'"Although" zıtlık bağlacı: başarısızlık → ama <b>büyük bir ilerlemeye</b> yol açtı. B tek olumlu çıktıdır.' },
+  { text:"The more diverse a team is in terms of background and experience, ----",
+    opts:['the harder it becomes to reach a consensus on important decisions.','the more challenges the management team faces in daily operations.','the more creative and effective its problem-solving tends to be.','the less likely it is to complete projects within the given timeframe.'],
+    ans:2,
+    exp:'"The more... the more..." yapısı + çeşitliliğin olumlu etkisi → problem çözme becerisi (C).' },
+  { text:"Not until the last decade ----",
+    opts:['scientists began to fully understand the extent of ocean plastic pollution.','did scientists begin to fully understand the extent of ocean plastic pollution.','had scientists fully understood the extent of ocean plastic pollution.','scientists have fully understood the extent of ocean plastic pollution.'],
+    ans:1,
+    exp:'"Not until" başa gelince inversion zorunludur: <b>did scientists begin</b>. (özne-yardımcı devrik)' },
+  { text:"Despite having access to extensive resources, ----",
+    opts:['the research team managed to complete the project ahead of schedule.','the developing nations have seen significant economic growth recently.','the wealthiest countries continue to struggle with income inequality.','scientists were able to make remarkable discoveries in the field.'],
+    ans:2,
+    exp:'"Despite" zıtlık gerektirir: bol kaynak → ama hâlâ <b>gelir eşitsizliğiyle mücadele</b>. Yalnızca C zıt anlam taşır.' },
+  { text:"So rapid was the spread of the disease that ----",
+    opts:['the health authorities had enough time to prepare an effective response.','medical researchers were able to develop a vaccine within months.','the authorities struggled to contain it before it reached epidemic proportions.','neighbouring countries had implemented strict quarantine measures beforehand.'],
+    ans:2,
+    exp:'"So + adj + that" yapısı sonuç belirtir: bu kadar hızlı → kontrol altına almakta <b>güçlük çekti</b> (C).' },
+  { text:"It is only by understanding the root causes of poverty ----",
+    opts:['that we can develop sustainable solutions to address it effectively.','when we can begin to make meaningful changes in economic policy.','which helps policymakers design targeted intervention programmes.','so that international organisations provide sufficient funding.'],
+    ans:0,
+    exp:'"It is only by... <b>that</b>..." vurgulama yapısı. Yalnızca A doğru bağlaçla ve doğru yapıyla tamamlanmaktadır.' },
+  { text:"No matter how advanced technology becomes, ----",
+    opts:['it will always replace the need for human creativity and intuition.','we should not overlook the importance of human connection and empathy.','it has already transformed every aspect of modern life completely.','environmental challenges will no longer pose a threat to humanity.'],
+    ans:1,
+    exp:'"No matter how" → rağmen (ne kadar ilerlese de). Teknoloji ilerler → <b>yine de insan bağı önemlidir</b> (B).' },
+  { text:"The study found that children who were read to regularly ----",
+    opts:['tended to develop stronger language and literacy skills.','showed less interest in reading books independently as they grew up.','often struggled with concentration during formal education.','were more likely to prefer visual media over written texts.'],
+    ans:0,
+    exp:'Araştırma bulgusu: düzenli okunan çocuklar → <b>daha güçlü dil ve okuryazarlık becerileri</b> (A). Diğerleri araştırmaya aykırı.' },
+  { text:"Contrary to popular belief, moderate exercise ----",
+    opts:['can significantly worsen chronic conditions in elderly patients.','has been shown to improve both physical and mental well-being.','is rarely recommended by medical professionals as a treatment.','requires specialised equipment and professional supervision.'],
+    ans:1,
+    exp:'"Contrary to popular belief" → yaygın inanışın aksine doğru olan: orta düzey egzersiz <b>faydalıdır</b> (B).' },
+  { text:"The reason why so many species are currently facing extinction is primarily ----",
+    opts:['due to natural selection and evolutionary pressures over centuries.','that humans have dramatically altered their natural habitats.','because conservation efforts have been largely unsuccessful worldwide.','related to the introduction of new predators in various ecosystems.'],
+    ans:1,
+    exp:'Günümüz nesli tükenme krizinin birincil sebebi: insanların <b>doğal yaşam alanlarını tahrip etmesi</b> (B).' },
+],
+
+};
+
+// ── State ────────────────────────────────────────────────────────────────────
+let selectedType = null;
+let questions    = [];   // flat list for current quiz
+let currentIdx   = 0;
+let score        = 0;
+let answered     = false;
+
+// For reading passages we need to track which passage we're in
+let passageMap   = {};   // qIdx → passage text (for okuma)
+
+// ── Type selector ─────────────────────────────────────────────────────────────
+function selectType(type, el) {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  selectedType = type;
+  document.getElementById('startBtn').disabled = false;
+}
+
+// ── Build question list ───────────────────────────────────────────────────────
+function buildQuestions(type) {
+  const raw = BANK[type];
+  if (type === 'okuma') {
+    const flat = [];
+    raw.forEach(block => {
+      block.questions.forEach(q => {
+        flat.push({ ...q, passage: block.passage, type: 'okuma' });
+      });
+    });
+    return flat;
+  }
+  return raw.map(q => ({ ...q, type }));
+}
+
+// ── Start quiz ────────────────────────────────────────────────────────────────
+function startQuiz() {
+  questions   = buildQuestions(selectedType);
+  currentIdx  = 0;
+  score       = 0;
+  answered    = false;
+
+  document.getElementById('typePicker').style.display = 'none';
+  document.getElementById('resultArea').style.display  = 'none';
+  document.getElementById('quizArea').style.display    = '';
+
+  showQuestion();
+}
+
+// ── Show question ─────────────────────────────────────────────────────────────
+const TYPE_META = {
+  kelime:  { label:'Kelime', color:'#7c6af7', bg:'rgba(124,106,247,.15)' },
+  gramer:  { label:'Gramer', color:'#4a9eff', bg:'rgba(74,158,255,.15)' },
+  okuma:   { label:'Okuma',  color:'#4caf7d', bg:'rgba(76,175,125,.15)' },
+  paragraf:{ label:'Paragraf Tamamlama', color:'#f7944a', bg:'rgba(247,148,74,.15)' },
+  cumle:   { label:'Cümle Tamamlama', color:'#f76aaa', bg:'rgba(247,106,170,.15)' },
+};
+
+function showQuestion() {
+  answered = false;
+  const q    = questions[currentIdx];
+  const meta = TYPE_META[q.type] || TYPE_META.kelime;
+  const total= questions.length;
+
+  // Progress
+  document.getElementById('progText').textContent  = `${currentIdx+1} / ${total}`;
+  document.getElementById('scoreText').textContent = `${score} doğru`;
+  document.getElementById('progFill').style.width  = `${(currentIdx/total)*100}%`;
+
+  // Badge
+  const badge = document.getElementById('typeBadge');
+  badge.textContent = meta.label;
+  badge.style.background = meta.bg;
+  badge.style.color       = meta.color;
+
+  // Passage (reading / paragraf)
+  const passWrap = document.getElementById('passageWrap');
+  if (q.passage) {
+    passWrap.style.display = '';
+    const passText = document.getElementById('passageText');
+    if (q.type === 'paragraf') {
+      // Mark the blank with a visual gap
+      passText.innerHTML = q.passage.replace('----',
+        '<span style="display:inline-flex;align-items:center;gap:4px;color:var(--accent);font-weight:700;">' +
+        '<span style="display:inline-block;width:80px;height:2px;background:var(--accent);vertical-align:middle"></span>' +
+        ' ④ ' +
+        '<span style="display:inline-block;width:80px;height:2px;background:var(--accent);vertical-align:middle"></span>' +
+        '</span>');
+    } else {
+      passText.innerHTML = q.passage;
+    }
+  } else {
+    passWrap.style.display = 'none';
+  }
+
+  // Question text
+  const qText = document.getElementById('qText');
+  if (q.type === 'kelime' || q.type === 'gramer') {
+    qText.innerHTML = q.text.replace('___',
+      '<span class="q-blank">___</span>');
+  } else {
+    qText.textContent = q.text;
+  }
+
+  // Options
+  const letters = ['A','B','C','D'];
+  document.getElementById('optionsList').innerHTML = q.opts.map((opt, i) =>
+    `<button class="opt-btn" id="opt-${i}" onclick="answer(${i})">
+       <span class="opt-letter">${letters[i]}</span>
+       <span>${opt}</span>
+     </button>`
+  ).join('');
+
+  // Reset explanation
+  const expBox = document.getElementById('expBox');
+  expBox.className = 'explanation';
+  document.getElementById('expTitle').textContent = '';
+  document.getElementById('expBody').innerHTML = '';
+
+  // Hide next
+  const nb = document.getElementById('nextBtn');
+  nb.className = 'next-btn';
+  nb.textContent = currentIdx < questions.length-1 ? 'Sonraki Soru →' : 'Sonuçları Gör →';
+}
+
+// ── Answer ────────────────────────────────────────────────────────────────────
+function answer(idx) {
+  if (answered) return;
+  answered = true;
+
+  const q       = questions[currentIdx];
+  const correct = q.ans;
+  const isRight = idx === correct;
+  if (isRight) score++;
+
+  // Update buttons
+  document.querySelectorAll('.opt-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correct) btn.classList.add('correct');
+    else if (i === idx) btn.classList.add('wrong');
+  });
+
+  // Explanation
+  const expBox = document.getElementById('expBox');
+  expBox.className = 'explanation show ' + (isRight ? 'correct-exp' : 'wrong-exp');
+  document.getElementById('expTitle').textContent = isRight ? '✓ Doğru!' : '✗ Yanlış';
+  document.getElementById('expBody').innerHTML = q.exp;
+
+  // Show next button
+  document.getElementById('nextBtn').className = 'next-btn show';
+}
+
+// ── Next question ─────────────────────────────────────────────────────────────
+function nextQuestion() {
+  currentIdx++;
+  if (currentIdx >= questions.length) {
+    showResult();
+  } else {
+    showQuestion();
+    window.scrollTo({ top: document.getElementById('quizArea').offsetTop - 70, behavior:'smooth' });
+  }
+}
+
+// ── Result ────────────────────────────────────────────────────────────────────
+function showResult() {
+  document.getElementById('quizArea').style.display  = 'none';
+  document.getElementById('resultArea').style.display = '';
+
+  const total = questions.length;
+  const pct   = Math.round((score/total)*100);
+
+  const scoreEl = document.getElementById('resultScore');
+  scoreEl.textContent = `${score} / ${total}`;
+  scoreEl.style.color = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--accent2)' : 'var(--red)';
+
+  const msgs = [
+    [85, 'Harika! Bu tipi çok iyi biliyorsun.'],
+    [70, 'İyi gidiyorsun, biraz daha pratikle pekiştirebilirsin.'],
+    [50, 'Orta seviye. Bu tipi daha fazla çalışman önerilir.'],
+    [0,  'Bu tip zayıf alanın. Deneme analizi bağlantılarına göz at.'],
+  ];
+  const msg = msgs.find(([th]) => pct >= th)[1];
+  document.getElementById('resultSub').textContent = `%${pct} başarı — ${msg}`;
+
+  // Bar
+  document.getElementById('resultBars').innerHTML =
+    `<div class="result-bar-row">
+       <span class="result-bar-label">${TYPE_META[selectedType]?.label || ''}</span>
+       <div class="result-bar-track"><div class="result-bar-fill" style="width:${pct}%;background:${pct>=70?'var(--green)':pct>=50?'var(--accent2)':'var(--red)'}"></div></div>
+       <span class="result-pct">${pct}%</span>
+     </div>`;
+}
+
+function retryQuiz() {
+  document.getElementById('resultArea').style.display = 'none';
+  startQuiz();
+}
+
+function backToSelector() {
+  document.getElementById('resultArea').style.display = 'none';
+  document.getElementById('typePicker').style.display = '';
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('active'));
+  selectedType = null;
+  document.getElementById('startBtn').disabled = true;
+}
+</script>
+</body>
+</html>
