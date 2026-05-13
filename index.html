@@ -1455,7 +1455,6 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
     <h3>Hesap oluştur, ilerlemeni kaydet</h3>
     <p>Misafir olarak başla, hazır olduğunda kayıt ol. Tamamen ücretsiz.</p>
     <button class="btn-land-primary" onclick="authGuest()">Ücretsiz Başla →</button>
-    <p style="margin-top:16px;font-size:.82rem"><a href="/hakkimizda.html" style="color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border)">Bu site hakkında →</a></p>
   </div>
 </div>
 
@@ -4108,6 +4107,10 @@ function openSettingsModal(){
       ${currentUser
         ? `<button class="btn btn-sm" style="background:rgba(248,81,73,.1);color:var(--red);border:1px solid rgba(248,81,73,.3)" onclick="closeModal();authSignOut()">Çıkış Yap</button>`
         : `<button class="btn btn-sm" style="background:rgba(129,140,248,.12);color:var(--blue);border:1px solid rgba(129,140,248,.3)" onclick="closeModal();showAuthInApp()">Giriş Yap / Kayıt Ol</button>`}
+    </div>
+    <div class="settings-row" style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
+      <div style="font-size:14px;font-weight:600">Bu Site Hakkında</div>
+      <a href="/hakkimizda.html" style="font-size:13px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border)">Hakkımızda →</a>
     </div>
   `, true);
   // Aktif tema butonunu işaretle
