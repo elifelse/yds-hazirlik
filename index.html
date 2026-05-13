@@ -2010,6 +2010,7 @@ function showAuthFromLanding(){
 function showAuthInApp(){
   // Misafir modundan giriş yapmak için: tüm ekranları gizle, auth'u göster
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('landing').classList.remove('active');
   document.getElementById('bottom-nav').style.display = 'none';
   document.getElementById('top-nav').classList.remove('active');
   document.getElementById('theme-picker-fixed').classList.remove('visible');
