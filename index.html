@@ -5683,6 +5683,11 @@ document.addEventListener('mouseup', () => {
   } else if (!currentUser) {
     // Tıklama (sürükleme değil) + giriş yapılmamış → direkt auth ekranı
     showAuthInApp();
+  } else if (document.getElementById('landing').classList.contains('active')) {
+    // Giriş yapılmış ama landing'de → uygulamaya al
+    document.getElementById('landing').classList.remove('active');
+    enterApp();
+    goTo('plan-screen');
   }
   setTimeout(() => { _beeDragged = false; }, 50);
 });
