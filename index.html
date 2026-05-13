@@ -5656,10 +5656,12 @@ document.addEventListener('mouseout', e => {
 // ── 3. SÜRÜKLE & BIRAK ───────────────────────────────────
 let _beeDragging = false, _beeDragged = false;
 let _beeDragOX = 0, _beeDragOY = 0;
+let _beeDragStartX = 0, _beeDragStartY = 0;
 
 document.getElementById('bee')?.addEventListener('mousedown', e => {
   if (e.button !== 0) return;
   _beeDragging = true; _beeDragged = false;
+  _beeDragStartX = e.clientX; _beeDragStartY = e.clientY;
   const r = document.getElementById('bee').getBoundingClientRect();
   _beeDragOX = e.clientX - r.left;
   _beeDragOY = e.clientY - r.top;
@@ -5667,6 +5669,8 @@ document.getElementById('bee')?.addEventListener('mousedown', e => {
 });
 document.addEventListener('mousemove', e => {
   if (!_beeDragging) return;
+  const dx = e.clientX - _beeDragStartX, dy = e.clientY - _beeDragStartY;
+  if (!_beeDragged && dx*dx + dy*dy < 25) return; // 5px threshold
   _beeDragged = true;
   const bee = document.getElementById('bee');
   const hp  = document.getElementById('honeycomb-panel');
