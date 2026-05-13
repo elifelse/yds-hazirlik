@@ -1314,9 +1314,9 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
         <a href="/yds-conditionals.html">Conditionals (If Clauses)</a>
         <a href="/yds-baglac-listesi.html">Bağlaç Listesi PDF</a>
         <a href="/yds-collocation-listesi.html">Collocation PDF</a>
-        <a href="/yds-deneme-analizi.html">Deneme Analizi</a>
-        <a href="/yds-ilerleme-grafigi.html">İlerleme Grafiği</a>
-        <a href="/yds-pratik-setleri.html">Pratik Setleri</a>
+        <a href="/yds-deneme-analizi.html" onclick="return guardedNav('/yds-deneme-analizi.html')">Deneme Analizi 🔒</a>
+        <a href="/yds-ilerleme-grafigi.html" onclick="return guardedNav('/yds-ilerleme-grafigi.html')">İlerleme Grafiği 🔒</a>
+        <a href="/yds-pratik-setleri.html" onclick="return guardedNav('/yds-pratik-setleri.html')">Pratik Setleri 🔒</a>
         <a href="/yds-soru-tipleri.html">Soru Tipleri</a>
         <a href="/yds-puan-hesaplama.html">Puan Hesaplama</a>
       </div>
@@ -1869,8 +1869,6 @@ async function initAuth(){
     }
     if(!session && currentUser){
       currentUser = null;
-      document.getElementById('bee').style.display = 'none';
-      document.getElementById('bee-bubble').style.display = 'none';
       document.getElementById('honeycomb-panel').style.display = 'none';
     }
   });
@@ -1912,8 +1910,8 @@ function enterApp(){
     const _savedPct = parseInt(localStorage.getItem('yds_pct') || '50');
     showPlan(_savedLevel, _savedPct);
   } else {
-    document.getElementById('bee').style.display = currentUser ? '' : 'none';
-    document.getElementById('bee-bubble').style.display = currentUser ? '' : 'none';
+    document.getElementById('bee').style.display = '';
+    document.getElementById('bee-bubble').style.display = '';
     document.getElementById('honeycomb-panel').style.display = currentUser ? '' : 'none';
     document.getElementById('intro').classList.add('active');
     renderLvlQ();
@@ -2019,6 +2017,22 @@ function showAuthInApp(){
   document.getElementById('auth-back-wrap').style.display = 'block';
 }
 
+function showAuthPrompt(msg){
+  openModal('🔑 Giriş Yap', `
+    <p style="color:var(--muted);font-size:14px;margin-bottom:20px">${msg||'Bu özelliği kullanmak için hesap oluşturman gerekiyor. Ücretsiz kayıt ol, ilerlemeni kaydet.'}</p>
+    <div style="display:flex;gap:10px">
+      <button class="btn" style="flex:1;background:var(--accent);color:#fff;font-weight:700" onclick="closeModal();showAuthInApp()">Giriş Yap / Kayıt Ol</button>
+      <button class="btn btn-outline" onclick="closeModal()">Şimdi değil</button>
+    </div>
+  `);
+}
+
+function guardedNav(url){
+  if(currentUser){ window.location.href = url; return false; }
+  showAuthPrompt('İlerleme sayfaları ve analiz araçlarına erişmek için ücretsiz hesap oluştur.');
+  return false;
+}
+
 function cancelAuthGoBack(){
   document.getElementById('auth-screen').classList.remove('active');
   document.getElementById('auth-back-wrap').style.display = 'none';
@@ -2033,8 +2047,6 @@ async function authSignOut(){
   const _nlb = document.getElementById('nav-login-btn');
   if(_nlb) _nlb.style.display = 'none';
   document.getElementById('theme-picker-fixed').classList.remove('visible');
-  document.getElementById('bee').style.display = 'none';
-  document.getElementById('bee-bubble').style.display = 'none';
   document.getElementById('honeycomb-panel').style.display = 'none';
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('auth-screen').classList.add('active');
@@ -5667,6 +5679,9 @@ document.addEventListener('mouseup', () => {
   if (_beeDragged) {
     const bee = document.getElementById('bee');
     localStorage.setItem('yds_bee_pos', JSON.stringify({ left:bee.style.left, top:bee.style.top }));
+  } else if (!currentUser) {
+    // Tıklama (sürükleme değil) + giriş yapılmamış → auth prompt
+    showAuthPrompt();
   }
   setTimeout(() => { _beeDragged = false; }, 50);
 });
