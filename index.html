@@ -4109,6 +4109,17 @@ function openSettingsModal(){
         : `<button class="btn btn-sm" style="background:rgba(129,140,248,.12);color:var(--blue);border:1px solid rgba(129,140,248,.3)" onclick="closeModal();showAuthInApp()">Giriş Yap / Kayıt Ol</button>`}
     </div>
     <div class="settings-row" style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
+      <div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:2px">🔔 Günlük Hatırlatıcı</div>
+        <div style="font-size:12px;color:var(--muted)">Belirlediğin saatte çalışma bildirimi al</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input type="time" id="notif-time-input" value="${localStorage.getItem('yds_notif_time')||'20:00'}" style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--text);font-size:13px;cursor:pointer">
+        <button class="btn btn-sm" style="background:rgba(124,106,247,.15);color:var(--accent);border:1px solid rgba(124,106,247,.3)" onclick="saveNotifTime(document.getElementById('notif-time-input').value)">Ayarla</button>
+        ${localStorage.getItem('yds_notif_time') ? `<button class="btn btn-sm" style="background:rgba(224,92,92,.1);color:var(--red);border:1px solid rgba(224,92,92,.3)" onclick="clearNotifTime();closeModal()">Kapat</button>` : ''}
+      </div>
+    </div>
+    <div class="settings-row" style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
       <div style="font-size:14px;font-weight:600">Bu Site Hakkında</div>
       <a href="/hakkimizda.html" style="font-size:13px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border)">Hakkımızda →</a>
     </div>
@@ -4785,7 +4796,7 @@ initAuth();
 if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>{
     navigator.serviceWorker.register('sw.js')
-      .then(()=>console.log('[YDS] SW registered'))
+      .then(()=>{ console.log('[YDS] SW registered'); initNotifications(); })
       .catch(e=>console.warn('[YDS] SW failed:', e));
   });
 }
@@ -4808,6 +4819,76 @@ function triggerInstall(){
   if(!deferredInstallPrompt) return;
   deferredInstallPrompt.prompt();
   deferredInstallPrompt.userChoice.then(()=>{ deferredInstallPrompt = null; });
+}
+
+// ══════════════════════════════════════════════════════
+//  BİLDİRİM — Günlük çalışma hatırlatıcısı
+// ══════════════════════════════════════════════════════
+let _notifTimer = null;
+
+function initNotifications(){
+  const savedTime = localStorage.getItem('yds_notif_time');
+  if(!savedTime) return;
+  if(!('Notification' in window)) return;
+  if(Notification.permission !== 'granted') return;
+  scheduleTodayReminder(savedTime);
+}
+
+async function requestNotifPermission(){
+  if(!('Notification' in window)){
+    showToast('Bu tarayıcı bildirimleri desteklemiyor');
+    return false;
+  }
+  if(Notification.permission === 'granted') return true;
+  if(Notification.permission === 'denied'){
+    showToast('Bildirim izni engellendi. Tarayıcı ayarlarından izin ver.');
+    return false;
+  }
+  const perm = await Notification.requestPermission();
+  return perm === 'granted';
+}
+
+function scheduleTodayReminder(timeStr){
+  if(_notifTimer) clearTimeout(_notifTimer);
+  const [h, m] = timeStr.split(':').map(Number);
+  const now = new Date();
+  const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0);
+  if(target <= now) target.setDate(target.getDate() + 1);
+  const ms = target - now;
+  _notifTimer = setTimeout(() => {
+    const todayStr = new Date().toDateString();
+    const lastFired = localStorage.getItem('yds_notif_last');
+    if(lastFired !== todayStr){
+      try{
+        new Notification('YDS Calisma Zamani!', {
+          body: 'Gunluk calismani tamamlamak icin tikla.',
+          icon: '/icon-192.png',
+          tag: 'yds-daily-reminder',
+          renotify: false
+        });
+        localStorage.setItem('yds_notif_last', todayStr);
+      }catch(e){ console.warn('[YDS] Bildirim gönderilemedi:', e); }
+    }
+    scheduleTodayReminder(timeStr); // yarın için yeniden zamanla
+  }, ms);
+}
+
+async function saveNotifTime(timeStr){
+  if(!timeStr) return;
+  const granted = await requestNotifPermission();
+  if(!granted) return;
+  localStorage.setItem('yds_notif_time', timeStr);
+  scheduleTodayReminder(timeStr);
+  const [h, m] = timeStr.split(':');
+  showToast(`Hatırlatıcı ${h}:${m} için ayarlandı`);
+  closeModal();
+}
+
+function clearNotifTime(){
+  if(_notifTimer){ clearTimeout(_notifTimer); _notifTimer = null; }
+  localStorage.removeItem('yds_notif_time');
+  localStorage.removeItem('yds_notif_last');
+  showToast('Hatırlatıcı kapatıldı');
 }
 
 // ══════════════════════════════════════════════════════
