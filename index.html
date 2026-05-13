@@ -5514,6 +5514,8 @@ function renderHoneycomb() {
   const count = document.getElementById('hc-count');
   if (!grid) return;
 
+  if (!currentUser) { panel.style.display = 'none'; return; }
+  panel.style.display = '';
   const cells = _getHC();
   count.textContent = `${cells.length}/${HC_MAX}`;
   panel.classList.toggle('hidden', cells.length === 0);
