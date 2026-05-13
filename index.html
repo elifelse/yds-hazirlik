@@ -5680,8 +5680,8 @@ document.addEventListener('mouseup', () => {
     const bee = document.getElementById('bee');
     localStorage.setItem('yds_bee_pos', JSON.stringify({ left:bee.style.left, top:bee.style.top }));
   } else if (!currentUser) {
-    // Tıklama (sürükleme değil) + giriş yapılmamış → auth prompt
-    showAuthPrompt();
+    // Tıklama (sürükleme değil) + giriş yapılmamış → direkt auth ekranı
+    showAuthInApp();
   }
   setTimeout(() => { _beeDragged = false; }, 50);
 });
