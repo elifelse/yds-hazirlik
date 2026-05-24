@@ -1839,8 +1839,6 @@ async function initAuth(){
   // Landing page'i göster (her zaman)
   document.getElementById('landing').classList.add('active');
   renderLandingCountdown();
-  // İlk ziyarette turu başlat
-  setTimeout(startTour, 600);
 
   if(!supa) return;
 
@@ -1903,6 +1901,7 @@ function enterApp(){
   document.getElementById('top-nav').classList.add('active');
   document.getElementById('theme-picker-fixed').classList.add('visible');
   roamStart(); // 5 dakikada bir soru soran tutor
+  setTimeout(startTour, 800); // Tour sadece uygulamaya girdikten sonra
 
   // Daha önce seviye testi yapıldıysa direkt plana git; yoksa quiz göster
   const _savedLevel = localStorage.getItem('yds_level');
