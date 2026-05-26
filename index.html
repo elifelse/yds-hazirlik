@@ -202,7 +202,11 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .daily-icon-wrap{width:36px;height:36px;border-radius:10px;background:rgba(124,106,247,.15);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .daily-check{font-size:18px;flex-shrink:0}
 .daily-label{font-size:14px;font-weight:600;line-height:1.4}
+.daily-item.done{background:rgba(63,185,80,.05);border-color:rgba(63,185,80,.25)}
+.daily-item.done .daily-icon-wrap{background:rgba(63,185,80,.18)}
 .daily-item.done .daily-label{text-decoration:line-through;color:var(--muted);font-weight:400}
+@keyframes task-pop{0%{transform:scale(1)}40%{transform:scale(1.035)}100%{transform:scale(1)}}
+.daily-item.just-done{animation:task-pop .38s cubic-bezier(.2,1.6,.4,1) both}
 .start-btn{flex-shrink:0;padding:9px 18px;min-height:38px;border:none;border-radius:9px;font-size:13px;font-weight:700;
   cursor:pointer;background:var(--accent);color:#fff;transition:.15s;white-space:nowrap;box-shadow:0 2px 8px rgba(124,106,247,.3)}
 .start-btn:hover{opacity:.88;box-shadow:0 4px 14px rgba(124,106,247,.4)}
@@ -2677,6 +2681,7 @@ function markDone(taskId){
   const level = localStorage.getItem('yds_level') || 'B1';
   const pct = parseInt(localStorage.getItem('yds_pct') || '50');
   showPlan(level, pct);
+  setTimeout(()=>{const el=document.getElementById('di-'+taskId);if(el){el.classList.add('just-done');el.addEventListener('animationend',()=>el.classList.remove('just-done'),{once:true});}},0);
   setTimeout(_updateBeeExamMood, 500);
 }
 let _toastTimer=null;
