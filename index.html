@@ -3229,22 +3229,53 @@ function showPlan(level,pct){
     ? `<div class="streak-warn">⚠️ Bugün henüz tamamlanmadı — seriniz kırılabilir! ${4-coreDone} görev kaldı.</div>`
     : '';
 
+  const coreDoneCount = ['words','grammar','read','review'].filter(id=>done[id]).length;
+  const progressPct = Math.round(coreDoneCount / 4 * 100);
+
   document.getElementById('plan-inner').innerHTML=`
-    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">
-      <h2 style="margin:0">Senin Planın</h2>
-      <button class="btn btn-outline btn-sm" onclick="goTo('intro')" style="font-size:12px;padding:2px 10px;opacity:.7">✏️ Değiştir</button>
+    <!-- ── ÜSTTE: Seri + İlerleme ── -->
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="background:rgba(255,160,40,.12);border:1px solid rgba(255,160,40,.3);border-radius:10px;padding:6px 12px;display:flex;align-items:center;gap:6px">
+          <span style="font-size:18px">🔥</span>
+          <span style="font-weight:800;font-size:16px;color:#f7a028" id="streak-num">${streak}</span>
+          <span style="font-size:12px;color:var(--muted)">günlük seri</span>
+        </div>
+        <div style="background:rgba(124,106,247,.1);border:1px solid rgba(124,106,247,.25);border-radius:10px;padding:6px 12px;display:flex;align-items:center;gap:5px">
+          <span style="font-size:12px;color:var(--muted)">Sınava</span>
+          <span style="font-weight:700;color:var(--accent2)">${d}</span>
+          <span style="font-size:12px;color:var(--muted)">gün</span>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="goTo('intro')" style="font-size:11px;padding:4px 10px;opacity:.6">✏️ ${level}</button>
     </div>
-    <p style="margin-bottom:20px">${level} · Sınava <strong style="color:var(--yellow)">${d} gün</strong> kaldı · Günlük hedef: <strong style="color:var(--green)">${mins} dakika</strong></p>
-    ${phaseHTML}
-    <div class="daily-box">
-      <div class="daily-title">📅 Bugünün Görevleri — ${TODAY}</div>
+
+    <!-- ── BUGÜNÜN GÖREVLERİ ── -->
+    <div class="daily-box" style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div class="daily-title" style="margin-bottom:0">Bugünün Görevleri</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="width:80px;height:6px;border-radius:3px;background:var(--border);overflow:hidden">
+            <div style="height:100%;border-radius:3px;background:var(--green);width:${progressPct}%;transition:width .4s"></div>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">${coreDoneCount}/4</span>
+        </div>
+      </div>
       <div class="daily-items">${dailyHTML}</div>
       ${streakWarn}
-      <div class="streak-badge">
-        <span class="streak-fire">🔥</span>
-        <span><strong id="streak-num">${streak}</strong> günlük seri</span>
-      </div>
     </div>
+
+    <!-- ── HAZIRLIK PLANI (katlanabilir) ── -->
+    <details style="margin-bottom:16px">
+      <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-weight:700;font-size:14px;user-select:none">
+        <span>📋 Haftalık Hazırlık Planı</span>
+        <span style="font-size:11px;font-weight:400;color:var(--muted)">${d} gün · ${mins} dk/gün</span>
+      </summary>
+      <div style="margin-top:8px">
+        ${phaseHTML}
+      </div>
+    </details>
+
     <div class="advice-box">${advice}</div>
     ${renderStatsBox()}
     ${renderAnalysisCard()}
