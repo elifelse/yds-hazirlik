@@ -937,6 +937,9 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
   100%{opacity:0;transform:translateY(100vh) rotate(720deg)}
 }
 
+/* ── BEE IDLE STATE ── */
+.idle{}
+
 /* ── STREAK WARNING ── */
 .streak-warn{display:flex;align-items:center;gap:10px;
   background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.25);
@@ -1928,6 +1931,35 @@ function enterApp(){
     // Intro altında araç linkini göster
     const _toolBanner = document.getElementById('intro-tool-banner');
     if(_toolBanner) _toolBanner.style.display = 'block';
+  }
+
+  // ── Son ziyaret kontrolü (geri dönen kullanıcı mesajı) ──
+  const _todayStr = new Date().toDateString();
+  const _lastVisit = localStorage.getItem('yds_last_visit');
+  if(_lastVisit && _lastVisit !== _todayStr){
+    const _diffDays = Math.round((new Date() - new Date(_lastVisit)) / 86400000);
+    if(_diffDays >= 2){
+      const _streak = parseInt(localStorage.getItem('yds_streak')||'0');
+      const _streakDay = localStorage.getItem('yds_streak_day');
+      const _yesterday = new Date(); _yesterday.setDate(_yesterday.getDate()-1);
+      const _streakSafe = _streakDay === _yesterday.toDateString() || _streakDay === _todayStr;
+      setTimeout(()=>{
+        if(_streak > 0 && !_streakSafe){
+          showToast(`😢 ${_diffDays} gündür yoktun — ${_streak} günlük serin kırıldı. Yeniden başlayalım!`, 5000);
+        } else {
+          showToast(`👋 ${_diffDays} gün sonra tekrar hoş geldin! Çalışmaya devam edelim.`, 4000);
+        }
+      }, 1500);
+    }
+  }
+  localStorage.setItem('yds_last_visit', _todayStr);
+
+  // ── Kayıtlı bildirim varsa zamanla ──
+  initNotifications();
+
+  // ── 25 sn sonra yumuşak bildirim izni sor (henüz sormadıysak) ──
+  if('Notification' in window && Notification.permission === 'default' && !localStorage.getItem('yds_notif_time')){
+    setTimeout(showNotifNudge, 25000);
   }
 }
 
@@ -4944,6 +4976,34 @@ function clearNotifTime(){
   localStorage.removeItem('yds_notif_time');
   localStorage.removeItem('yds_notif_last');
   showToast('Hatırlatıcı kapatıldı');
+}
+
+function showNotifNudge(){
+  if(Notification.permission !== 'default') return;
+  if(document.getElementById('notif-nudge')) return;
+  const el = document.createElement('div');
+  el.id = 'notif-nudge';
+  el.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:10px;z-index:7999;box-shadow:0 4px 20px rgba(0,0,0,.35);max-width:340px;width:calc(100% - 32px)';
+  el.innerHTML = `
+    <span style="font-size:22px">🔔</span>
+    <div style="flex:1;font-size:13px;line-height:1.45">
+      <strong style="display:block;margin-bottom:2px">Günlük hatırlatıcı kur</strong>
+      <span style="color:var(--muted)">Her gün çalışman için seni uyaralım</span>
+    </div>
+    <button onclick="handleNotifNudgeYes()" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap">Evet, kur</button>
+    <button onclick="document.getElementById('notif-nudge').remove()" style="background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:0 2px">×</button>
+  `;
+  document.body.appendChild(el);
+  setTimeout(()=>{ el.parentNode && el.remove(); }, 12000);
+}
+
+async function handleNotifNudgeYes(){
+  document.getElementById('notif-nudge')?.remove();
+  const granted = await requestNotifPermission();
+  if(granted){
+    await saveNotifTime('20:00');
+    showToast('🔔 Her gün 20:00\'de hatırlatacağım!', 4000);
+  }
 }
 
 // ══════════════════════════════════════════════════════
