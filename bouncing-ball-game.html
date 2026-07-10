@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Zıplatma Oyunu</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      color: #eee;
+      user-select: none;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      color: #e94560;
+      letter-spacing: 2px;
+    }
+
+    #scoreboard {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 14px;
+      font-size: 1rem;
+    }
+
+    #scoreboard span { color: #a0c4ff; font-weight: bold; }
+
+    #gameCanvas {
+      border: 3px solid #e94560;
+      border-radius: 8px;
+      background: #16213e;
+      display: block;
+      box-shadow: 0 0 30px rgba(233, 69, 96, 0.4);
+    }
+
+    #message {
+      margin-top: 14px;
+      font-size: 1.1rem;
+      min-height: 28px;
+      color: #ffd166;
+    }
+
+    #startBtn {
+      margin-top: 10px;
+      padding: 10px 32px;
+      background: #e94560;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    #startBtn:hover { background: #c73652; transform: scale(1.05); }
+    #startBtn:active { transform: scale(0.97); }
+
+    #controls {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>TOP ZIPLATMA</h1>
+  <div id="scoreboard">
+    <div>Skor: <span id="score">0</span></div>
+    <div>En Yüksek: <span id="highScore">0</span></div>
+    <div>Can: <span id="lives">3</span></div>
+  </div>
+  <canvas id="gameCanvas" width="480" height="520"></canvas>
+  <div id="message">Oynamaya başlamak için butona bas!</div>
+  <button id="startBtn">BAŞLA</button>
+  <div id="controls">← → tuşları veya dokunmatik ile raket hareket ettirilir</div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const highScoreEl = document.getElementById('highScore');
+    const livesEl = document.getElementById('lives');
+    const messageEl = document.getElementById('message');
+    const startBtn = document.getElementById('startBtn');
+
+    const W = canvas.width;
+    const H = canvas.height;
+
+    // Oyun durumu
+    let state = 'idle'; // idle | playing | paused | gameover
+    let score = 0;
+    let highScore = 0;
+    let lives = 3;
+    let animId = null;
+    let level = 1;
+
+    // Raket
+    const paddle = {
+      w: 90, h: 12, x: 0, y: H - 40,
+      speed: 7, dx: 0,
+      color: '#e94560'
+    };
+
+    // Top
+    const ball = {
+      r: 10, x: 0, y: 0,
+      vx: 0, vy: 0,
+      baseSpeed: 4,
+      color: '#ffd166',
+      trail: []
+    };
+
+    // Tuğlalar
+    const BRICK_ROWS = 5;
+    const BRICK_COLS = 8;
+    const BRICK_W = 52;
+    const BRICK_H = 20;
+    const BRICK_GAP = 5;
+    const BRICK_OFFSET_X = (W - (BRICK_COLS * (BRICK_W + BRICK_GAP) - BRICK_GAP)) / 2;
+    const BRICK_OFFSET_Y = 60;
+
+    const BRICK_COLORS = ['#ef233c', '#f77f00', '#fcbf49', '#06d6a0', '#4361ee'];
+
+    let bricks = [];
+
+    function initBricks() {
+      bricks = [];
+      for (let r = 0; r < BRICK_ROWS; r++) {
+        for (let c = 0; c < BRICK_COLS; c++) {
+          bricks.push({
+            x: BRICK_OFFSET_X + c * (BRICK_W + BRICK_GAP),
+            y: BRICK_OFFSET_Y + r * (BRICK_H + BRICK_GAP),
+            w: BRICK_W, h: BRICK_H,
+            alive: true,
+            color: BRICK_COLORS[r % BRICK_COLORS.length],
+            points: (BRICK_ROWS - r) * 10
+          });
+        }
+      }
+    }
+
+    function initBall() {
+      ball.x = paddle.x + paddle.w / 2;
+      ball.y = paddle.y - ball.r - 2;
+      const angle = (Math.random() * 60 + 60) * Math.PI / 180;
+      const spd = ball.baseSpeed + (level - 1) * 0.4;
+      ball.vx = spd * Math.cos(angle) * (Math.random() < 0.5 ? 1 : -1);
+      ball.vy = -spd * Math.sin(angle);
+      ball.trail = [];
+    }
+
+    function initPaddle() {
+      paddle.x = W / 2 - paddle.w / 2;
+      paddle.dx = 0;
+    }
+
+    function startGame() {
+      score = 0;
+      lives = 3;
+      level = 1;
+      scoreEl.textContent = score;
+      livesEl.textContent = lives;
+      initPaddle();
+      initBricks();
+      initBall();
+      state = 'playing';
+      messageEl.textContent = '';
+      startBtn.textContent = 'YENİDEN BAŞLA';
+      if (animId) cancelAnimationFrame(animId);
+      loop();
+    }
+
+    // Girdi
+    const keys = {};
+    document.addEventListener('keydown', e => {
+      keys[e.key] = true;
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') e.preventDefault();
+    });
+    document.addEventListener('keyup', e => { keys[e.key] = false; });
+
+    // Dokunmatik
+    let touchStartX = null;
+    canvas.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+      e.preventDefault();
+    }, { passive: false });
+    canvas.addEventListener('touchmove', e => {
+      if (touchStartX === null) return;
+      const dx = e.touches[0].clientX - touchStartX;
+      paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x + dx));
+      touchStartX = e.touches[0].clientX;
+      e.preventDefault();
+    }, { passive: false });
+
+    function updatePaddle() {
+      if (keys['ArrowLeft']) paddle.dx = -paddle.speed;
+      else if (keys['ArrowRight']) paddle.dx = paddle.speed;
+      else paddle.dx = 0;
+
+      paddle.x += paddle.dx;
+      paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x));
+    }
+
+    function updateBall() {
+      ball.trail.push({ x: ball.x, y: ball.y });
+      if (ball.trail.length > 8) ball.trail.shift();
+
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+
+      // Duvar çarpışması
+      if (ball.x - ball.r < 0) { ball.x = ball.r; ball.vx *= -1; }
+      if (ball.x + ball.r > W) { ball.x = W - ball.r; ball.vx *= -1; }
+      if (ball.y - ball.r < 0) { ball.y = ball.r; ball.vy *= -1; }
+
+      // Raket çarpışması
+      if (
+        ball.vy > 0 &&
+        ball.y + ball.r >= paddle.y &&
+        ball.y + ball.r <= paddle.y + paddle.h &&
+        ball.x >= paddle.x - ball.r &&
+        ball.x <= paddle.x + paddle.w + ball.r
+      ) {
+        ball.y = paddle.y - ball.r;
+        // Çarpma açısını raketteki konuma göre ayarla
+        const hitPos = (ball.x - paddle.x) / paddle.w; // 0..1
+        const angle = (hitPos * 150 + 15) * Math.PI / 180; // 15°..165°
+        const spd = Math.sqrt(ball.vx ** 2 + ball.vy ** 2);
+        ball.vx = spd * Math.cos(angle) * (hitPos < 0.5 ? -1 : 1);
+        ball.vy = -Math.abs(spd * Math.sin(angle));
+      }
+
+      // Top düştü
+      if (ball.y - ball.r > H) {
+        lives--;
+        livesEl.textContent = lives;
+        if (lives <= 0) {
+          gameOver();
+        } else {
+          initPaddle();
+          initBall();
+          messageEl.textContent = `${lives} can kaldı!`;
+          setTimeout(() => { if (state === 'playing') messageEl.textContent = ''; }, 1500);
+        }
+      }
+    }
+
+    function updateBricks() {
+      let allCleared = true;
+      for (const b of bricks) {
+        if (!b.alive) continue;
+        allCleared = false;
+        if (
+          ball.x + ball.r > b.x &&
+          ball.x - ball.r < b.x + b.w &&
+          ball.y + ball.r > b.y &&
+          ball.y - ball.r < b.y + b.h
+        ) {
+          b.alive = false;
+          score += b.points;
+          scoreEl.textContent = score;
+
+          // Hangi yüzden çarptığını belirle
+          const overlapX = Math.min(ball.x + ball.r - b.x, b.x + b.w - (ball.x - ball.r));
+          const overlapY = Math.min(ball.y + ball.r - b.y, b.y + b.h - (ball.y - ball.r));
+          if (overlapX < overlapY) ball.vx *= -1;
+          else ball.vy *= -1;
+        }
+      }
+      if (allCleared) nextLevel();
+    }
+
+    function nextLevel() {
+      level++;
+      messageEl.textContent = `Seviye ${level}!`;
+      setTimeout(() => { if (state === 'playing') messageEl.textContent = ''; }, 1500);
+      initPaddle();
+      initBricks();
+      initBall();
+    }
+
+    function gameOver() {
+      state = 'gameover';
+      if (score > highScore) {
+        highScore = score;
+        highScoreEl.textContent = highScore;
+      }
+      messageEl.textContent = `Oyun bitti! Skorun: ${score}`;
+      cancelAnimationFrame(animId);
+    }
+
+    // Çizim
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Arka plan ızgarası
+      ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 30) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      }
+      for (let y = 0; y < H; y += 30) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+
+      // Tuğlalar
+      for (const b of bricks) {
+        if (!b.alive) continue;
+        const grad = ctx.createLinearGradient(b.x, b.y, b.x, b.y + b.h);
+        grad.addColorStop(0, b.color);
+        grad.addColorStop(1, shadeColor(b.color, -30));
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.roundRect(b.x, b.y, b.w, b.h, 4);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Top izi
+      for (let i = 0; i < ball.trail.length; i++) {
+        const alpha = (i / ball.trail.length) * 0.4;
+        const r = ball.r * (i / ball.trail.length) * 0.8;
+        ctx.beginPath();
+        ctx.arc(ball.trail[i].x, ball.trail[i].y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 209, 102, ${alpha})`;
+        ctx.fill();
+      }
+
+      // Top
+      const ballGrad = ctx.createRadialGradient(ball.x - 3, ball.y - 3, 1, ball.x, ball.y, ball.r);
+      ballGrad.addColorStop(0, '#fff5c0');
+      ballGrad.addColorStop(1, '#ffd166');
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+      ctx.fillStyle = ballGrad;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Raket
+      const paddleGrad = ctx.createLinearGradient(paddle.x, paddle.y, paddle.x, paddle.y + paddle.h);
+      paddleGrad.addColorStop(0, '#ff6b8a');
+      paddleGrad.addColorStop(1, '#e94560');
+      ctx.fillStyle = paddleGrad;
+      ctx.beginPath();
+      ctx.roundRect(paddle.x, paddle.y, paddle.w, paddle.h, 6);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Seviye
+      ctx.fillStyle = 'rgba(255,255,255,0.15)';
+      ctx.font = '13px Segoe UI';
+      ctx.textAlign = 'right';
+      ctx.fillText(`Seviye ${level}`, W - 10, H - 10);
+      ctx.textAlign = 'left';
+    }
+
+    function shadeColor(color, amt) {
+      let num = parseInt(color.replace('#', ''), 16);
+      let r = Math.min(255, Math.max(0, (num >> 16) + amt));
+      let g = Math.min(255, Math.max(0, ((num >> 8) & 0xff) + amt));
+      let b = Math.min(255, Math.max(0, (num & 0xff) + amt));
+      return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    function loop() {
+      if (state !== 'playing') return;
+      updatePaddle();
+      updateBall();
+      updateBricks();
+      draw();
+      animId = requestAnimationFrame(loop);
+    }
+
+    // İlk çizim
+    initPaddle();
+    initBricks();
+    initBall();
+    draw();
+
+    startBtn.addEventListener('click', startGame);
+  </script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kutu Yakala!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f1a;
+      overflow: hidden;
+      height: 100dvh;
+      user-select: none;
+    }
+
+    /* ── HUD ── */
+    #hud {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 24px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 10;
+    }
+
+    .hud-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .hud-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .hud-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      transition: transform 0.1s;
+    }
+
+    .hud-value.bump {
+      transform: scale(1.4);
+    }
+
+    #timer-value {
+      color: #7ee8a2;
+    }
+
+    #timer-value.urgent {
+      color: #ff6b6b;
+      animation: pulse 0.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { opacity: 1; }
+      to   { opacity: 0.4; }
+    }
+
+    /* ── ARENA ── */
+    #arena {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    /* ── BOXES ── */
+    .box {
+      position: absolute;
+      border-radius: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.25);
+      transform: scale(0);
+      animation: popIn 0.25s cubic-bezier(0.34,1.56,0.64,1) forwards;
+      transition: transform 0.1s;
+    }
+
+    .box:active {
+      transform: scale(0.85) !important;
+    }
+
+    @keyframes popIn {
+      to { transform: scale(1); }
+    }
+
+    @keyframes popOut {
+      to { transform: scale(0); opacity: 0; }
+    }
+
+    .box.dying {
+      animation: popOut 0.2s ease-in forwards;
+      pointer-events: none;
+    }
+
+    /* ── FLOATING SCORE ── */
+    .float-score {
+      position: absolute;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.8);
+      pointer-events: none;
+      animation: floatUp 0.7s ease-out forwards;
+      z-index: 20;
+    }
+
+    @keyframes floatUp {
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-60px) scale(1.4); }
+    }
+
+    /* ── OVERLAY ── */
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,20,0.92);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      z-index: 100;
+      backdrop-filter: blur(6px);
+    }
+
+    #overlay h1 {
+      font-size: clamp(28px, 8vw, 56px);
+      font-weight: 900;
+      background: linear-gradient(135deg, #f9ca24, #f0932b, #eb4d4b, #6c5ce7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+
+    #overlay p {
+      color: rgba(255,255,255,0.6);
+      font-size: 16px;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .score-display {
+      font-size: clamp(48px, 15vw, 96px);
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(126,232,162,0.6);
+    }
+
+    .score-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: #7ee8a2;
+      text-transform: uppercase;
+    }
+
+    #start-btn {
+      margin-top: 10px;
+      padding: 16px 48px;
+      font-size: 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #7ee8a2, #6c5ce7);
+      color: #fff;
+      box-shadow: 0 4px 30px rgba(108,92,231,0.5);
+      transition: transform 0.15s, box-shadow 0.15s;
+      letter-spacing: 1px;
+    }
+
+    #start-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 40px rgba(108,92,231,0.7);
+    }
+
+    #start-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ── STARS BACKGROUND ── */
+    #stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle var(--d) var(--delay) infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50%       { opacity: var(--op); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Stars -->
+<div id="stars"></div>
+
+<!-- HUD -->
+<div id="hud">
+  <div class="hud-item">
+    <span class="hud-label">Skor</span>
+    <span class="hud-value" id="score-value">0</span>
+  </div>
+  <div class="hud-item">
+    <span class="hud-label">Süre</span>
+    <span class="hud-value" id="timer-value">15</span>
+  </div>
+  <div class="hud-item">
+    <span class="hud-label">En İyi</span>
+    <span class="hud-value" id="best-value">0</span>
+  </div>
+</div>
+
+<!-- Game area -->
+<div id="arena"></div>
+
+<!-- Overlay (start / game over) -->
+<div id="overlay">
+  <h1 id="overlay-title">Kutu Yakala!</h1>
+  <p id="overlay-desc">Kutulara tıkla, puan topla.<br>15 saniyede kaç puan yapabilirsin?</p>
+  <div id="score-section" style="display:none; text-align:center;">
+    <div class="score-label">Final Skor</div>
+    <div class="score-display" id="final-score">0</div>
+  </div>
+  <button id="start-btn">Oyna!</button>
+</div>
+
+<script>
+  // ── Config ──────────────────────────────────────────────
+  const GAME_DURATION  = 15;
+  const BOX_INTERVAL   = 600;   // ms — new box spawn rate
+  const BOX_LIFETIME   = 1800;  // ms — how long a box lives
+  const BOX_EMOJIS     = ['⭐','💎','🔥','⚡','🎯','🍀','🚀','💥'];
+  const COLORS = [
+    ['#f9ca24','#f0932b'],
+    ['#6c5ce7','#a29bfe'],
+    ['#00cec9','#0984e3'],
+    ['#fd79a8','#e84393'],
+    ['#55efc4','#00b894'],
+    ['#e17055','#d63031'],
+  ];
+
+  // ── State ───────────────────────────────────────────────
+  let score     = 0;
+  let bestScore = parseInt(localStorage.getItem('bestScore') || '0', 10);
+  let timeLeft  = GAME_DURATION;
+  let running   = false;
+  let timerInterval, spawnInterval;
+
+  // ── DOM refs ────────────────────────────────────────────
+  const arena       = document.getElementById('arena');
+  const overlay     = document.getElementById('overlay');
+  const overlayTitle= document.getElementById('overlay-title');
+  const overlayDesc = document.getElementById('overlay-desc');
+  const scoreSection= document.getElementById('score-section');
+  const finalScore  = document.getElementById('final-score');
+  const scoreValue  = document.getElementById('score-value');
+  const timerValue  = document.getElementById('timer-value');
+  const bestValue   = document.getElementById('best-value');
+  const startBtn    = document.getElementById('start-btn');
+
+  // ── Stars ───────────────────────────────────────────────
+  (function createStars() {
+    const container = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.cssText = `
+        left:${Math.random()*100}%;
+        top:${Math.random()*100}%;
+        --d:${2 + Math.random()*4}s;
+        --delay:${Math.random()*5}s;
+        --op:${0.3 + Math.random()*0.7};
+      `;
+      container.appendChild(s);
+    }
+  })();
+
+  // ── Init display ────────────────────────────────────────
+  bestValue.textContent = bestScore;
+
+  // ── Start game ──────────────────────────────────────────
+  function startGame() {
+    score    = 0;
+    timeLeft = GAME_DURATION;
+    running  = true;
+
+    scoreValue.textContent = 0;
+    timerValue.textContent = GAME_DURATION;
+    timerValue.classList.remove('urgent');
+
+    overlay.style.display = 'none';
+    arena.innerHTML = '';
+
+    timerInterval = setInterval(tick, 1000);
+    spawnInterval = setInterval(spawnBox, BOX_INTERVAL);
+    spawnBox(); // immediate first box
+  }
+
+  // ── Tick ────────────────────────────────────────────────
+  function tick() {
+    timeLeft--;
+    timerValue.textContent = timeLeft;
+
+    if (timeLeft <= 5) timerValue.classList.add('urgent');
+    if (timeLeft <= 0) endGame();
+  }
+
+  // ── End game ────────────────────────────────────────────
+  function endGame() {
+    running = false;
+    clearInterval(timerInterval);
+    clearInterval(spawnInterval);
+
+    // Kill remaining boxes
+    arena.querySelectorAll('.box').forEach(b => b.remove());
+
+    if (score > bestScore) {
+      bestScore = score;
+      localStorage.setItem('bestScore', bestScore);
+      bestValue.textContent = bestScore;
+    }
+
+    overlayTitle.textContent  = score >= 10 ? '🎉 Harika!' : 'Oyun Bitti!';
+    overlayDesc.textContent   = score >= 10
+      ? 'Muazzam bir performans!'
+      : 'Daha hızlı olabilirsin!';
+    finalScore.textContent    = score;
+    scoreSection.style.display= 'block';
+    startBtn.textContent      = 'Tekrar Oyna';
+    overlay.style.display     = 'flex';
+  }
+
+  // ── Spawn a box ─────────────────────────────────────────
+  function spawnBox() {
+    if (!running) return;
+
+    const arenaRect = arena.getBoundingClientRect();
+    const size      = clamp(randomInt(50, 80), 50, 80);
+    const x         = randomInt(10, arenaRect.width  - size - 10);
+    const y         = randomInt(10, arenaRect.height - size - 10);
+    const color     = COLORS[randomInt(0, COLORS.length - 1)];
+    const emoji     = BOX_EMOJIS[randomInt(0, BOX_EMOJIS.length - 1)];
+
+    const box = document.createElement('div');
+    box.className = 'box';
+    box.textContent = emoji;
+    box.style.cssText = `
+      width:${size}px;
+      height:${size}px;
+      left:${x}px;
+      top:${y}px;
+      background: linear-gradient(135deg, ${color[0]}, ${color[1]});
+    `;
+
+    box.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!running) return;
+      hitBox(box, e.clientX, e.clientY);
+    });
+
+    // Touch support
+    box.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      if (!running) return;
+      const t = e.touches[0];
+      hitBox(box, t.clientX, t.clientY);
+    }, { passive: false });
+
+    arena.appendChild(box);
+
+    // Auto-remove after lifetime
+    const autoKill = setTimeout(() => {
+      if (box.parentNode) box.remove();
+    }, BOX_LIFETIME);
+
+    box.dataset.killTimer = autoKill;
+  }
+
+  // ── Hit a box ───────────────────────────────────────────
+  function hitBox(box, cx, cy) {
+    clearTimeout(parseInt(box.dataset.killTimer));
+    box.classList.add('dying');
+    box.addEventListener('animationend', () => box.remove(), { once: true });
+
+    score++;
+    scoreValue.textContent = score;
+    bump(scoreValue);
+
+    showFloatScore(cx, cy, '+1');
+  }
+
+  // ── Floating +1 ─────────────────────────────────────────
+  function showFloatScore(x, y, text) {
+    const el = document.createElement('div');
+    el.className   = 'float-score';
+    el.textContent = text;
+    el.style.left  = `${x - 15}px`;
+    el.style.top   = `${y - 20}px`;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove(), { once: true });
+  }
+
+  // ── Bump animation ──────────────────────────────────────
+  function bump(el) {
+    el.classList.remove('bump');
+    void el.offsetWidth; // reflow
+    el.classList.add('bump');
+    el.addEventListener('transitionend', () => el.classList.remove('bump'), { once: true });
+  }
+
+  // ── Helpers ─────────────────────────────────────────────
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function clamp(val, min, max) {
+    return Math.min(Math.max(val, min), max);
+  }
+
+  // ── Button ──────────────────────────────────────────────
+  startBtn.addEventListener('click', startGame);
+</script>
+</body>
+</html>
