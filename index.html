@@ -2127,18 +2127,16 @@ async function cloudSaveProfile(level, pct){
 
 // Tarihler ÖSYM resmi takvimine göre — osym.gov.tr
 const EXAM_DATES = [
-  { id:'eyds-may26',  label:'e-YDS', date:'2026-05-02', note:'e-YDS 2026/4 — İngilizce' },
-  { id:'eyds-jun26',  label:'e-YDS', date:'2026-06-27', note:'e-YDS 2026/6 — İngilizce' },
-  { id:'eyds-aug26',  label:'e-YDS', date:'2026-08-22', note:'e-YDS 2026/9 — İngilizce' },
+  { id:'eyds-aug26',  label:'e-YDS', date:'2026-08-22', note:'e-YDS 2026/9 — İngilizce (41 gün)' },
   { id:'eyds-sep26',  label:'e-YDS', date:'2026-09-26', note:'e-YDS 2026/10 — İngilizce' },
   { id:'eyds-oct26',  label:'e-YDS', date:'2026-10-17', note:'e-YDS 2026/11 — İngilizce' },
-  { id:'yds-nov26',   label:'YDS',   date:'2026-11-22', note:'YDS 2026/2 — Yılda 2 kez yapılan' },
+  { id:'yds-nov26',   label:'YDS',   date:'2026-11-22', note:'YDS 2026/2 — Klasik YDS (en büyük)' },
   { id:'eyds-dec26',  label:'e-YDS', date:'2026-12-19', note:'e-YDS 2026/12 — İngilizce' },
 ];
 
 let EXAM_DATE = new Date('2026-08-22T09:00:00');
 let selectedExamId = localStorage.getItem('yds_exam_id') || 'eyds-aug26';
-// reset if saved id no longer exists
+// reset if saved id no longer exists (örn. geçmiş sınav seçiliydi)
 if(!EXAM_DATES.find(e=>e.id===selectedExamId)) selectedExamId='eyds-aug26';
 
 function initExamDate(){
