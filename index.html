@@ -258,7 +258,12 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;justify-content:center}
 
 /* ── DAILY CORNER ── */
-.dc-wrap{margin-bottom:14px}
+.dc-wrap{
+  margin-bottom:14px;
+  background:linear-gradient(135deg,rgba(129,140,248,.07) 0%,rgba(167,139,250,.04) 100%);
+  border:1px solid rgba(129,140,248,.14);
+  border-radius:16px;padding:14px;
+}
 .dc-bee-bar{
   display:flex;align-items:center;gap:10px;
   background:rgba(129,140,248,.07);
@@ -2925,22 +2930,52 @@ function renderDailyCorner(){
   const DAY = Math.floor(Date.now() / 86400000);
   const p   = (arr) => arr[DAY % arr.length];
   const streak = parseInt(localStorage.getItem('yds_streak')||'0');
+  const hour = new Date().getHours();
+  const todayKey = 'yds_daily_' + new Date().toLocaleDateString('tr-TR');
+  const todayDone = JSON.parse(localStorage.getItem(todayKey)||'{}');
+  const coreDoneNow = ['words','grammar','read','review'].filter(id=>todayDone[id]).length;
+  const weakCount = Object.values(JSON.parse(localStorage.getItem('yds_weak_words')||'{}')).filter(v=>v>0).length;
 
-  // ── 1. Bee günlük tavsiyesi ──
-  const BEE_TIPS = [
-    'Bugün bağlaçlara odaklan — YDS\'de however ve although çok çıkıyor.',
+  // ── 1. Bee — context-aware ──
+  let beeTip;
+  if(coreDoneNow === 4){
+    beeTip = 'Bugün harikasın — tüm görevler tamam! 🎉 Yarın da burada ol.';
+  } else if(coreDoneNow === 3){
+    beeTip = 'Son 1 görev kaldı. Şimdi bitirirsen seri güvende!';
+  } else if(coreDoneNow === 2){
+    beeTip = '2 görev tamam, 2 kaldı. Momentum senin yanında, devam et.';
+  } else if(hour < 9){
+    beeTip = 'Sabah çalışması en kalıcı. Erken başladın — bu çok iyi ☀️';
+  } else if(hour >= 22){
+    beeTip = 'Geç saat ama buradasan. Kısa tut, kaliteli çalış — yeter.';
+  } else if(streak === 0){
+    beeTip = 'İlk gün her zaman en zordur. Başlamak yolun yarısıdır.';
+  } else if(streak === 1){
+    beeTip = 'Dün başladın, bugün devam ediyorsun. Seri oluşuyor! 🌱';
+  } else if(streak >= 30){
+    beeTip = `${streak} gün! Bu artık alışkanlık değil — kimlik. 👑`;
+  } else if(streak >= 14){
+    beeTip = `${streak} günlük seri. 2 haftayı geçtin, kolay kolay durmazsın artık.`;
+  } else if(streak >= 7){
+    beeTip = `${streak} gün üst üste — harika. Bu hafta bitir, tarihe gir. 🔥`;
+  } else if(weakCount > 5){
+    beeTip = `${weakCount} zayıf kelimen var. Bugün sadece onlara bak mı? Fark yaratır.`;
+  } else if(streak >= 3){
+    beeTip = `${streak} gün devam ediyor. Momentum oluştu — bozma.`;
+  } else {
+    const BEE_TIPS = [
+    'Bugün bağlaçlara odaklan — however ve although çok çıkıyor.',
     'Kelimeyi cümlede gör, sözlükte değil. Bağlamı ezberle.',
-    'Okuma parçasında ilk cümle ve son cümle genellikle ana fikri verir.',
-    'Pasif yapıyı aktife çevirme soruları bu sınav sezonunda sık çıkıyor.',
-    'Seri kırmamak için en kısa görevden başla — momentum önemli.',
-    '10 kelimeyi iyi öğrenmek 50 kelimeyi yüzeysel geçmekten iyidir.',
-    'Relative clause\'da "that" ne zaman, "which" ne zaman? Bugün bak.',
-    'Yorgunken okuma parçası yerine kelime kartlarıyla çalış.',
-    'Articles (a/an/the) YDS\'de sürpriz kayıp noktası — gözden geçir.',
-    'Sınava 134 gün kaldı. Her gün 1 saat = 134 saat hazırlık.',
+    'Okuma parçasında ilk ve son cümle genellikle ana fikri verir.',
+    'Pasif yapıyı aktife çevirme soruları bu sezon sık çıkıyor.',
+    'En kısa görevden başla — momentum önemli.',
+    '10 kelimeyi iyi öğrenmek 50\'yi yüzeysel geçmekten iyidir.',
+    '"that" mı "which" mı? Relative clause\'da bugün bak.',
+    'Yorgunken okuma yerine kelime kartlarıyla çalış.',
+    'Articles (a/an/the) YDS\'de sürpriz kayıp noktası.',
     'Paragrafın ana fikrini ilk okuyuşta yakalamaya çalış.',
     'Zayıf kelime listeni bugün bir kez daha gözden geçir.',
-    'Conditional Type 2 ile Type 3 karıştırma — fark kritik.',
+    'Conditional Type 2 ile Type 3\'ü karıştırma — fark kritik.',
     'Despite + noun, although + clause. Bu ayrımı ezberle.',
     'Okurken "what does the author imply?" sorusunu aklında tut.',
     'Gramer sorusunda önce boşluktan önce ve sonrasına bak.',
@@ -2958,7 +2993,9 @@ function renderDailyCorner(){
     'Sözcük türetme: determine → determination → determined. Kökleri öğren.',
     'However ile Nevertheless aynı anlam, farklı ton. İkisini de bil.',
     'Hedefin 85 puan ise 60 doğru yeterli. Hangilerini garanti edebilirsin?',
-  ];
+    ];
+    beeTip = p(BEE_TIPS);
+  }
 
   // ── 2. Günün Kartı ──
   const THEMES = [
@@ -2999,21 +3036,21 @@ function renderDailyCorner(){
   const w = allWords[DAY % allWords.length];
 
   const GRAMMAR_TIPS = [
-    {tip:'<b>Although</b> + clause (özne+fiil), <b>Despite</b> + noun/gerund. "Despite being tired" ✓ "Despite although" ✗'},
-    {tip:'<b>Relative clause</b>: kişi → who/that, şey → which/that, yer → where, zaman → when'},
-    {tip:'<b>Passive voice</b>: be + past participle. Zaman eki be\'ye gelir: "is written / was written / has been written"'},
-    {tip:'<b>Conditional Type 2</b>: If + past simple, would + V1. Gerçek olmayan şimdi/gelecek için.'},
-    {tip:'<b>Articles</b>: İlk bahsedince "a", sonrasında "the". Sayılamayan isimler ile "a" kullanılmaz.'},
-    {tip:'<b>Gerund vs Infinitive</b>: enjoy/avoid/consider → gerund (-ing). want/hope/decide → infinitive (to+V1)'},
-    {tip:'<b>Inversion</b>: "Not only did he..." — olumsuz zarfla başlayınca yardımcı fiil öne çıkar.'},
-    {tip:'<b>Reported Speech</b>: "I am tired" → He said he was tired. Tense bir adım geriye kayar.'},
-    {tip:'<b>Cleft sentence</b>: "It was Mary who called." — vurgu için kullanılır, YDS\'de sorulur.'},
-    {tip:'<b>Concession</b>: although / even though / while / whereas / despite / in spite of — hepsini ayırt et.'},
-    {tip:'<b>Result/Reason</b>: therefore / as a result / consequently (sonuç) vs because / since / as (sebep)'},
-    {tip:'<b>Subjunctive</b>: suggest/recommend/insist that + V1 (s\'siz). "She suggests he go." ✓'},
-    {tip:'<b>Quantifiers</b>: sayılabilir → many/few/a few. Sayılamayan → much/little/a little.'},
-    {tip:'<b>Participle clause</b>: "Walking down the street, she saw him." Özne aynı olmalı!'},
-    {tip:'<b>Emphasis</b>: "do/does/did" fiili güçlendirir: "I did finish it!" — YDS\'de inference sorularında çıkar.'},
+    {label:'Concession',    tip:'<b>although</b> + clause&nbsp;&nbsp;✓<br><b>despite</b> + noun/V-ing&nbsp;&nbsp;✓<br><span style="opacity:.55">despite although&nbsp;&nbsp;✗</span>'},
+    {label:'Relative',      tip:'kişi → <b>who / that</b><br>şey → <b>which / that</b><br>yer → <b>where</b>'},
+    {label:'Gerund vs to',  tip:'enjoy / avoid / consider → <b>V-ing</b><br>want / decide / hope → <b>to V1</b>'},
+    {label:'Passive',       tip:'<b>be + V3</b> — zaman eki be\'ye gelir<br>is written · was written · has been written'},
+    {label:'Conditional 2', tip:'If + <b>past simple</b>, would + <b>V1</b><br><span style="opacity:.55">gerçek olmayan şimdi/gelecek</span>'},
+    {label:'Inversion',     tip:'<b>Not only did he</b> arrive late...<br><span style="opacity:.55">olumsuz zarfta yardımcı öne çıkar</span>'},
+    {label:'Reported',      tip:'"I am tired" →<br>He said he <b>was</b> tired.<br><span style="opacity:.55">tense 1 adım geri kayar</span>'},
+    {label:'Subjunctive',   tip:'suggest / recommend / insist<br>that + <b>V1</b> (s\'siz)<br>"She suggests he <b>go</b>."&nbsp;&nbsp;✓'},
+    {label:'Quantifiers',   tip:'sayılabilir → <b>many / few</b><br>sayılamayan → <b>much / little</b>'},
+    {label:'Articles',      tip:'ilk bahis → <b>a/an</b><br>sonrası → <b>the</b><br>sayılamayanlar → <b>the</b> veya sıfır'},
+    {label:'Concession 2',  tip:'although = even though = while<br>despite = in spite of<br><span style="opacity:.55">hepsinin sonrası farklı!</span>'},
+    {label:'Result',        tip:'sonuç → <b>therefore / thus / hence</b><br>sebep → <b>because / since / as</b>'},
+    {label:'Cleft',         tip:'"It was <b>Mary</b> who called."<br><span style="opacity:.55">vurgu için — YDS\'de çıkar</span>'},
+    {label:'Participle',    tip:'"<b>Walking</b> down the street, she saw him."<br><span style="opacity:.55">özne iki cümlede aynı olmalı</span>'},
+    {label:'Emphasis',      tip:'"I <b>did</b> finish it!"<br><span style="opacity:.55">do/does/did = güçlendirme</span>'},
   ];
   const BADGE_HINTS = [
     {e:'🌱', name:'Filiz', hint:'3 gün üst üste çalış', target:3},
@@ -3049,8 +3086,8 @@ function renderDailyCorner(){
     const gt = p(GRAMMAR_TIPS);
     surpriseHTML = `
       <div class="dc-card-icon">📐</div>
-      <div class="dc-card-label">Grammar İpucu</div>
-      <div class="dc-card-sub" style="font-size:12px;line-height:1.55">${gt.tip}</div>`;
+      <div class="dc-card-label">Grammar Hack · <span style="color:var(--accent);font-style:normal">${gt.label}</span></div>
+      <div class="dc-card-sub" style="font-size:12px;line-height:1.65">${gt.tip}</div>`;
   } else if(surpriseType === 2){
     // Mini quiz
     const qi = QUIZ_ITEMS[DAY % QUIZ_ITEMS.length];
@@ -3107,6 +3144,10 @@ function renderDailyCorner(){
 
   return `
   <div class="dc-wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">✨ Günlük Köşe</span>
+      <span style="font-size:11px;color:var(--muted);opacity:.6">${new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'})}</span>
+    </div>
     <div class="dc-bee-bar">
       <span class="dc-bee-icon">🐝</span>
       <span class="dc-bee-text">${beeTip}</span>
@@ -3114,7 +3155,7 @@ function renderDailyCorner(){
     </div>
     <div class="dc-grid">
       <div class="dc-card dc-theme">
-        <div class="dc-card-icon">${theme.e}</div>
+        <div class="dc-card-icon" style="font-size:28px">${theme.e}</div>
         <div class="dc-card-label">Günün Kartı</div>
         <div class="dc-card-title">${theme.t}</div>
         <div class="dc-card-sub">${theme.q}</div>
