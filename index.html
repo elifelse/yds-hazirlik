@@ -298,6 +298,14 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .dc-card:nth-child(4){animation-delay:.19s}
 .dc-quiz-opt{background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.15);border-radius:6px;padding:5px 8px;font-size:11px;color:var(--text);cursor:pointer;text-align:left;transition:.15s}
 .dc-quiz-opt:hover:not(:disabled){background:rgba(129,140,248,.18)}
+.dc-tick-btn{margin-top:auto;align-self:flex-start;background:rgba(129,140,248,.12);border:1px solid rgba(129,140,248,.22);border-radius:8px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--accent);cursor:pointer;transition:all .18s}
+.dc-tick-btn:hover{background:rgba(129,140,248,.26);transform:translateY(-1px)}
+.dc-tick-btn:active{transform:scale(.96)}
+.dc-bonus-badge{background:rgba(251,191,36,.18);border:1px solid rgba(251,191,36,.3);border-radius:4px;padding:1px 5px;font-size:9px;font-weight:800;color:#b45309;letter-spacing:.4px;margin-left:5px;vertical-align:middle;text-transform:uppercase}
+.dc-mission-done{background:rgba(52,211,153,.07)!important;border-color:rgba(52,211,153,.22)!important;transition:all .3s}
+.dc-mission-done .dc-card-title{text-decoration:line-through;opacity:.5}
+.dc-mission-done-txt{font-size:11px;color:var(--green,#34d399);font-weight:700;margin-top:3px}
+.dc-bonus-ind{display:none;align-items:center;gap:3px;font-size:11px;color:var(--green,#34d399);font-weight:700}
 
 /* ── REKLAM ALANLARI ── */
 .ad-slot{
@@ -3153,10 +3161,13 @@ function renderDailyCorner(){
         <div class="dc-card-sub">${theme.q}</div>
       </div>
       <div class="dc-card dc-grammar">${grammarHTML}</div>
-      <div class="dc-card dc-mission-col">
-        <div class="dc-card-icon">🎯</div>
-        <div class="dc-card-label">Bugünkü Mini Görev</div>
+      <div class="dc-card dc-mission-col${todayDone.mini?' dc-mission-done':''}" id="dc-mission-card" data-mission="${mission}">
+        <div class="dc-card-icon">${todayDone.mini?'✅':'🎯'}</div>
+        <div class="dc-card-label">Mini Görev <span class="dc-bonus-badge">BONUS</span></div>
         <div class="dc-card-title" style="font-size:12.5px;font-weight:500;margin-top:3px">${mission}</div>
+        ${todayDone.mini
+          ? '<span class="dc-mission-done-txt">Tamamlandı! 🌟</span>'
+          : '<button class="dc-tick-btn" onclick="completeMiniTask()">Yaptım ✓</button>'}
       </div>
       <div class="dc-card dc-surprise">${surpriseHTML}</div>
     </div>
@@ -3172,6 +3183,27 @@ function dcQuizReveal(btn, chosen, correct){
     b.style.color = i===correct ? 'var(--green)' : (i===chosen && chosen!==correct ? 'var(--red,#f87171)' : '');
     b.style.background = i===correct ? 'rgba(52,211,153,.15)' : (i===chosen && chosen!==correct ? 'rgba(248,113,113,.12)' : '');
   });
+}
+
+function completeMiniTask(){
+  const d = getDone(); d.mini = true; setDone(d);
+
+  const card = document.getElementById('dc-mission-card');
+  if(card){
+    const mission = card.dataset.mission || '';
+    card.classList.add('dc-mission-done');
+    card.style.transition = 'transform .25s';
+    card.style.transform = 'scale(1.03)';
+    setTimeout(()=>{ card.style.transform = ''; }, 280);
+    card.innerHTML = `
+      <div class="dc-card-icon">✅</div>
+      <div class="dc-card-label">Mini Görev <span class="dc-bonus-badge">BONUS</span></div>
+      <div class="dc-card-title" style="font-size:12.5px;font-weight:500;margin-top:3px;text-decoration:line-through;opacity:.5">${mission}</div>
+      <span class="dc-mission-done-txt">Tamamlandı! 🌟</span>`;
+  }
+  const bi = document.getElementById('dc-bonus-ind');
+  if(bi){ bi.style.display='inline-flex'; }
+  if(typeof showToast==='function') showToast('🎯 Bonus görev tamamlandı!', 2500);
 }
 
 function renderStatsBox(){
@@ -3608,7 +3640,8 @@ function showPlan(level,pct){
           <div style="width:80px;height:6px;border-radius:3px;background:var(--border);overflow:hidden">
             <div style="height:100%;border-radius:3px;background:var(--green);width:${progressPct}%;transition:width .4s"></div>
           </div>
-          <span style="font-size:12px;color:var(--muted)">${coreDoneCount}/4</span>
+          <span style="font-size:12px;color:var(--muted)">${coreDoneCount}/4 görev</span>
+          <span id="dc-bonus-ind" class="dc-bonus-ind" style="${done.mini?'display:inline-flex':'display:none'}">· 🎯 bonus</span>
         </div>
       </div>
       <div class="daily-items">${dailyHTML}</div>
