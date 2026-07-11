@@ -5745,9 +5745,15 @@ document.addEventListener('click', e => {
   if (!e.target.closest('#bee') || _beeDragged) return;
   // Giriş yapılmamışsa sadece teşvik mesajı göster
   if (!currentUser) {
-    _showBeeBubble('Giriş yap ve çalışmaya başla! 🍯', 3500);
+    const bubble = document.getElementById('bee-bubble');
+    if (bubble) {
+      const isLeft = document.getElementById('bee').classList.contains('fly-left');
+      bubble.innerHTML = `Giriş yap ve çalışmaya başla! 🍯<br><button onclick="showAuthFromLanding()" style="margin-top:6px;background:var(--accent);color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;width:100%">Giriş Yap →</button>`;
+      bubble.className = 'show' + (isLeft ? ' fly-left' : '');
+      if (_beeBubbleTimer) clearTimeout(_beeBubbleTimer);
+      _beeBubbleTimer = setTimeout(() => { bubble.className = bubble.className.replace('show','').trim(); }, 5000);
+    }
     setBeeState('dance', 1200);
-    setTimeout(() => showAuthFromLanding(), 600);
     return;
   }
   if (_pendingWeekly) { _pendingWeekly = false; _showWeeklySummary(); return; }
