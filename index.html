@@ -257,6 +257,46 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .advice-box strong{color:var(--purple)}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;justify-content:center}
 
+/* ── DAILY CORNER ── */
+.dc-wrap{margin-bottom:14px}
+.dc-bee-bar{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(129,140,248,.07);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(129,140,248,.15);
+  border-radius:12px;padding:10px 14px;margin-bottom:8px;
+}
+.dc-bee-bar .dc-bee-icon{font-size:20px;flex-shrink:0}
+.dc-bee-bar .dc-bee-text{font-size:12px;color:var(--muted);line-height:1.45;flex:1}
+.dc-bee-bar .dc-streak{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:#f97316;white-space:nowrap;flex-shrink:0}
+.dc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.dc-card{
+  position:relative;overflow:hidden;
+  background:rgba(255,255,255,.03);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-radius:13px;padding:13px;
+  transition:transform .18s,box-shadow .18s;
+  display:flex;flex-direction:column;gap:5px;
+  min-height:108px;
+}
+.dc-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.dc-card.dc-theme{border:1px solid rgba(167,139,250,.22);background:rgba(167,139,250,.06)}
+.dc-card.dc-surprise{border:1px solid rgba(251,191,36,.2);background:rgba(251,191,36,.05)}
+.dc-card.dc-mission{border:1px solid rgba(129,140,248,.2);background:rgba(129,140,248,.05);grid-column:1/-1;flex-direction:row;align-items:flex-start;gap:12px;min-height:auto}
+.dc-card-icon{font-size:20px;line-height:1;flex-shrink:0}
+.dc-card-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.dc-card-title{font-size:13px;font-weight:700;color:var(--text);line-height:1.35}
+.dc-card-sub{font-size:11px;color:var(--muted);line-height:1.4;margin-top:1px}
+.dc-mission-body{flex:1}
+.dc-reveal-btn{margin-top:8px;background:rgba(129,140,248,.15);border:none;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--accent);cursor:pointer}
+.dc-reveal-btn:hover{background:rgba(129,140,248,.25)}
+@keyframes dc-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.dc-card{animation:dc-in .3s ease both}
+.dc-card:nth-child(2){animation-delay:.07s}
+.dc-card:nth-child(3){animation-delay:.14s}
+.dc-quiz-opt{background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.15);border-radius:6px;padding:5px 8px;font-size:11px;color:var(--text);cursor:pointer;text-align:left;transition:.15s}
+.dc-quiz-opt:hover:not(:disabled){background:rgba(129,140,248,.18)}
+
 /* ── REKLAM ALANLARI ── */
 .ad-slot{
   width:100%;border-radius:10px;overflow:hidden;
@@ -2880,6 +2920,228 @@ function saveDenemeScore(correct, total, net){
 }
 
 // ── Dashboard render ──────────────────────────────────
+// ── DAILY CORNER ─────────────────────────────────────────────────────────────
+function renderDailyCorner(){
+  const DAY = Math.floor(Date.now() / 86400000);
+  const p   = (arr) => arr[DAY % arr.length];
+  const streak = parseInt(localStorage.getItem('yds_streak')||'0');
+
+  // ── 1. Bee günlük tavsiyesi ──
+  const BEE_TIPS = [
+    'Bugün bağlaçlara odaklan — YDS\'de however ve although çok çıkıyor.',
+    'Kelimeyi cümlede gör, sözlükte değil. Bağlamı ezberle.',
+    'Okuma parçasında ilk cümle ve son cümle genellikle ana fikri verir.',
+    'Pasif yapıyı aktife çevirme soruları bu sınav sezonunda sık çıkıyor.',
+    'Seri kırmamak için en kısa görevden başla — momentum önemli.',
+    '10 kelimeyi iyi öğrenmek 50 kelimeyi yüzeysel geçmekten iyidir.',
+    'Relative clause\'da "that" ne zaman, "which" ne zaman? Bugün bak.',
+    'Yorgunken okuma parçası yerine kelime kartlarıyla çalış.',
+    'Articles (a/an/the) YDS\'de sürpriz kayıp noktası — gözden geçir.',
+    'Sınava 134 gün kaldı. Her gün 1 saat = 134 saat hazırlık.',
+    'Paragrafın ana fikrini ilk okuyuşta yakalamaya çalış.',
+    'Zayıf kelime listeni bugün bir kez daha gözden geçir.',
+    'Conditional Type 2 ile Type 3 karıştırma — fark kritik.',
+    'Despite + noun, although + clause. Bu ayrımı ezberle.',
+    'Okurken "what does the author imply?" sorusunu aklında tut.',
+    'Gramer sorusunda önce boşluktan önce ve sonrasına bak.',
+    'Akademik kelimeleri Türkçe değil, İngilizce tanımıyla öğren.',
+    'Sınav stresini azaltmak için bugün sadece 1 konu çalış — ama derinlemesine.',
+    'Cloze test\'te dilbilgisel ipuçlarına dikkat et: singular/plural, tense.',
+    'Bugün öğrendiğin kelimeyi bir cümlede kullan — kalıcılık artıyor.',
+    'Okuma parçasında soru sormadan önce metne dön — hız kazandırır.',
+    'Tekrar aralığı unutmayı önler: bugün öğrendiğini 1 gün sonra tekrar et.',
+    'Soru türlerini tanı: main idea / inference / vocabulary in context.',
+    'Zor paragraf gelince paniklemek yerine yavaşla ve iki kez oku.',
+    'Her seri günü seni sınava biraz daha hazır hale getiriyor.',
+    'Bugün grammar bölümünde 5 doğru yaptıysan yarın 6 hedefle.',
+    'Kelime kartlarını yatmadan önce bir kez daha gözden geçir.',
+    'Sözcük türetme: determine → determination → determined. Kökleri öğren.',
+    'However ile Nevertheless aynı anlam, farklı ton. İkisini de bil.',
+    'Hedefin 85 puan ise 60 doğru yeterli. Hangilerini garanti edebilirsin?',
+  ];
+
+  // ── 2. Günün Kartı ──
+  const THEMES = [
+    {e:'🌱',t:'Sabır',q:'Her büyük başarı küçük adımların birikiminden doğar.'},
+    {e:'🔥',t:'Israr',q:'Dil öğrenmek maraton — kendi hızını koru.'},
+    {e:'🌊',t:'Akış',q:'Anlamadan önce maruz kalmalısın.'},
+    {e:'⚡',t:'Enerji',q:'Yorgun zihin de öğrenir — sadece daha yavaş.'},
+    {e:'🎯',t:'Odak',q:'Tek bir konu derinlemesine > yüzey çalışması.'},
+    {e:'🌙',t:'Süreklilik',q:'Küçük bir şey yapmak hiç yapmamaktan iyidir.'},
+    {e:'💡',t:'Merak',q:'Her yeni kelime dünyayı biraz daha genişletir.'},
+    {e:'🏔️',t:'Kararlılık',q:'Sınava kadar her gün bir adım.'},
+    {e:'🌸',t:'Taze Başlangıç',q:'Bugün dünden bağımsız bir fırsat.'},
+    {e:'🦋',t:'Dönüşüm',q:'Kullanım alışkanlığı kuraldın önce gelir.'},
+    {e:'🌟',t:'Parlaklık',q:'Hazırlık gizlenir, sınavda ortaya çıkar.'},
+    {e:'🔮',t:'Vizyon',q:'Hedefini net gör, yol belirginleşir.'},
+    {e:'🧩',t:'Sistem',q:'Rastgele değil, planlı çalış.'},
+    {e:'🌍',t:'Perspektif',q:'İngilizce sınavın ötesinde bir kapı açar.'},
+    {e:'⚓',t:'Güven',q:'Her doğru cevap seni bir adım öne taşır.'},
+    {e:'🌅',t:'Yeni Gün',q:'Dün ne kadar çalıştığın değil, bugün ne yapacağın.'},
+    {e:'🧠',t:'Derinlik',q:'Kelimeyi cümlede gör — sözlükte değil.'},
+    {e:'🏆',t:'Mükemmellik',q:'İyi puan değil; iyi anlamak hedef.'},
+    {e:'🌿',t:'Büyüme',q:'Her yanlış cevap bir sonraki doğruyu hazırlar.'},
+    {e:'✨',t:'Dikkat',q:'Paragrafın tamamını oku — cevap genelde ortada.'},
+    {e:'🔑',t:'Anahtar',q:'Bağlaçlar YDS\'nin gizli anahtarları.'},
+    {e:'🌠',t:'İnanç',q:'Hazırlıkta harcanan her dakika sınava taşınır.'},
+    {e:'🧭',t:'Yön',q:'Kaynaktan çok tekrar sayısı belirler başarıyı.'},
+    {e:'⏰',t:'Zaman',q:'3 dk/soru hızını ancak okuma alışkanlığıyla kazanırsın.'},
+    {e:'🌻',t:'Umut',q:'Bugün zor görünüyorsa yarın daha anlaşılır olacak.'},
+    {e:'🎶',t:'Ritim',q:'Düzenli çalışma beyin için müzik gibidir.'},
+    {e:'🦅',t:'Özgürlük',q:'Sınav geçti sonrası için de öğren.'},
+    {e:'🎋',t:'Esneklik',q:'Zorlu parçalarda yavaşla, geçme.'},
+    {e:'🚀',t:'Hız',q:'Hazırlık sürecini hızlandıran tek şey tutarlılık.'},
+    {e:'🌈',t:'Çeşitlilik',q:'Bugün farklı bir konu çalış — zihin canlanır.'},
+  ];
+
+  // ── 3. Sürpriz (4 tipli döngü) ──
+  const allWords = [...VOCAB_SETS_C1, ...VOCAB_SETS_B2, ...VOCAB_SETS_B1].flatMap(s=>s.words);
+  const w = allWords[DAY % allWords.length];
+
+  const GRAMMAR_TIPS = [
+    {tip:'<b>Although</b> + clause (özne+fiil), <b>Despite</b> + noun/gerund. "Despite being tired" ✓ "Despite although" ✗'},
+    {tip:'<b>Relative clause</b>: kişi → who/that, şey → which/that, yer → where, zaman → when'},
+    {tip:'<b>Passive voice</b>: be + past participle. Zaman eki be\'ye gelir: "is written / was written / has been written"'},
+    {tip:'<b>Conditional Type 2</b>: If + past simple, would + V1. Gerçek olmayan şimdi/gelecek için.'},
+    {tip:'<b>Articles</b>: İlk bahsedince "a", sonrasında "the". Sayılamayan isimler ile "a" kullanılmaz.'},
+    {tip:'<b>Gerund vs Infinitive</b>: enjoy/avoid/consider → gerund (-ing). want/hope/decide → infinitive (to+V1)'},
+    {tip:'<b>Inversion</b>: "Not only did he..." — olumsuz zarfla başlayınca yardımcı fiil öne çıkar.'},
+    {tip:'<b>Reported Speech</b>: "I am tired" → He said he was tired. Tense bir adım geriye kayar.'},
+    {tip:'<b>Cleft sentence</b>: "It was Mary who called." — vurgu için kullanılır, YDS\'de sorulur.'},
+    {tip:'<b>Concession</b>: although / even though / while / whereas / despite / in spite of — hepsini ayırt et.'},
+    {tip:'<b>Result/Reason</b>: therefore / as a result / consequently (sonuç) vs because / since / as (sebep)'},
+    {tip:'<b>Subjunctive</b>: suggest/recommend/insist that + V1 (s\'siz). "She suggests he go." ✓'},
+    {tip:'<b>Quantifiers</b>: sayılabilir → many/few/a few. Sayılamayan → much/little/a little.'},
+    {tip:'<b>Participle clause</b>: "Walking down the street, she saw him." Özne aynı olmalı!'},
+    {tip:'<b>Emphasis</b>: "do/does/did" fiili güçlendirir: "I did finish it!" — YDS\'de inference sorularında çıkar.'},
+  ];
+  const BADGE_HINTS = [
+    {e:'🌱', name:'Filiz', hint:'3 gün üst üste çalış', target:3},
+    {e:'⭐', name:'Haftanın Kahramanı', hint:'7 gün üst üste çalış', target:7},
+    {e:'🔥', name:'Yanan Alev', hint:'14 gün üst üste çalış', target:14},
+    {e:'👑', name:'Kraliçe Arı', hint:'30 gün üst üste çalış', target:30},
+    {e:'📚', name:'Kelime Avcısı', hint:'150 kelime öğren', target:null},
+    {e:'🎯', name:'Odak Ustası', hint:'Tüm günlük görevleri 5 gün tamamla', target:null},
+  ];
+  const QUIZ_ITEMS = [
+    {q:'"She managed to _____ the committee\'s decision." Doğrusu hangisi?',opts:['influence','influenced','influencing','be influence'],a:0},
+    {q:'"_____ the heavy traffic, she arrived on time."',opts:['Although','Despite','Because','Since'],a:1},
+    {q:'"He _____ here for 10 years when he retired."',opts:['has worked','had been working','is working','worked'],a:1},
+    {q:'"It is essential that every student _____ the exam."',opts:['takes','take','took','taking'],a:1},
+    {q:'"Not only _____ late, but he also forgot his notes."',opts:['he arrived','arrived he','did he arrive','he did arrive'],a:2},
+    {q:'"The report, _____ was published last year, is outdated."',opts:['who','that','which','what'],a:2},
+    {q:'"I\'d rather you _____ tell anyone about this."',opts:['don\'t','didn\'t','won\'t','wouldn\'t'],a:1},
+    {q:'"_____ is well known, exercise improves mental health."',opts:['As','What','That','Which'],a:0},
+  ];
+
+  const surpriseType = DAY % 4;
+  let surpriseHTML = '';
+  if(surpriseType === 0){
+    // Kelime
+    surpriseHTML = `
+      <div class="dc-card-icon">🎁</div>
+      <div class="dc-card-label">Günün Kelimesi</div>
+      <div class="dc-card-title">${w.word} <span style="font-size:10px;font-weight:400;opacity:.6">${w.pos}</span></div>
+      <div class="dc-card-sub">${w.tr}</div>
+      <div class="dc-card-sub" style="font-style:italic;margin-top:4px;opacity:.7">"${w.ex}"</div>`;
+  } else if(surpriseType === 1){
+    // Grammar ipucu
+    const gt = p(GRAMMAR_TIPS);
+    surpriseHTML = `
+      <div class="dc-card-icon">📐</div>
+      <div class="dc-card-label">Grammar İpucu</div>
+      <div class="dc-card-sub" style="font-size:12px;line-height:1.55">${gt.tip}</div>`;
+  } else if(surpriseType === 2){
+    // Mini quiz
+    const qi = QUIZ_ITEMS[DAY % QUIZ_ITEMS.length];
+    const optsHTML = qi.opts.map((o,i)=>`<button onclick="dcQuizReveal(this,${i},${qi.a})" class="dc-quiz-opt">${o}</button>`).join('');
+    surpriseHTML = `
+      <div class="dc-card-icon">🧪</div>
+      <div class="dc-card-label">Mini Quiz</div>
+      <div class="dc-card-sub" style="font-size:12px;margin-bottom:6px">${qi.q}</div>
+      <div class="dc-quiz-opts" style="display:flex;flex-direction:column;gap:4px">${optsHTML}</div>`;
+  } else {
+    // Rozet ipucu
+    const bh = BADGE_HINTS.find(b=>b.target && streak < b.target) || BADGE_HINTS[DAY % BADGE_HINTS.length];
+    const pct = bh.target ? Math.min(100, Math.round(streak/bh.target*100)) : null;
+    surpriseHTML = `
+      <div class="dc-card-icon">${streak >= (bh.target||999) ? bh.e : '🔒'}</div>
+      <div class="dc-card-label">Gizli Başarı</div>
+      <div class="dc-card-title">${bh.name}</div>
+      <div class="dc-card-sub">${bh.hint}</div>
+      ${pct!==null ? `<div style="margin-top:6px;height:4px;background:var(--border);border-radius:2px"><div style="height:4px;width:${pct}%;background:var(--accent);border-radius:2px;transition:.4s"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px">${streak} / ${bh.target} gün</div>` : ''}`;
+  }
+
+  // ── 4. Mini görev ──
+  const MISSIONS = [
+    '3 farklı bağlaç kullanarak tek bir cümle yaz',
+    'Bugünkü sürpriz kelimeyi kendi cümlenle kullan',
+    'Pasif yapıyı aktife çevir: "The letter was written by her"',
+    'Bir Relative Clause cümlesi kur — "which" veya "who" kullan',
+    'Conditional Type 2: "If I studied harder, I would..." devamını getir',
+    '"Despite" ile başlayan bir cümle yaz',
+    '5 akademik sıfat say — bakmadan!',
+    '"However" ve "Nevertheless" arasındaki farkı bir cümleyle göster',
+    'Bir cümleyi Passive\'den Active\'e çevir',
+    '"It is essential that..." ile bir cümle tamamla',
+    'Bugün öğrendiğin kelimeyi sesli oku — 5 kez',
+    'Bir akademik paragrafa bak ve topic sentence\'ı bul',
+    '"Not only... but also..." yapısıyla cümle kur',
+    'Gerund vs infinitive: "enjoy" ve "want" fiillerini örnekle göster',
+    '"In spite of" ile "Although" farkını yaz',
+    '60 saniyede aklına gelen 10 akademik kelimeyi say',
+    'Bir soru tipini analiz et: inference mi, main idea mı?',
+    '"As a result" ve "Therefore" arasındaki fark nedir?',
+    'Bugün öğrendiğin 3 kelimeyi kök + türev olarak yaz',
+    '"Cleft sentence" nedir? Bir örnek ver: "It was..."',
+    'Quantifier al: many/few/much/little — 2\'şer örnek cümle',
+    '"Suggest that" yapısında fiil hangi formda gelir?',
+    'Yazıda "the" neden kullanıldığını 1 örnekte açıkla',
+    'En son çalıştığın grammar konusunu 3 maddeyle özetle',
+    '"Although" ile başlayan bir cümleyi "Despite" ile yeniden yaz',
+  ];
+
+  const theme   = p(THEMES);
+  const beeTip  = p(BEE_TIPS);
+  const mission = p(MISSIONS);
+
+  return `
+  <div class="dc-wrap">
+    <div class="dc-bee-bar">
+      <span class="dc-bee-icon">🐝</span>
+      <span class="dc-bee-text">${beeTip}</span>
+      <span class="dc-streak">🔥 ${streak} gün</span>
+    </div>
+    <div class="dc-grid">
+      <div class="dc-card dc-theme">
+        <div class="dc-card-icon">${theme.e}</div>
+        <div class="dc-card-label">Günün Kartı</div>
+        <div class="dc-card-title">${theme.t}</div>
+        <div class="dc-card-sub">${theme.q}</div>
+      </div>
+      <div class="dc-card dc-surprise">${surpriseHTML}</div>
+    </div>
+    <div class="dc-card dc-mission">
+      <div class="dc-card-icon">🎯</div>
+      <div class="dc-mission-body">
+        <div class="dc-card-label">Bugünkü Mini Görev</div>
+        <div class="dc-card-title" style="font-size:13px;font-weight:500;margin-top:3px">${mission}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function dcQuizReveal(btn, chosen, correct){
+  const container = btn.closest('.dc-quiz-opts');
+  if(!container) return;
+  [...container.querySelectorAll('.dc-quiz-opt')].forEach((b,i)=>{
+    b.disabled = true;
+    b.style.fontWeight = i===correct ? '700' : '400';
+    b.style.color = i===correct ? 'var(--green)' : (i===chosen && chosen!==correct ? 'var(--red,#f87171)' : '');
+    b.style.background = i===correct ? 'rgba(52,211,153,.15)' : (i===chosen && chosen!==correct ? 'rgba(248,113,113,.12)' : '');
+  });
+}
+
 function renderStatsBox(){
   const gramArr  = JSON.parse(localStorage.getItem('yds_grammar_scores')||'[]').slice(-7);
   const readArr  = JSON.parse(localStorage.getItem('yds_reading_scores')||'[]').slice(-7);
@@ -3318,6 +3580,8 @@ function showPlan(level,pct){
       <div class="daily-items">${dailyHTML}</div>
       ${streakWarn}
     </div>
+
+    ${renderDailyCorner()}
 
     <!-- ── HAZIRLIK PLANI (katlanabilir) ── -->
     <details style="margin-bottom:16px">
