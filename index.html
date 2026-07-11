@@ -743,18 +743,21 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 .tnav-btn.primary:hover{opacity:.85}
 .tnav-dropdown{position:relative}
 .tnav-dropdown-menu{
-  display:none;position:absolute;top:100%;left:0;
-  background:var(--card);border:1px solid var(--border);border-radius:10px;
-  min-width:200px;padding:6px;z-index:200;
-  box-shadow:0 8px 24px rgba(0,0,0,.3);
-  padding-top:10px;
+  display:none;position:absolute;top:calc(100% + 6px);left:-60px;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  width:380px;padding:14px;z-index:200;
+  box-shadow:0 8px 32px rgba(0,0,0,.35);
 }
-.tnav-dropdown-menu.open{display:flex;flex-direction:column}
+.tnav-dropdown-menu.open{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.tnav-dd-col{display:flex;flex-direction:column}
+.tnav-dd-cat{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.7px;padding:8px 8px 4px;margin-top:4px}
+.tnav-dd-col:first-child .tnav-dd-cat:first-child{margin-top:0}
 .tnav-dropdown-menu a{
-  display:block;padding:9px 12px;border-radius:7px;font-size:13px;font-weight:500;
-  color:var(--muted);text-decoration:none;transition:.12s;white-space:nowrap;
+  display:block;padding:7px 8px;border-radius:7px;font-size:13px;font-weight:500;
+  color:var(--text);text-decoration:none;transition:.12s;white-space:nowrap;
 }
-.tnav-dropdown-menu a:hover{background:rgba(129,140,248,.1);color:var(--text)}
+.tnav-dropdown-menu a:hover{background:rgba(129,140,248,.1);color:var(--accent)}
 
 @media(max-width:640px){
   #top-nav{display:none !important}
@@ -1315,24 +1318,32 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
     <div class="tnav-dropdown" id="rehber-dropdown">
       <button class="tnav-btn" onclick="toggleRehberMenu(event)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Rehber ▾</button>
       <div class="tnav-dropdown-menu" id="rehber-menu">
-        <a href="/yds-sinav-hakkinda.html">YDS Sınavı Hakkında</a>
-        <a href="/yds-kelime-listesi.html">YDS Kelime Listesi</a>
-        <a href="/yds-gramer-konulari.html">Gramer Konuları</a>
-        <a href="/yds-okuma-teknikleri.html">Okuma Teknikleri</a>
-        <a href="/yds-30-gunluk-plan.html">30 Günlük Plan</a>
-        <a href="/yds-zaman-yonetimi.html">Zaman Yönetimi</a>
-        <a href="/yds-ielts-fark.html">YDS vs IELTS</a>
-        <a href="/yds-relative-clauses.html">Relative Clauses</a>
-        <a href="/yds-passive-voice.html">Passive Voice</a>
-        <a href="/yds-articles-kullanimi.html">Articles (a/an/the)</a>
-        <a href="/yds-conditionals.html">Conditionals (If Clauses)</a>
-        <a href="/yds-baglac-listesi.html">Bağlaç Listesi PDF</a>
-        <a href="/yds-collocation-listesi.html">Collocation PDF</a>
-        <a href="/yds-deneme-analizi.html" onclick="return guardedNav('/yds-deneme-analizi.html')">Deneme Analizi 🔒</a>
-        <a href="/yds-ilerleme-grafigi.html" onclick="return guardedNav('/yds-ilerleme-grafigi.html')">İlerleme Grafiği 🔒</a>
-        <a href="/yds-pratik-setleri.html" onclick="return guardedNav('/yds-pratik-setleri.html')">Pratik Setleri 🔒</a>
-        <a href="/yds-soru-tipleri.html">Soru Tipleri</a>
-        <a href="/yds-puan-hesaplama.html">Puan Hesaplama</a>
+        <div class="tnav-dd-col">
+          <div class="tnav-dd-cat">📚 Gramer</div>
+          <a href="/yds-gramer-konulari.html">Gramer Konuları</a>
+          <a href="/yds-relative-clauses.html">Relative Clauses</a>
+          <a href="/yds-passive-voice.html">Passive Voice</a>
+          <a href="/yds-articles-kullanimi.html">Articles (a/an/the)</a>
+          <a href="/yds-conditionals.html">Conditionals</a>
+          <div class="tnav-dd-cat">📖 Kelime &amp; Okuma</div>
+          <a href="/yds-kelime-listesi.html">Kelime Listesi</a>
+          <a href="/yds-collocation-listesi.html">Collocation PDF</a>
+          <a href="/yds-baglac-listesi.html">Bağlaç Listesi</a>
+          <a href="/yds-okuma-teknikleri.html">Okuma Teknikleri</a>
+        </div>
+        <div class="tnav-dd-col">
+          <div class="tnav-dd-cat">🎯 Sınav &amp; Strateji</div>
+          <a href="/yds-sinav-hakkinda.html">YDS Sınavı Hakkında</a>
+          <a href="/yds-soru-tipleri.html">Soru Tipleri</a>
+          <a href="/yds-puan-hesaplama.html">Puan Hesaplama</a>
+          <a href="/yds-ielts-fark.html">YDS vs IELTS</a>
+          <a href="/yds-30-gunluk-plan.html">30 Günlük Plan</a>
+          <a href="/yds-zaman-yonetimi.html">Zaman Yönetimi</a>
+          <div class="tnav-dd-cat">🔒 Araçlar</div>
+          <a href="/yds-deneme-analizi.html" onclick="return guardedNav('/yds-deneme-analizi.html')">Deneme Analizi</a>
+          <a href="/yds-ilerleme-grafigi.html" onclick="return guardedNav('/yds-ilerleme-grafigi.html')">İlerleme Grafiği</a>
+          <a href="/yds-pratik-setleri.html" onclick="return guardedNav('/yds-pratik-setleri.html')">Pratik Setleri</a>
+        </div>
       </div>
     </div>
     <button class="tnav-btn" onclick="openSettingsModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Ayarlar</button>
@@ -5736,6 +5747,7 @@ document.addEventListener('click', e => {
   if (!currentUser) {
     _showBeeBubble('Giriş yap ve çalışmaya başla! 🍯', 3500);
     setBeeState('dance', 1200);
+    setTimeout(() => showAuthFromLanding(), 600);
     return;
   }
   if (_pendingWeekly) { _pendingWeekly = false; _showWeeklySummary(); return; }
