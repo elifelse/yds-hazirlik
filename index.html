@@ -3566,6 +3566,8 @@ function showPlan(level,pct){
       <button class="btn btn-outline btn-sm" onclick="goTo('intro')" style="font-size:11px;padding:4px 10px;opacity:.6">✏️ ${level}</button>
     </div>
 
+    ${renderDailyCorner()}
+
     <!-- ── BUGÜNÜN GÖREVLERİ ── -->
     <div class="daily-box" style="margin-bottom:20px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -3580,8 +3582,6 @@ function showPlan(level,pct){
       <div class="daily-items">${dailyHTML}</div>
       ${streakWarn}
     </div>
-
-    ${renderDailyCorner()}
 
     <!-- ── HAZIRLIK PLANI (katlanabilir) ── -->
     <details style="margin-bottom:16px">
