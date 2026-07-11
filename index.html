@@ -260,45 +260,42 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 /* ── DAILY CORNER ── */
 .dc-wrap{
   margin-bottom:14px;
-  background:linear-gradient(135deg,rgba(129,140,248,.07) 0%,rgba(167,139,250,.04) 100%);
-  border:1px solid rgba(129,140,248,.14);
-  border-radius:16px;padding:14px;
+  background:var(--bg-card,rgba(255,255,255,.04));
+  border:1px solid rgba(129,140,248,.13);
+  border-radius:18px;
+  padding:16px 18px 15px;
 }
-.dc-bee-bar{
-  display:flex;align-items:center;gap:10px;
-  background:rgba(129,140,248,.07);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(129,140,248,.15);
-  border-radius:12px;padding:10px 14px;margin-bottom:8px;
+.dc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.dc-head-title{
+  font-size:11px;font-weight:800;color:var(--accent);
+  text-transform:uppercase;letter-spacing:1.1px;
+  border-bottom:2px solid var(--accent);padding-bottom:2px;
 }
-.dc-bee-bar .dc-bee-icon{font-size:20px;flex-shrink:0}
-.dc-bee-bar .dc-bee-text{font-size:12px;color:var(--muted);line-height:1.45;flex:1}
-.dc-bee-bar .dc-streak{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:#f97316;white-space:nowrap;flex-shrink:0}
-.dc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.dc-head-date{font-size:11px;color:var(--muted);opacity:.65}
+.dc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .dc-card{
   position:relative;overflow:hidden;
-  background:rgba(255,255,255,.03);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-radius:13px;padding:13px;
-  transition:transform .18s,box-shadow .18s;
-  display:flex;flex-direction:column;gap:5px;
-  min-height:108px;
+  border-radius:14px;padding:14px 13px;
+  display:flex;flex-direction:column;gap:6px;
+  min-height:118px;
+  transition:transform .18s;
 }
-.dc-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.22)}
-.dc-card.dc-theme{border:1px solid rgba(167,139,250,.22);background:rgba(167,139,250,.06)}
-.dc-card.dc-surprise{border:1px solid rgba(251,191,36,.2);background:rgba(251,191,36,.05)}
-.dc-card.dc-mission{border:1px solid rgba(129,140,248,.2);background:rgba(129,140,248,.05);grid-column:1/-1;flex-direction:row;align-items:flex-start;gap:12px;min-height:auto}
-.dc-card-icon{font-size:20px;line-height:1;flex-shrink:0}
+.dc-card:hover{transform:translateY(-2px)}
+.dc-card.dc-theme{background:rgba(167,139,250,.14);border:1px solid rgba(167,139,250,.28)}
+.dc-card.dc-grammar{background:rgba(255,255,255,.05);border:1px solid rgba(129,140,248,.14)}
+.dc-card.dc-mission-col{background:rgba(255,255,255,.05);border:1px solid rgba(129,140,248,.14)}
+.dc-card.dc-surprise{background:rgba(254,240,138,.10);border:1px solid rgba(251,191,36,.28)}
+.dc-card-icon{font-size:18px;line-height:1;flex-shrink:0;margin-bottom:2px}
 .dc-card-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
 .dc-card-title{font-size:13px;font-weight:700;color:var(--text);line-height:1.35}
-.dc-card-sub{font-size:11px;color:var(--muted);line-height:1.4;margin-top:1px}
-.dc-mission-body{flex:1}
+.dc-card-sub{font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:1px}
 .dc-reveal-btn{margin-top:8px;background:rgba(129,140,248,.15);border:none;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--accent);cursor:pointer}
 .dc-reveal-btn:hover{background:rgba(129,140,248,.25)}
-@keyframes dc-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dc-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .dc-card{animation:dc-in .3s ease both}
 .dc-card:nth-child(2){animation-delay:.07s}
-.dc-card:nth-child(3){animation-delay:.14s}
+.dc-card:nth-child(3){animation-delay:.13s}
+.dc-card:nth-child(4){animation-delay:.19s}
 .dc-quiz-opt{background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.15);border-radius:6px;padding:5px 8px;font-size:11px;color:var(--text);cursor:pointer;text-align:left;transition:.15s}
 .dc-quiz-opt:hover:not(:disabled){background:rgba(129,140,248,.18)}
 
@@ -3071,7 +3068,15 @@ function renderDailyCorner(){
     {q:'"_____ is well known, exercise improves mental health."',opts:['As','What','That','Which'],a:0},
   ];
 
-  const surpriseType = DAY % 4;
+  // Grammar Hack — her gün sabit 2. kolonda görünür
+  const gt = p(GRAMMAR_TIPS);
+  const grammarHTML = `
+      <div class="dc-card-icon">💡</div>
+      <div class="dc-card-label">Grammar Hack · <span style="color:var(--accent)">${gt.label}</span></div>
+      <div class="dc-card-sub" style="font-size:12px;line-height:1.7">${gt.tip}</div>`;
+
+  // Sürpriz köşesi — 3 türde döner: kelime / quiz / rozet
+  const surpriseType = DAY % 3;
   let surpriseHTML = '';
   if(surpriseType === 0){
     // Kelime
@@ -3082,13 +3087,6 @@ function renderDailyCorner(){
       <div class="dc-card-sub">${w.tr}</div>
       <div class="dc-card-sub" style="font-style:italic;margin-top:4px;opacity:.7">"${w.ex}"</div>`;
   } else if(surpriseType === 1){
-    // Grammar ipucu
-    const gt = p(GRAMMAR_TIPS);
-    surpriseHTML = `
-      <div class="dc-card-icon">📐</div>
-      <div class="dc-card-label">Grammar Hack · <span style="color:var(--accent);font-style:normal">${gt.label}</span></div>
-      <div class="dc-card-sub" style="font-size:12px;line-height:1.65">${gt.tip}</div>`;
-  } else if(surpriseType === 2){
     // Mini quiz
     const qi = QUIZ_ITEMS[DAY % QUIZ_ITEMS.length];
     const optsHTML = qi.opts.map((o,i)=>`<button onclick="dcQuizReveal(this,${i},${qi.a})" class="dc-quiz-opt">${o}</button>`).join('');
@@ -3139,35 +3137,28 @@ function renderDailyCorner(){
   ];
 
   const theme   = p(THEMES);
-  const beeTip  = p(BEE_TIPS);
   const mission = p(MISSIONS);
 
   return `
   <div class="dc-wrap">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">✨ Günlük Köşe</span>
-      <span style="font-size:11px;color:var(--muted);opacity:.6">${new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'})}</span>
-    </div>
-    <div class="dc-bee-bar">
-      <span class="dc-bee-icon">🐝</span>
-      <span class="dc-bee-text">${beeTip}</span>
-      <span class="dc-streak">🔥 ${streak} gün</span>
+    <div class="dc-head">
+      <span class="dc-head-title">Günlük Köşe</span>
+      <span class="dc-head-date">${new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'})}</span>
     </div>
     <div class="dc-grid">
       <div class="dc-card dc-theme">
-        <div class="dc-card-icon" style="font-size:28px">${theme.e}</div>
+        <div class="dc-card-icon" style="font-size:22px">${theme.e}</div>
         <div class="dc-card-label">Günün Kartı</div>
-        <div class="dc-card-title">${theme.t}</div>
+        <div class="dc-card-title" style="color:var(--accent);font-size:15px">${theme.t}</div>
         <div class="dc-card-sub">${theme.q}</div>
       </div>
-      <div class="dc-card dc-surprise">${surpriseHTML}</div>
-    </div>
-    <div class="dc-card dc-mission">
-      <div class="dc-card-icon">🎯</div>
-      <div class="dc-mission-body">
+      <div class="dc-card dc-grammar">${grammarHTML}</div>
+      <div class="dc-card dc-mission-col">
+        <div class="dc-card-icon">🎯</div>
         <div class="dc-card-label">Bugünkü Mini Görev</div>
-        <div class="dc-card-title" style="font-size:13px;font-weight:500;margin-top:3px">${mission}</div>
+        <div class="dc-card-title" style="font-size:12.5px;font-weight:500;margin-top:3px">${mission}</div>
       </div>
+      <div class="dc-card dc-surprise">${surpriseHTML}</div>
     </div>
   </div>`;
 }
