@@ -1087,6 +1087,18 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
   60%{ transform:translateX(-5px); filter:drop-shadow(0 0 7px #f87171); }
   80%{ transform:translateX(5px);  filter:drop-shadow(0 0 7px #f87171); }
 }
+@keyframes bee-idle-sway{
+  0%,100%{ transform:translateY(0) rotate(0deg); }
+  30%    { transform:translateY(-11px) rotate(-2deg); }
+  65%    { transform:translateY(-8px) rotate(1.5deg); }
+}
+@keyframes bee-glance{
+  0%   { transform:translateY(0) rotate(0deg); }
+  20%  { transform:translateY(-9px) rotate(-9deg) scale(1.05); }
+  55%  { transform:translateY(-11px) rotate(-7deg) scale(1.04); }
+  80%  { transform:translateY(-5px) rotate(-2deg); }
+  100% { transform:translateY(0) rotate(0deg); }
+}
 #bee{ transition:left .45s ease, top .45s ease, right .45s ease, bottom .45s ease; cursor:grab; }
 #bee:active{ cursor:grabbing; }
 #bee:hover{ filter:drop-shadow(0 6px 20px rgba(249,202,36,.55)); }
@@ -5743,9 +5755,25 @@ let _beeTimer       = null;
 let _beeCurrentState = 'idle';
 let _beePriority     = 0; // higher = harder to override
 let _inactiveTimer   = null;
-let _beeQuizOpen     = false;
-let _pendingWeekly   = false;
+let _beeQuizOpen        = false;
+let _pendingWeekly      = false;
+let _beeIdleGlanceTimer = null;
 const BEE_STATES = { idle:0, sleep:1, correct:2, wrong:2, dance:3, panic:4 };
+
+function _scheduleBeeGlance() {
+  if (_beeIdleGlanceTimer) clearTimeout(_beeIdleGlanceTimer);
+  const delay = 8000 + Math.random() * 9000; // 8–17 seconds
+  _beeIdleGlanceTimer = setTimeout(() => {
+    if (_beeCurrentState !== 'idle') return;
+    _beeSetAnim('bee-glance 1.6s cubic-bezier(.34,1.2,.64,1) forwards');
+    setTimeout(() => {
+      if (_beeCurrentState === 'idle') {
+        _beeSetAnim('bee-idle-sway 3s ease-in-out infinite');
+        _scheduleBeeGlance();
+      }
+    }, 1700);
+  }, delay);
+}
 
 function _beeSetAnim(anim) {
   const bee = document.getElementById('bee');
@@ -5802,9 +5830,10 @@ function setBeeState(state, duration, force) {
 
   switch(state) {
     case 'idle':
-      _beeSetAnim('bee-float 2s ease-in-out infinite');
+      _beeSetAnim('bee-idle-sway 3s ease-in-out infinite');
       _beeSetWings(false);
       _beePriority = 0;
+      _scheduleBeeGlance();
       break;
     case 'correct':
       _beeSetAnim('bee-jump .7s cubic-bezier(.34,1.56,.64,1) forwards');

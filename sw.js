@@ -1,7 +1,7 @@
 // YDS Hazırlık — Service Worker
 // Uygulamayı önbelleğe alır, internet olmadan da çalışmasını sağlar
 
-const CACHE_NAME = 'yds-hazirlik-v6';
+const CACHE_NAME = 'yds-hazirlik-v7';
 const ASSETS = [
   '/',
   '/index.html'
