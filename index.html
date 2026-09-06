@@ -17,7 +17,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="YDS Hazırlık — Ücretsiz Akıllı Hazırlık"/>
-<meta property="og:description" content="Kelime kartları, gramer testleri, okuma pratikleri ve deneme sınavlarıyla YDS skorunu artır. Tamamen ücretsiz, reklamsız."/>
+<meta property="og:description" content="Kelime kartları, gramer testleri, okuma pratikleri ve deneme sınavlarıyla YDS skorunu artır. Tamamen ücretsiz."/>
 <meta property="og:url" content="https://yds-hazirlik.com/"/>
 <meta property="og:image" content="https://yds-hazirlik.com/og-image.svg"/>
 <meta property="og:image:width" content="1200"/>
@@ -1441,7 +1441,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
       <span style="font-size:13px;font-weight:500;color:var(--muted);letter-spacing:0">&amp; e-YDS Hazırlık</span>
     </div>
     <h1 class="land-title">Sınava akıllıca hazırlan</h1>
-    <p class="land-sub">Kelime kartları, gramer rehberi, okuma pratikleri ve mini denemelerle YDS skorunu artır. Ücretsiz, reklamsız, planlı.</p>
+    <p class="land-sub">Kelime kartları, gramer rehberi, okuma pratikleri ve mini denemelerle YDS skorunu artır. Ücretsiz, planlı.</p>
     <div class="land-cta-row">
       <button class="btn-land-primary" onclick="authGuest()">Hemen Başla →</button>
       <button class="btn-land-ghost" onclick="showAuthFromLanding()">Giriş Yap / Kayıt Ol</button>
@@ -4560,7 +4560,10 @@ function openSettingsModal(){
     </div>
     <div class="settings-row" style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
       <div style="font-size:14px;font-weight:600">Bu Site Hakkında</div>
-      <a href="/hakkimizda.html" style="font-size:13px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border)">Hakkımızda →</a>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="/hakkimizda.html" style="font-size:13px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border)">Hakkımızda →</a>
+        <a href="/gizlilik-politikasi.html" style="font-size:13px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border)">Gizlilik Politikası →</a>
+      </div>
     </div>
   `, true);
   // Aktif tema butonunu işaretle
@@ -5624,7 +5627,7 @@ const TOUR_STEPS = [
   {
     el: ()=>document.querySelector('.land-features'),
     robot: '📚',
-    text: 'Kelime kartları, gramer rehberi, okuma pratikleri ve <strong>mini denemeler</strong> — hepsi ücretsiz, reklamsız.'
+    text: 'Kelime kartları, gramer rehberi, okuma pratikleri ve <strong>mini denemeler</strong> — hepsi ücretsiz.'
   },
   {
     el: ()=>document.querySelector('.land-countdown'),
